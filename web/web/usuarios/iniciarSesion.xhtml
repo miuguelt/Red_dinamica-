@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:component>    
+        <h:panelGrid columns="3">
+            <h:outputLabel for="cedula" value="Cédula: *" />
+            <h:inputText id="cedula" value="#{loggin.cedula}" rendered="true" >
+                <f:validateLength minimum="1" />  
+                <f:validateRequired />  
+                <p:ajax update="msgCedula" event="keyup"/>
+            </h:inputText>
+            <p:message for="cedula" id="msgCedula" display="tooltip" />  
+            <h:outputLabel value="Contraseña: *" for="pass" />
+            <p:password id="pass" value="#{loggin.contrasena}"   required="true">
+                <f:validateLength minimum="3" />  
+                <f:validateRequired /> 
+                <p:ajax update="msgPass" event="keyup" />
+            </p:password>
+            <p:message for="pass" id="msgPass" display="tooltip" />  
+
+        </h:panelGrid>
+        <p:commandButton value="Ingresar" actionListener="#{loggin.comprobar()}" styleClass="bt"/>
+        <p:commandButton id="usariosCreateButton" icon="ui-icon-plus"   value="Registrar" actionListener="#{usuariosController.prepareCreate}" oncomplete="PF('usuariosCreateDialog').show()"/>
+        <ui:include src="/web/usuarios/Create.xhtml"/>
+    </ui:component>
+</html>

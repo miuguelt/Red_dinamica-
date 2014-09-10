@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateMensajeTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateMensajeLabel_msjTexto}" for="msjTexto" />
+                    <h:inputTextarea rows="4" cols="30" id="msjTexto" value="#{mensajeController.selected.msjTexto}" title="#{bundle.CreateMensajeTitle_msjTexto}" />                    
+                </h:panelGrid>
+                <br />
+                <p:commandButton action="#{mensajeController.create}" value="#{bundle.CreateMensajeSaveLink}" update=":formMensaje,msjTexto"/>
+                <br />
+                <br />
+                <h:commandLink action="#{mensajeController.prepareList}" value="#{bundle.CreateMensajeShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateMensajeIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

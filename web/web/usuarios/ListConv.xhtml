@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="usuariosFormBoton" > 
+        <p:commandButton id="usuariosBoton" value="#{bundle.CreateConversacionTitle}" type="button"/>
+    </h:form>
+    <p:overlayPanel id="usuariosOverlay" for="usuariosFormBoton:usuariosBoton" appendToBody="true" hideEffect="fade">
+
+        <h:form styleClass="jsfcrud_list_form" >
+            <h:panelGroup>
+                <p:dataTable id="usuariosListForm"
+                             styleClass="classDataTable"
+                             value="#{usuariosController.items}"
+                             var="item"
+                             rowKey="#{item.usrId}"
+                             emptyMessage="No hay Usuarios Registrados"
+                             selectionMode="single"
+                             selection="#{conversacionController.usrDestino}"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" >
+
+                    <f:facet name="header">
+                        <h:outputText value="Comunidad"/>
+                    </f:facet>
+                    <p:ajax event="rowSelect" update=":usuariosOverlay" />  
+                    
+                    <p:column sortBy="#{item.usrId}" filterBy="#{item.usrId}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrId}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrId}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usrNombres}" filterBy="#{item.usrNombres}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrNombres}"/>
+                        </f:facet>
+                        <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
+                        <h:outputText value=" #{item.usrNombres}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usrApellidos}" filterBy="#{item.usrApellidos}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrApellidos}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrApellidos}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.usrUniversidad}" filterBy="#{item.usrUniversidad}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrUniversidad}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrUniversidad}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.usrDepartamento}" filterBy="#{item.usrDepartamento}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrDepartamento}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrDepartamento}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usrCiudad}" filterBy="#{item.usrCiudad}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrCiudad}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrCiudad}"/>
+                    </p:column>
+
+                    <h:dataTable value="#{usuariosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{usuariosController.prepareView}" value="#{bundle.ListUsuariosViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{usuariosController.prepareEdit}" value="#{bundle.ListUsuariosEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{usuariosController.destroy}" value="#{bundle.ListUsuariosDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
+    </p:overlayPanel>
+</ui:composition>

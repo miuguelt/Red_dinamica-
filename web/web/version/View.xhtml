@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewVersionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewVersionLabel_versionId}"/>
+                    <h:outputText value="#{versionController.selected.versionId}" title="#{bundle.ViewVersionTitle_versionId}"/>
+                    <h:outputText value="#{bundle.ViewVersionLabel_versionFecha}"/>
+                    <h:outputText value="#{versionController.selected.versionFecha}" title="#{bundle.ViewVersionTitle_versionFecha}"/>
+                    <h:outputText value="#{bundle.ViewVersionLabel_versionArchivoId}"/>
+                    <h:outputText value="#{versionController.selected.versionArchivoId}" title="#{bundle.ViewVersionTitle_versionArchivoId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{versionController.destroyAndView}" value="#{bundle.ViewVersionDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewVersionEditLink}"/>
+                <br />
+                <h:commandLink action="#{versionController.prepareCreate}" value="#{bundle.ViewVersionCreateLink}" />
+                <br />
+                <h:commandLink action="#{versionController.prepareList}" value="#{bundle.ViewVersionShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewVersionIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

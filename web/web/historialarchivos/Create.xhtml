@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateHistorialarchivosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateHistorialarchivosLabel_historialId}" for="historialId" />
+                    <h:inputText id="historialId" value="#{historialarchivosController.selected.historialId}" title="#{bundle.CreateHistorialarchivosTitle_historialId}" required="true" requiredMessage="#{bundle.CreateHistorialarchivosRequiredMessage_historialId}"/>
+                    <h:outputLabel value="#{bundle.CreateHistorialarchivosLabel_historialFecha}" for="historialFecha" />
+                    <h:inputText id="historialFecha" value="#{historialarchivosController.selected.historialFecha}" title="#{bundle.CreateHistorialarchivosTitle_historialFecha}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateHistorialarchivosLabel_historialUsrId}" for="historialUsrId" />
+                    <h:selectOneMenu id="historialUsrId" value="#{historialarchivosController.selected.historialUsrId}" title="#{bundle.CreateHistorialarchivosTitle_historialUsrId}" required="true" requiredMessage="#{bundle.CreateHistorialarchivosRequiredMessage_historialUsrId}">
+                        <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateHistorialarchivosLabel_historialArchivoId}" for="historialArchivoId" />
+                    <h:selectOneMenu id="historialArchivoId" value="#{historialarchivosController.selected.historialArchivoId}" title="#{bundle.CreateHistorialarchivosTitle_historialArchivoId}" required="true" requiredMessage="#{bundle.CreateHistorialarchivosRequiredMessage_historialArchivoId}">
+                        <f:selectItems value="#{archivosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{historialarchivosController.create}" value="#{bundle.CreateHistorialarchivosSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{historialarchivosController.prepareList}" value="#{bundle.CreateHistorialarchivosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateHistorialarchivosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

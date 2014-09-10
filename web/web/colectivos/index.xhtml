@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body">
+            #{colectivosController.asignarUsuarioActual()}
+            <p:tabView id="colectivosTabView" styleClass="tabView">  
+                <p:tab title="Todos" >
+                    <ui:include src="/web/colectivos/List.xhtml"/>
+                    <ui:include src="/web/colectivos/Create.xhtml"/>
+                </p:tab>
+                <p:tab title="Personales">
+
+                    <p:accordionPanel id="colectivosAccordionPanel" multiple="true">
+
+                        <p:tab title="Colaborador" >
+                            <ui:include src="/web/colectivos/ListColaborador.xhtml"/>
+                        </p:tab>
+
+                        <p:tab title="Administrador" id="panelAdmin">
+                            <ui:include src="/web/colectivos/ListAdmin.xhtml"/>
+                        </p:tab>
+
+                    </p:accordionPanel>  
+                </p:tab>
+            </p:tabView>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

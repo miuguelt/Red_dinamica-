@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditVersionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditVersionLabel_versionId}" for="versionId" />
+                    <h:inputText id="versionId" value="#{versionController.selected.versionId}" title="#{bundle.EditVersionTitle_versionId}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionId}"/>
+                    <h:outputLabel value="#{bundle.EditVersionLabel_versionFecha}" for="versionFecha" />
+                    <h:inputText id="versionFecha" value="#{versionController.selected.versionFecha}" title="#{bundle.EditVersionTitle_versionFecha}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionFecha}"/>
+                    <h:outputLabel value="#{bundle.EditVersionLabel_versionArchivoId}" for="versionArchivoId" />
+                    <h:selectOneMenu id="versionArchivoId" value="#{versionController.selected.versionArchivoId}" title="#{bundle.EditVersionTitle_versionArchivoId}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionArchivoId}">
+                        <f:selectItems value="#{archivosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{versionController.update}" value="#{bundle.EditVersionSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditVersionViewLink}"/>
+                <br />
+                <h:commandLink action="#{versionController.prepareList}" value="#{bundle.EditVersionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditVersionIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

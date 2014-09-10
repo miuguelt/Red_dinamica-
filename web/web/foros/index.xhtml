@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body" class="bodys">        
+
+            <p:tabView id="forosTabView" dynamic="true" scrollable="true" styleClass="tabView">
+                
+                <p:tab title="Foros" closable="true">
+                    
+                    <p:layout>
+                        <p:layoutUnit position="west" size="25%" header="Foros" collapsible="true" resizable="true" gutter="15">                            
+                            <ui:include src="/web/foros/Create.xhtml" />
+                            <ui:include src="/web/foros/List.xhtml"/>
+                        </p:layoutUnit>
+
+                        <p:layoutUnit id="forosCenterLayout" position="center" style="border: none;">
+                            <p:panel style="background: activeborder; border: none; height: auto; min-height: 400px">
+                                <ui:include src="/web/foros/View.xhtml"/>
+                                <ui:include src="/web/comentarios/Create.xhtml" />
+                                <ui:include src="/web/comentarios/List.xhtml" />
+                            </p:panel>
+                        </p:layoutUnit>
+
+                    </p:layout>
+                </p:tab>
+
+                <p:tab title="Archivos" >              
+                    <p:layout>
+                        <p:layoutUnit position="west" size="30%" >
+                            <ui:include src="/web/archivos/List.xhtml" />
+                            <ui:include src="/web/archivos/Create.xhtml" />
+                        </p:layoutUnit>
+
+                        <p:layoutUnit position="center">
+                            <ui:include src="/web/archivos/View.xhtml"/>
+                            <ui:include src="/web/version/List.xhtml" />
+                            <ui:include src="/web/version/Create.xhtml" />
+                        </p:layoutUnit>
+                    </p:layout>
+                </p:tab>
+                <p:tab title="Participantes" >
+                    <p:layout>
+                        <p:layoutUnit position="west" size="30%" >
+                        </p:layoutUnit>
+
+                        <p:layoutUnit position="center">
+                        </p:layoutUnit>
+                    </p:layout>
+                </p:tab>
+            </p:tabView>  
+        </ui:define>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition >        
+        <h:form id="comentariosCreateForm" styleClass="createForm">
+            <h:panelGrid styleClass="centerPanel" columns="1" rendered="#{forosController.hayForo}">
+                <f:facet name="header">
+                    <h2><h:outputText value="Escriba su comentario"/></h2>
+                </f:facet>
+                <p:editor id="comentDescripcion" value="#{comentariosController.selected.comentDescripcion}" required="true" requiredMessage="#{bundle.CreateComentariosRequiredMessage_comentDescripcion}"/>
+                <p:commandButton actionListener="#{comentariosController.create}" value="#{bundle.CreateComentariosSaveLink}" update=":forosTabView:comentariosListForm,comentariosCreateForm" styleClass="ui-priority-primary" rendered="#{forosController.hayForo}"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUsuariosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombres" />
+                    <h:inputText id="usrNombres" value="#{usuariosController.selected.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}"/>
+                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellidos" />
+                    <h:inputText id="usrApellidos" value="#{usuariosController.selected.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}"/>
+                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrEmail" />
+                    <h:inputText id="usrEmail" value="#{usuariosController.selected.usrEmail}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrEmail}"/>
+                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrPass}" for="usrPass" />
+                    <h:panelGroup >
+                        <p:password id="usrPass" binding="#{pass}" value="#{usuariosController.selected.usrPass}" 
+                                               feedback="true" promptLabel="Seguridad" weakLabel="Debil"  goodLabel="Media" strongLabel="Fuerte" 
+                                               title="#{bundle.CreateUsuariosTitle_usrPass}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrPass}" >
+                            <f:validateLength minimum="3" maximum="30" /> 
+
+                            <p:ajax event="keyup" update="msgPass"  />
+                        </p:password>
+                        <p:message for="usrPass" id="msgPass" display="tooltip" />
+                    </h:panelGroup>
+                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrSexo}" for="usrSexo" />
+                    <h:selectOneMenu id="usrSexo" value="#{usuariosController.selected.usrSexo}" title="#{bundle.CreateUsuariosTitle_usrSexo}">
+                        <f:selectItem id="item1" itemLabel="M" itemValue="0" />
+                        <f:selectItem id="item2" itemLabel="F" itemValue="1" />                        
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{usuariosController.create}" value="#{bundle.CreateUsuariosSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{usuariosController.prepareList}" value="#{bundle.CreateUsuariosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUsuariosIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

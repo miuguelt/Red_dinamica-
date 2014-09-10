@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+        
+        <p:dialog id="colectivosCreateDlg" widgetVar="colectivosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Colectivo">
+            <h:form id="colectivosCreateForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateColectivosLabel_colectTitulo}" for="colectTitulo" />
+                    <h:inputText id="colectTitulo" value="#{colectivosController.selected.colectTitulo}" title="#{bundle.CreateColectivosTitle_colectTitulo}" required="true" requiredMessage="#{bundle.CreateColectivosRequiredMessage_colectTitulo}"/>
+                    <h:outputLabel value="#{bundle.CreateColectivosLabel_colectDescripcion}" for="colectDescripcion" />
+                    <h:inputTextarea rows="4" cols="30" id="colectDescripcion" value="#{colectivosController.selected.colectDescripcion}" title="#{bundle.CreateColectivosTitle_colectDescripcion}" required="true" requiredMessage="#{bundle.CreateColectivosRequiredMessage_colectDescripcion}"/>
+                </h:panelGrid>
+                <br />
+                <p:commandButton value="Crear Colectivo" id="enviarBoton" action="#{colectivosController.create}" update=":colectivosTabView:colectivosAccordionPanel:colectivosListAdminForm,:colectivosTabView:colectivosListForm,colectivosCreateForm" oncomplete="handleSubmit(args,'colectivosCreateDialog');"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

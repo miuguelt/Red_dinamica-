@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListFormaparteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListFormaparteEmpty}" rendered="#{formaparteController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{formaparteController.items.rowCount > 0}">
+                    <h:outputText value="#{formaparteController.pagination.pageFirstItem + 1}..#{formaparteController.pagination.pageLastItem + 1}/#{formaparteController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{formaparteController.previous}" value="#{bundle.Previous} #{formaparteController.pagination.pageSize}" rendered="#{formaparteController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{formaparteController.next}" value="#{bundle.Next} #{formaparteController.pagination.pageSize}" rendered="#{formaparteController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{formaparteController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFormaparteTitle_formaEstado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.formaEstado}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFormaparteTitle_usuarios}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.usuarios}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListFormaparteTitle_colectivos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.colectivos}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{formaparteController.prepareView}" value="#{bundle.ListFormaparteViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{formaparteController.prepareEdit}" value="#{bundle.ListFormaparteEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{formaparteController.destroy}" value="#{bundle.ListFormaparteDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{formaparteController.prepareCreate}" value="#{bundle.ListFormaparteCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListFormaparteIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

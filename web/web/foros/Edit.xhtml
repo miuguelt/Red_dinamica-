@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditForosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroId}" for="foroId" />
+                    <h:inputText id="foroId" value="#{forosController.selected.foroId}" title="#{bundle.EditForosTitle_foroId}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroId}"/>
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroTema}" for="foroTema" />
+                    <h:inputText id="foroTema" value="#{forosController.selected.foroTema}" title="#{bundle.EditForosTitle_foroTema}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroTema}"/>
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroFecha}" for="foroFecha" />
+                    <h:inputText id="foroFecha" value="#{forosController.selected.foroFecha}" title="#{bundle.EditForosTitle_foroFecha}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroFecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroDescripcion}" for="foroDescripcion" />
+                    <h:inputText id="foroDescripcion" value="#{forosController.selected.foroDescripcion}" title="#{bundle.EditForosTitle_foroDescripcion}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroDescripcion}"/>
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroUsrId}" for="foroUsrId" />
+                    <h:selectOneMenu id="foroUsrId" value="#{forosController.selected.foroUsrId}" title="#{bundle.EditForosTitle_foroUsrId}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroUsrId}">
+                        <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditForosLabel_foroColectId}" for="foroColectId" />
+                    <h:selectOneMenu id="foroColectId" value="#{forosController.selected.foroColectId}" title="#{bundle.EditForosTitle_foroColectId}" required="true" requiredMessage="#{bundle.EditForosRequiredMessage_foroColectId}">
+                        <f:selectItems value="#{colectivosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{forosController.update}" value="#{bundle.EditForosSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditForosViewLink}"/>
+                <br />
+                <h:commandLink action="#{forosController.prepareList}" value="#{bundle.EditForosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditForosIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

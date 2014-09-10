@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateGruposinvestigaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateGruposinvestigaLabel_gruposinvestigaPK_gruposInvestigaId}" for="gruposinvestigaPK_gruposInvestigaId" />
+                    <h:inputText id="gruposinvestigaPK_gruposInvestigaId" value="#{gruposinvestigaController.selected.gruposinvestigaPK.gruposInvestigaId}" title="#{bundle.CreateGruposinvestigaTitle_gruposinvestigaPK_gruposInvestigaId}" required="true" requiredMessage="#{bundle.CreateGruposinvestigaRequiredMessage_gruposinvestigaPK_gruposInvestigaId}"/>
+                    <h:outputLabel value="#{bundle.CreateGruposinvestigaLabel_gruposInvestigaNombre}" for="gruposInvestigaNombre" />
+                    <h:inputText id="gruposInvestigaNombre" value="#{gruposinvestigaController.selected.gruposInvestigaNombre}" title="#{bundle.CreateGruposinvestigaTitle_gruposInvestigaNombre}" />
+                    <h:outputLabel value="#{bundle.CreateGruposinvestigaLabel_gruposInvestigaDescripcion}" for="gruposInvestigaDescripcion" />
+                    <h:inputText id="gruposInvestigaDescripcion" value="#{gruposinvestigaController.selected.gruposInvestigaDescripcion}" title="#{bundle.CreateGruposinvestigaTitle_gruposInvestigaDescripcion}" />
+                    <h:outputLabel value="#{bundle.CreateGruposinvestigaLabel_universidades}" for="universidades" />
+                    <h:selectOneMenu id="universidades" value="#{gruposinvestigaController.selected.universidades}" title="#{bundle.CreateGruposinvestigaTitle_universidades}" required="true" requiredMessage="#{bundle.CreateGruposinvestigaRequiredMessage_universidades}">
+                        <f:selectItems value="#{universidadesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{gruposinvestigaController.create}" value="#{bundle.CreateGruposinvestigaSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{gruposinvestigaController.prepareList}" value="#{bundle.CreateGruposinvestigaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateGruposinvestigaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

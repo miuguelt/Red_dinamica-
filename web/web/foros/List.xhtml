@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+        <h:form id="forosListForm">
+            <h:outputText id="forosListoutput" escape="false" value="#{bundle.ListForosEmpty}" rendered="#{forosController.items.rowCount == 0}"/>
+            <h:panelGroup id="forosListpanelGroup" rendered="#{forosController.items.rowCount > 0}">
+                <p:dataTable id="forosListDataTable" value="#{forosController.items}" 
+                             emptyMessage="No hay Foros" var="item" selectionMode="single"  
+                             selection="#{forosController.foros_select}" rowKey="#{item.foroId}" editable="true">
+                    <p:ajax event="rowSelect" listener="#{forosController.RowSelect}" update=":forosTabView:forosViewForm,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"/>   <!--update=":forosTabView:forosViewForm,:forosTabView:forosListForm:growl,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"-->
+                    <p:column filterValue="#{item.foroDescripcion}" filterMatchMode="contains" sortBy="#{item.foroDescripcion}" filterBy="#{item.foroDescripcion}">
+                        <h3> #{item.foroTema}</h3>
+                        #{item.foroDescripcion}
+                    </p:column>                                       
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
+    </ui:composition>
+</html>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form>
+        <p:messages id="msgs2" />
+        <h:panelGrid columns="3" cellpadding="10">  
+            <p:outputLabel for="usrPassword" value="Contraseña Actual: *" />
+            <h:inputSecret value="#{usuariosController.actualPass}" validator="#{usuariosController.validarPassActual}" 
+                           title="#{bundle.CreateUsuariosTitle_usrPass}" id="usrPassword" required="true" 
+                           requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrPass}">
+                <f:validateLength minimum="3" maximum="30" />  
+                <p:ajax update="msgContrasena" event="keyup" />
+            </h:inputSecret>
+            <p:message for="usrPassword" id="msgContrasena" display="tooltip" />  
+            <p:outputLabel for="nueva" value="Nueva contraseña: *" />
+            <h:inputSecret id="nueva" value="#{usuariosController.nuevaPass}" validator="#{usuariosController.validarNueva}">
+                <f:validateLength minimum="3" />  
+                <f:validateRequired />                
+                <p:ajax update="msgnueva" event="keyup"/>
+            </h:inputSecret>
+            <p:message for="nueva" id="msgnueva" display="tooltip" />  
+            <p:outputLabel for="confirmarPass" value="Confirmar Contraseña: *" />
+            <h:inputSecret id="confirmarPass"  required="true"  validator="#{usuariosController.validarNuevaConfirmar}">
+                <f:validateLength minimum="3" />  
+                <f:validateRequired />  
+                <p:ajax update="msgnuevaconf"  event="keyup"/>
+            </h:inputSecret>
+            <p:message for="confirmarPass" id="msgnuevaconf" display="tooltip" />  
+            <p:commandButton id="datos" value="Actualizar" actionListener="#{usuariosController.actualizarContraseña}" update="msgs2"/> 
+        </h:panelGrid>  
+    </h:form>
+</ui:composition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditFormaparteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditFormaparteLabel_formaEstado}" for="formaEstado" />
+                    <h:inputText id="formaEstado" value="#{formaparteController.selected.formaEstado}" title="#{bundle.EditFormaparteTitle_formaEstado}" required="true" requiredMessage="#{bundle.EditFormaparteRequiredMessage_formaEstado}"/>
+                    <h:outputLabel value="#{bundle.EditFormaparteLabel_usuarios}" for="usuarios" />
+                    <h:selectOneMenu id="usuarios" value="#{formaparteController.selected.usuarios}" title="#{bundle.EditFormaparteTitle_usuarios}" required="true" requiredMessage="#{bundle.EditFormaparteRequiredMessage_usuarios}">
+                        <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditFormaparteLabel_colectivos}" for="colectivos" />
+                    <h:selectOneMenu id="colectivos" value="#{formaparteController.selected.colectivos}" title="#{bundle.EditFormaparteTitle_colectivos}" required="true" requiredMessage="#{bundle.EditFormaparteRequiredMessage_colectivos}">
+                        <f:selectItems value="#{colectivosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{formaparteController.update}" value="#{bundle.EditFormaparteSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditFormaparteViewLink}"/>
+                <br />
+                <h:commandLink action="#{formaparteController.prepareList}" value="#{bundle.EditFormaparteShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditFormaparteIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>       
+            <h:form id="comentariosListForm">
+                <h:outputText escape="false" value="#{bundle.ListComentariosEmpty}" rendered="#{comentariosController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{comentariosController.items.rowCount > 0}">
+                    <p:dataTable id="comentariosListDataTable" styleClass="classDataTable" value="#{comentariosController.items}" emptyMessage="No hay Comentarios" var="item" editable="true" >
+                         <f:facet name="header">
+                                <h:outputText value="Comentarios del Foro"/>
+                            </f:facet>
+                        <p:column width="10%">
+                            <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
+                            <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                                <h:outputText value="#{item.comentUsrId.usrNombres} #{item.comentUsrId.usrApellidos}"/>
+                            </p:overlayPanel>
+                        </p:column>
+                        <p:column width="75%">
+                            <h:outputText id="display" value="#{item.comentDescripcion}" escape="false" />
+                        </p:column>
+                        <p:column>                            
+                            <h:outputText value="#{item.comentFecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+    </ui:composition>
+
+</html>

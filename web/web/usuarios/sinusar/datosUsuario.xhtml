@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">  
+        
+        <ui:define name="body">
+
+            <p:tabView effectDuration="normal" >  
+                <p:tab title="Mis datos"> 
+                    <p:accordionPanel multiple="true" binding="#{usrActual}" value="#{usuariosController.selected}" >  
+                        <p:tab title="Cambiar foto" id="panelFoto">  
+                            <h:form id="HojaVida" enctype="multipart/form-data">
+                                <p:growl id="growlfoto" showDetail="true" /> 
+                                <p:messages id="msgs1" autoUpdate="true"/>               
+                                <h:panelGrid columns="2" style="margin-top:10px">
+
+                                    <p:commandLink id="fotoLink" onclick="fotoDialog.show()">
+                                        <p:graphicImage value="#{pageContext.contextPath}/Recursos/Imagenes/perfil/default.png"
+                                                        rendered="#{! photoCamBean.tieneFoto}" cache="false" style="height: 120px;"/>
+                                        <p:graphicImage rendered="#{photoCamBean.tieneFoto}"
+                                                        value="#{pageContext.contextPath}/Recursos/Imagenes/perfil/#{usuariosController.selected.usrFoto}"
+                                                        cache="false" style="height: 120px;"/>
+                                    </p:commandLink>
+                                    <p:dialog header="Toma una foto" widgetVar="fotoDialog" >
+                                        <p:photoCam widgetVar="pc" listener="#{photoCamBean.oncapture}" update="growlfoto" />
+                                        <p:commandButton type="button" value="Tomar foto" onclick="pc.capture()" update="growlfoto">
+                                            <p:ajax oncomplete="fotoDialog.hide();"  update="growlfoto"/>
+                                        </p:commandButton>
+                                    </p:dialog> 
+
+                                </h:panelGrid> 
+                                <h:panelGrid columns="4" > 
+
+                                    <p:commandButton id="cambiarFoto" onclick="fotoDialog.show()" value="Cambiar Foto" icon="ui-icon-disk"/>
+                                </h:panelGrid> 
+                            </h:form>
+                        </p:tab>
+
+                        <p:tab title="Modificar contraseña" closable="false"> 
+                            <h:form>
+                                <p:messages id="msgs2" />
+                                <h:panelGrid columns="3" cellpadding="10">  
+                                    <p:outputLabel for="usrPassword" value="Contraseña Actual: *" />
+                                    <h:inputSecret value="#{usuariosController.actualPass}" validator="#{usuariosController.validarPassActual}" title="#{bundle.CreateUsuariosTitle_usrPass}" id="usrPassword" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrPass}">
+                                        <f:validateLength minimum="3" maximum="30" />  
+                                        <p:ajax update="msgContrasena" event="keyup" />
+                                    </h:inputSecret>
+                                    <p:message for="usrPassword" id="msgContrasena" display="tooltip" />  
+                                    <p:outputLabel for="nueva" value="Nueva contraseña: *" />
+                                    <h:inputSecret id="nueva" value="#{usuariosController.nuevaPass}" rendered="true" >
+                                        <f:validateLength minimum="3" />  
+                                        <f:validateRequired />  
+                                        <p:ajax update="msgnueva" event="keyup"/>
+                                    </h:inputSecret>
+                                    <p:message for="nueva" id="msgnueva" display="tooltip" />  
+                                    <p:outputLabel for="confirmarPass" value="Confirmar Contraseña: *" />
+                                    <h:inputSecret id="confirmarPass"  required="true"  validator="#{usuariosController.validarNuevaConfirmar}">
+                                        <f:validateLength minimum="3" />  
+                                        <f:validateRequired />  
+                                        <p:ajax update="msgnuevaconf"  event="keyup"/>
+                                    </h:inputSecret>
+                                    <p:message for="confirmarPass" id="msgnuevaconf" display="tooltip" />  
+                                    <p:commandButton id="datos" value="Actualizar" actionListener="#{usuariosController.actualizarContraseña}" update="msgs2"/> 
+                                </h:panelGrid>  
+                            </h:form>
+                        </p:tab>  
+
+                        <p:tab title="Modificar datos personales" closable="true" >
+                            <h:form id="datosBasicos">
+                                <p:panel header="Datos Básicos">
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrMail" />
+                                        <p:inputText id="usrMail" type="email" value="#{usuariosController.selected.usrEmail}" validator="#{validadorRegistro.asignarCorreo}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true">
+                                            <f:validateLength minimum="3" maximum="45"/>    
+                                            <p:ajax update="msgMail" event="keyup"/>
+                                        </p:inputText>
+                                        <p:message for="usrMail" id="msgMail" display="tooltip" />
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombre" />
+                                        <p:inputText id="usrNombre" value="#{usuariosController.selected.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}">
+                                            <f:validateLength minimum="3" maximum="45"/>  
+                                            <p:ajax update="msgNombre" event="keyup" />
+                                        </p:inputText>
+                                        <p:message for="usrNombre" id="msgNombre" display="tooltip" />
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellido" />
+                                        <p:inputText id="usrApellido" value="#{usuariosController.selected.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}">
+                                            <f:validateLength minimum="3" maximum="45"/>
+                                            <p:ajax update="msgApellido" event="keyup" />
+                                        </p:inputText>
+                                        <p:message for="usrApellido" id="msgApellido" display="tooltip" />
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:panel header="Datos adicionales">
+                                    <p:panelGrid columns="2">
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrSexo}" for="usrGenero" />
+                                        <p:selectOneMenu value="#{usuariosController.selected.usrSexo}" >  
+                                            <f:selectItem itemLabel="Masculino" itemValue="0" />
+                                            <f:selectItem itemLabel="Femenino" itemValue="1" />
+                                        </p:selectOneMenu>  
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}" for="departamentosdepartamentoid" />
+                                        <h:selectOneMenu id="departamentosdepartamentoid" value="#{usuariosController.selected.usrDepartamento}" title="#{bundle.CreateUsuariosTitle_usrDepartamento}" validator="#{ciudadController.asignarDepartamento}"  >                        
+                                            <f:selectItems  value="#{departamentosController.itemsAvailableSelectOne}"/>                        
+                                            <p:ajax  listener="#{ciudadController.asignarCiudades}"   update="ciudades" />  
+                                        </h:selectOneMenu>
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}" for="ciudadciudadid" />
+                                        <h:selectOneMenu id="ciudades" value="#{usuariosController.selected.usrCiudad}" title="#{bundle.CreateUsuariosTitle_usrCiudad}"  validator="#{universidadesController.asignarCiudad}">                         
+                                            <f:selectItem itemLabel="" itemValue="" />
+                                            <f:selectItems value="#{ciudadController.ciudades}"/>
+                                            <p:ajax  listener="#{universidadesController.asignarUniversidades}"   update="universidadesuniversidadid" /> 
+                                        </h:selectOneMenu>
+                                        <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}" for="universidadesuniversidadid" />
+                                        <h:selectOneMenu id="universidadesuniversidadid" value="#{usuariosController.selected.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
+                                            <f:selectItem itemLabel="" itemValue="" />
+                                            <f:selectItems value="#{universidadesController.universidad}"/>
+                                        </h:selectOneMenu>
+                                    </p:panelGrid>
+                                </p:panel>
+                                <br />
+                                <h:commandButton action="#{usuariosController.update}"  value="Actualizar" />
+                            </h:form>
+                        </p:tab>  
+                    </p:accordionPanel>   
+                </p:tab>  
+
+                <p:tab title="Subir noticia" rendered="#{loggin.admin}" >
+                    <!--                <p:layout style="height: 800px; padding: 0; margin: 0;">
+                    
+                                        <p:layoutUnit position="center" size="190" resizable="true" closable="true" collapsible="true" >
+                                         Esta son noticias   <ui:include src="/web/noticias/ingresarNoticia.xhtml"  />
+                                        </p:layoutUnit>
+                                    </p:layout>-->
+                </p:tab> 
+
+                <p:tab title="Busca personas" id="busca" >  
+                    <p:layout style="height: 800px; padding: 0; margin: 0;">
+                        <p:layoutUnit position="center" size="190" resizable="true" closable="true" collapsible="true" >
+                            <ui:include src="List.xhtml"  />
+                        </p:layoutUnit> 
+                    </p:layout>
+                </p:tab>  
+                <!--
+                            <p:tab title="Solicitudes" rendered="#{loggin.admin}" >  
+                                <h:form id="tablaSolicitudes" class="tablaPostula" prependId="false">  
+                                    <p:growl id="growl2" showDetail="true" /> 
+                                    <p:dataTable sortMode="multiple" var="usuarios" value="#{solicitudesController.listaNoAceptados}" widgetVar="tablaPost" emptyMessage="No hay solicitudes disponibles" paginator="true" rows="10"
+                                                 rowKey="#{usuarios.usrId}" selection="#{solicitudesController.listaAceptados}" >  
+                
+                                        <f:facet name="header">  
+                                            <p:outputPanel>  
+                                                <h:outputText value="Buscar en todos los campos:" />  
+                                                <p:inputText id="globalFilter" onkeyup="tablaPost.filter()" style="width:150px" />  
+                                            </p:outputPanel>  
+                                        </f:facet>  
+                                        <p:column style="width:10%" headerText="Mas Info.">                                                           
+                                            <p:rowToggler />  
+                                        </p:column>  
+                                        <p:column style="width:25%" headerText="Imágen de Perfil">  
+                                            <p:graphicImage value="/Recursos/Imagenes/perfil/#{usuarios.usrId}" width="170" height="200"/>  
+                                        </p:column>  
+                
+                                        <p:column id="usrnombre" style="width:20px"  headerText="Nombres" filterValue="#{usuarios.usrNombres}"
+                                                  filterMatchMode="contains" sortBy="#{usuarios.usrNombres}" filterBy="#{usuarios.usrNombres}" > 
+                                            <h:outputText value="#{usuarios.usrNombres}" />  
+                                        </p:column> 
+                
+                                        <p:column id="usrapellido"  style="width:40px" filterBy="#{usuarios.usrApellidos}"   
+                                                  headerText="Apellidos"   filterMatchMode="contains" sortBy="#{usuarios.usrApellidos}" >  
+                                            <h:outputText value="#{usuarios.usrApellidos}" />  
+                                        </p:column> 
+                
+                                        <p:column id="usremail" style="width:20px" filterBy="#{usuarios.usrEmail}"   
+                                                  headerText="E-Mail"   filterMatchMode="contains" sortBy="#{usuarios.usrEmail}">  
+                
+                                            <h:outputText value="#{usuarios.usrEmail}" />  
+                                        </p:column>  
+                
+                
+                                        <p:column selectionMode="multiple" style="width:6%" headerText="Enviar mensaje">
+                
+                
+                                        </p:column>
+                
+                                        <p:rowExpansion>  
+                                            <h:panelGrid id="display" columns="2" cellpadding="5" style="width:100%"  
+                                                         styleClass="ui-widget-content grid">  
+                                                <h:outputText value="Cedula de Ciudadania:" />
+                                                <h:outputText id="nombres" value="#{usuarios.usrNombres}" />      
+                                                <h:outputText value="Ciudad:" />  
+                                                <h:outputText id="ciudad" value="#{usuarios.usrEmail}"/>  
+                                            </h:panelGrid>  
+                                        </p:rowExpansion>  
+                                    </p:dataTable>  
+                                    <p:commandButton value="Enviar" action="#{solicitudesController.aceptarSolicitudes}" update="growl2"/>
+                                </h:form>  
+                            </p:tab>  -->
+            </p:tabView>
+        </ui:define>
+    </ui:composition>
+</html>

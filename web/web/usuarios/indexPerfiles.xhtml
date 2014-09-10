@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body">
+            #{archivosController.setArchivoSelectVista()};
+            #{versionController.setArchivoSelectVista()};
+            <p:layout id="perfilLayout">
+                <p:layoutUnit position="west" size="25%" header="Perfil" collapsible="true" resizable="true" gutter="15"> 
+                    <ui:include src="/web/usuarios/View.xhtml"/>
+                </p:layoutUnit>
+
+                <p:layoutUnit id="perfilCenterLayout" position="center" style="border: none;">
+                    <p:panel id="panel" style="background: activeborder; border: none; height: auto; min-height: 400px">
+                        <p:tabView id="usuariosTabView" dynamic="true" scrollable="true" styleClass="tabView">
+
+                            <p:tab title="Colectivos" >              
+                                <p:accordionPanel id="colectivosAccordionPanel" multiple="true">
+
+                                    <p:tab title="Colaborador" >
+                                        <ui:include src="/web/colectivos/ListColaborador.xhtml"/>
+                                    </p:tab>
+
+                                    <p:tab title="Administrador" id="panelAdmin">
+                                        <ui:include src="/web/colectivos/ListAdmin.xhtml"/>
+                                    </p:tab>
+
+                                </p:accordionPanel>  
+                            </p:tab>
+
+                            <p:tab title="Archivos" >
+                                <p:layout>
+                                    <p:layoutUnit position="west" size="25%" header="Archivos" resizable="true" gutter="15">                            
+                                        <ui:include src="/web/archivos/ListUsuario.xhtml" />
+                                    </p:layoutUnit>
+
+                                    <p:layoutUnit id="forosCenterLayout" position="center" style="border: none;">
+                                        <p:panel style="background: activeborder; border: none; height: auto; min-height: 400px">
+                                            <ui:include src="/web/archivos/View.xhtml" />
+                                            <ui:include src="/web/version/List.xhtml" />
+                                        </p:panel>
+                                    </p:layoutUnit>
+
+                                </p:layout>                                
+                            </p:tab>
+                        </p:tabView>
+                    </p:panel>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+
+    </ui:composition>
+</html>

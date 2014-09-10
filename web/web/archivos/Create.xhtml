@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+
+        <h:form id="archivosFormBoton"> 
+            <p:commandButton id="overlayBoton" value="#{bundle.CreateArchivosTitle}" type="button" />
+        </h:form>
+        <p:overlayPanel id="archivosOverlay" for=":forosTabView:archivosFormBoton:overlayBoton" appendToBody="true" hideEffect="fade"   >
+            <h1><h:outputText value="#{bundle.CreateArchivosTitle}"></h:outputText></h1>
+            <br />
+            <h:form id="archivosCreateForm">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoNombre}" for="archivoNombre" />
+                    <h:inputText id="archivoNombre" value="#{archivosController.selected.archivoNombre}" title="#{bundle.CreateArchivosTitle_archivoNombre}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoNombre}"/>
+                    <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoAutor}" for="archivoAutor" />
+                    <h:inputText id="archivoAutor" value="#{archivosController.selected.archivoAutor}" title="#{bundle.CreateArchivosTitle_archivoAutor}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoAutor}"/>
+                    <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoTema}" for="archivoTema" />
+                    <h:inputText id="archivoTema" value="#{archivosController.selected.archivoTema}" title="#{bundle.CreateArchivosTitle_archivoTema}" />
+                    <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoResumen}" for="archivoResumen" />
+                    <h:inputTextarea rows="4" cols="30" id="archivoResumen" value="#{archivosController.selected.archivoResumen}" title="#{bundle.CreateArchivosTitle_archivoResumen}" />
+                </h:panelGrid>
+                <br />
+                <p:commandButton value="#{bundle.CreateArchivosSaveLink}" actionListener="#{archivosController.create}" update="archivosCreateForm,:forosTabView:archivosFormBoton,:forosTabView:archivosOverlay,:forosTabView:archivosListForm,:forosTabView:versionListForm"/>
+            </h:form>
+        </p:overlayPanel>
+
+    </ui:composition>
+
+</html>

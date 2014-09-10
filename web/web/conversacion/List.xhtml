@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="formConversacion" >
+        <p:dataTable id="dataTableConversacion" value="#{conversacionController.items}" 
+                     emptyMessage="No hay Conversaciones" var="item"  style="border:solid 1px" 
+                     selectionMode="single"  selection="#{conversacionController.conv_select}"
+                     rowKey="#{item.convId}" editable="true" >
+            
+            <p:ajax event="rowSelect" listener="#{conversacionController.RowSelect}" update=""/>
+            <p:column>
+                <h:panelGrid columns="2" style="width:100%" id="msgs1">
+                    <p:graphicImage rendered="#{item.convUsr1Id.usrId == conversacionController.usrActual.usrId}"  value="/Recursos/Imagenes/perfil/#{item.convUsr2Id.usrFoto}" width="50px"/>
+                    <h:outputText rendered="#{item.convUsr1Id.usrId == conversacionController.usrActual.usrId}" value="#{item.convUsr2Id.usrNombres} #{item.convUsr2Id.usrApellidos}" style="width: 70%;font-size: 15px;font-weight: bold"/>
+                    <p:graphicImage rendered="#{item.convUsr2Id.usrId == conversacionController.usrActual.usrId}" value="/Recursos/Imagenes/perfil/#{item.convUsr1Id.usrFoto}" width="50px"/>
+                    <h:outputText rendered="#{item.convUsr2Id.usrId == conversacionController.usrActual.usrId}" value="#{item.convUsr1Id.usrNombres} #{item.convUsr1Id.usrApellidos}" style="width: 70%;font-size: 15px;font-weight: bold"/>
+                    <h:outputText rendered="#//{item.convUsr2Id.usrId == conversacionController.ust_act.usrId}" value="usr2 es actu" />
+                    <h:outputText rendered="#//{item.convUsr1Id.usrId == conversacionController.ust_act.usrId}" value="usr1 es actu" />
+                    <h:outputText value="#{item.convUltimo}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{item.convAsunto}"/>
+                </h:panelGrid>
+            </p:column>                
+        </p:dataTable>                    
+
+    </h:form>
+</ui:composition>

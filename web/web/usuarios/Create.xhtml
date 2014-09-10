@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="usuariosCreateDlg" widgetVar="usuariosCreateDialog" closeOnEscape="true" modal="true" dynamic="true" appendTo="@(body)" header="Crear Nuevo Colectivo" width="40%">
+
+        <h:form styleClass="jsfcrud_list_form">
+            <p:wizard  id="wid" flowListener="#{usuariosController.onFlowProcess}" widgetVar="wit">
+                <p:tab id="sesion" title="Sesion" >
+                    <p:panel header="Datos de Sesion">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrFoto}" for="usrFoto" />
+                            <h:inputText id="usrFoto" value="#{usuariosController.selected.usrFoto}" title="#{bundle.CreateUsuariosTitle_usrFoto}" />
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrEmail" />
+                            <p:inputText id="usrEmail" type="email" value="#{usuariosController.selected.usrEmail}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrEmail}"/>
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrPass}" for="usrPass" />
+                            <h:inputText id="usrPass" value="#{usuariosController.selected.usrPass}" title="#{bundle.CreateUsuariosTitle_usrPass}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrPass}"/>
+                            <h:outputLabel value="Confirmar #{bundle.CreateUsuariosLabel_usrPass}" for="usrPass2" />
+                            <h:inputText id="usrPass2" value="#{usuariosController.usrPass2}" title="#{bundle.CreateUsuariosTitle_usrPass}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrPass}"/>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="personal" title="Personal">
+                    <p:panel header="Datos Personales">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombres" />
+                            <h:inputText id="usrNombres" value="#{usuariosController.selected.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}"/>
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellidos" />
+                            <h:inputText id="usrApellidos" value="#{usuariosController.selected.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}"/>
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrSexo}" for="usrSexo" />
+                            <h:selectOneMenu id="usrSexo" value="#{usuariosController.selected.usrSexo}" required="true">
+                                <f:selectItem itemLabel="---" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Mujer" itemValue="false" />
+                                <f:selectItem itemLabel="Hombre" itemValue="true" />
+                            </h:selectOneMenu>
+
+                            <h:outputText value="Saltar datos Académicos: " />
+                            <h:selectBooleanCheckbox value="#{usuariosController.skip}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="academico" title="Academico">
+                    <p:panel header="Datos Académicos">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}" for="usrDepartamento" />
+                            <h:selectOneMenu id="usrDepartamento" value="#{usuariosController.selected.usrDepartamento}" title="#{bundle.CreateUsuariosTitle_usrDepartamento}" >
+                                <f:selectItems value="#{departamentosController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}" for="usrCiudad" />
+                            <h:selectOneMenu id="usrCiudad" value="#{usuariosController.selected.usrCiudad}" title="#{bundle.CreateUsuariosTitle_usrCiudad}" >
+                                <f:selectItems value="#{ciudadController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}" for="usrUniversidad" />
+                            <h:selectOneMenu id="usrUniversidad" value="#{usuariosController.selected.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
+                                <f:selectItems value="#{universidadesController.itemsAvailableSelectOne}"/>
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="confirmacion" title="Confirmacion" >
+                    <p:panel header="Confirmación">
+                        <h:panelGrid id="confirmation" columns="2" columnClasses="grid,grid">
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrNombres}"/>
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrApellidos}"/>
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrSexo}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrSexo}"/>
+                            </h:panelGrid> 
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrDepartamento}"/>
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrCiudad}"/>
+                                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}"/>
+                                <h:outputLabel value="#{usuariosController.selected.usrUniversidad}"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <p:commandButton value="#{bundle.CreateUsuariosSaveLink}" action="#{usuariosController.create}" process="@this" resetValues="true"/>
+                    </p:panel>
+                </p:tab>
+
+            </p:wizard>
+        </h:form>
+    </p:dialog>
+</ui:composition>

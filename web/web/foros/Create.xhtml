@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+       
+            <h:form id="forosFormBoton" > 
+                <p:commandButton id="forosBoton" value="#{bundle.CreateForosTitle}" type="button"/>
+            </h:form>
+            <p:overlayPanel id="forosOverlay" for=":forosTabView:forosFormBoton:forosBoton" appendToBody="true" hideEffect="fade" style="width:500px">
+                <h1><h:outputText value="#{bundle.CreateForosTitle}"></h:outputText></h1>
+                <br />
+                <h:form id="forosCreateForm">
+                    <h:panelGrid columns="2">                   
+                        <h:outputLabel value="#{bundle.CreateForosLabel_foroTema}" for="foroTema" />
+                        <h:inputText id="foroTema" value="#{forosController.selected.foroTema}" title="#{bundle.CreateForosTitle_foroTema}" required="true" requiredMessage="#{bundle.CreateForosRequiredMessage_foroTema}"/>
+                        <h:outputLabel value="#{bundle.CreateForosLabel_foroDescripcion}" for="foroDescripcion" />
+                        <p:inputTextarea id="foroDescripcion" value="#{forosController.selected.foroDescripcion}" rows="6" cols="33" required="true" requiredMessage="#{bundle.CreateForosRequiredMessage_foroDescripcion}"/>
+                    </h:panelGrid>
+                    <br />
+                    <p:commandButton value="#{bundle.CreateForosSaveLink}" update=":forosTabView:forosFormBoton,:forosTabView:forosOverlay,:forosTabView:forosListForm" actionListener="#{forosController.create}"/>
+                    <br />
+                </h:form>
+            </p:overlayPanel>
+    </ui:composition>
+</html>

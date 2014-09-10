@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body">        
+            Hello from Facelets
+            <br />
+            <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+            <br />
+            <h:link outcome="/web/archivos/List" value="Show All Archivos Items"/>
+            <br />
+            <h:link outcome="/web/ciudad/List" value="Show All Ciudad Items"/>
+            <br />
+            <h:link outcome="/web/colectivos/List" value="Show All Colectivos Items"/>
+            <br />
+            <h:link outcome="/web/comentarios/List" value="Show All Comentarios Items"/>
+            <br />
+            <h:link outcome="/web/conversacion/List" value="Show All Conversacion Items"/>
+            <br />
+            <h:link outcome="/web/departamentos/List" value="Show All Departamentos Items"/>
+            <br />
+            <h:link outcome="/web/eventos/List" value="Show All Eventos Items"/>
+            <br />
+            <h:link outcome="/web/formaparte/List" value="Show All Formaparte Items"/>
+            <br />
+            <h:link outcome="/web/foros/List" value="Show All Foros Items"/>
+            <br />
+            <h:link outcome="/web/gruposinvestiga/List" value="Show All Gruposinvestiga Items"/>
+            <br />
+            <h:link outcome="/web/historialarchivos/List" value="Show All Historialarchivos Items"/>
+            <br />
+            <h:link outcome="/web/mensaje/List" value="Show All Mensaje Items"/>
+            <br />
+            <h:link outcome="/web/noticias/List" value="Show All Noticias Items"/>
+            <br />
+            <h:link outcome="/web/palabrasclave/List" value="Show All Palabrasclave Items"/>
+            <br />
+            <h:link outcome="/web/respuestascoment/List" value="Show All Respuestascoment Items"/>
+            <br />
+            <h:link outcome="/web/solicitudes/List" value="Show All Solicitudes Items"/>
+            <br />
+            <h:link outcome="/web/universidades/List" value="Show All Universidades Items"/>
+            <br />
+            <h:link outcome="/web/usuarios/List" value="Show All Usuarios Items"/>
+            <br />
+            <h:link outcome="/web/version/List" value="Show All Version Items"/>
+        </ui:define>
+    </ui:composition>
+</html>
+

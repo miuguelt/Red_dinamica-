@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:form id="menuGeneralForm" styleClass="menu">
+
+            <p:menubar>
+                <p:menuitem value="Inicio" outcome="/index" icon="ui-icon-home"/>
+                <p:menuitem value="Comunidad" outcome="/web/usuarios/index.xhtml" icon="ui-icon-home"/>
+                <f:facet name="options">
+                    <p:inputText placeholder="Search"/>
+                    <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+                </f:facet>
+                <f:facet name="options" class="Titulo" >                   
+                    <p:commandButton id="perfilBoton" value="Iniciar Sesion" type="button"/>
+                    <p:overlayPanel id="perfilOverlay" for=":menuGeneralForm:perfilBoton" hideEffect="fade">       
+                        <ui:include src="/web/usuarios/iniciarSesion.xhtml"/>
+                    </p:overlayPanel>
+
+                </f:facet>
+            </p:menubar>
+        </h:form>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+    </h:head>
+
+    <h:body>
+        <f:facet name="last"> 
+            <h:outputStylesheet library="css" name="jsfcrud.css"/>
+            <h:outputScript library="js" name="jsfcrud.js" target="head"/>
+        </f:facet>
+
+        <p:growl id="growl" life="9000" autoUpdate="true"/>
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="northRegistro" position="north" header="Red Colombiana de Dinámica de Sistemas" rendered="#{loggin.activa}">
+                <ui:include src="/componentes/menuregistro.xhtml"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit id="northGeneral" position="north" header="Red Colombiana de Dinámica de Sistemas" rendered="#{!loggin.activa}">
+                <ui:include src="/componentes/menugeneral.xhtml"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="south" size="40" collapsible="true" resizable="true">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" styleClass="centerLayout">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </p:layout>
+    </h:body>
+
+</html>
