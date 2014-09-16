@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,10 +21,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import org.primefaces.component.log.Log;
+import javax.faces.view.ViewScoped;
 
 @Named("comentariosController")
-@SessionScoped
+@ViewScoped
 public class ComentariosController implements Serializable {
 
     private Comentarios current;
@@ -258,7 +257,7 @@ public class ComentariosController implements Serializable {
 
     public void asignarTodo() {
         current.setComentFecha(new Date());
-        current.setComentUsrId(UsuariosController.getUsurioActual());
+        current.setComentUsrId(UsuariosController.getUsuarioActual());
         current.setComentForoId(getForoActual());
     }
 }

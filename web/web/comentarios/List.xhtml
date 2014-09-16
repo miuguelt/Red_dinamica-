@@ -7,10 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>       
-            <h:form id="comentariosListForm">
-                <h:outputText escape="false" value="#{bundle.ListComentariosEmpty}" rendered="#{comentariosController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{comentariosController.items.rowCount > 0}">
-                    <p:dataTable id="comentariosListDataTable" styleClass="classDataTable" value="#{comentariosController.items}" emptyMessage="No hay Comentarios" var="item" editable="true" >
+        <h:form id="comentariosListForm">
+                    <p:dataTable id="comentariosListDataTable" styleClass="classDataTable" 
+                                 rendered="#{forosController.foroSelected}"
+                                 value="#{comentariosController.items}" emptyMessage="No hay Comentarios" var="item" editable="true" >
                          <f:facet name="header">
                                 <h:outputText value="Comentarios del Foro"/>
                             </f:facet>
@@ -29,7 +29,6 @@
                             </h:outputText>
                         </p:column>
                     </p:dataTable>
-                </h:panelGroup>
             </h:form>
     </ui:composition>
 

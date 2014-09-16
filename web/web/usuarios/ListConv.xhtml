@@ -28,7 +28,11 @@
                     <f:facet name="header">
                         <h:outputText value="Comunidad"/>
                     </f:facet>
-                    <p:ajax event="rowSelect" update=":usuariosOverlay" />  
+                    
+                    <p:ajax event="rowSelect" listener="#{conversacionController.cargarConversacion()}" 
+                            update=":usuariosOverlay,:conversacionListForm,:mensajeListForm,:mensajeCreateForm"/>  
+
+                    <p:ajax event="rowSelect" listener="#{mensajeController.setConvSelect(conversacionController.convSelect)}"/>  
                     
                     <p:column sortBy="#{item.usrId}" filterBy="#{item.usrId}">
                         <f:facet name="header">
@@ -70,19 +74,6 @@
                         </f:facet>
                         <h:outputText value="#{item.usrCiudad}"/>
                     </p:column>
-
-                    <h:dataTable value="#{usuariosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{usuariosController.prepareView}" value="#{bundle.ListUsuariosViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{usuariosController.prepareEdit}" value="#{bundle.ListUsuariosEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{usuariosController.destroy}" value="#{bundle.ListUsuariosDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
                 </p:dataTable>
             </h:panelGroup>
         </h:form>

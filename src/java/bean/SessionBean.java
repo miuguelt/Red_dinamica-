@@ -82,7 +82,7 @@ public class SessionBean implements InterfaceBean, Serializable {
             Usuarios user;
             user = (Usuarios) ejbFacadeUsuarios.find(ingresarCedula);
             if (user != null && user.getUsrPass().trim().matches(ingresarContraseña) ) {
-                UsuariosController.setUsurioActual(user);
+                UsuariosController.setUsuarioActual(user);
                 
                 session.setActiva(true);
                 return "login";
@@ -112,8 +112,8 @@ public class SessionBean implements InterfaceBean, Serializable {
 
     public String cerrarSesion() {
 
-        UsuariosController.getUsurioActual().setUsrId(null);
-        UsuariosController.setUsurioActual(new Usuarios());
+        UsuariosController.getUsuarioActual().setUsrId(null);
+        UsuariosController.setUsuarioActual(new Usuarios());
         session.setActiva(false);
         return "index";
     }

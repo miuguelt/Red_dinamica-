@@ -11,8 +11,9 @@
             <h:panelGroup id="forosListpanelGroup" rendered="#{forosController.items.rowCount > 0}">
                 <p:dataTable id="forosListDataTable" value="#{forosController.items}" 
                              emptyMessage="No hay Foros" var="item" selectionMode="single"  
-                             selection="#{forosController.foros_select}" rowKey="#{item.foroId}" editable="true">
-                    <p:ajax event="rowSelect" listener="#{forosController.RowSelect}" update=":forosTabView:forosViewForm,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"/>   <!--update=":forosTabView:forosViewForm,:forosTabView:forosListForm:growl,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"-->
+                             selection="#{forosController.foroSelect}" rowKey="#{item.foroId}" editable="true">
+                    <p:ajax event="rowSelect" listener="#{forosController.RowSelect}" 
+                            update=":forosTabView:forosViewForm,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"/> 
                     <p:column filterValue="#{item.foroDescripcion}" filterMatchMode="contains" sortBy="#{item.foroDescripcion}" filterBy="#{item.foroDescripcion}">
                         <h3> #{item.foroTema}</h3>
                         #{item.foroDescripcion}

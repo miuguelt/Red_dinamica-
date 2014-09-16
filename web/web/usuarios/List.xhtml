@@ -27,7 +27,9 @@
                         <h:outputText value="#{bundle.ListUsuariosTitle_usrId}"/>
                     </f:facet>
                     <h:outputText value="#{item.usrId}"/>
-                    <p:commandButton icon="ui-icon-folder-open" action="#{usuariosController.setUsuarioPeril(item)}" title="Ver Perfil" />
+                    <p:commandButton icon="ui-icon-folder-open" action="#{usuariosController.setPerilUsuario(item)}" 
+                                     title="Ver Perfil">
+                    </p:commandButton>
 
                 </p:column>
 

@@ -1,5 +1,6 @@
 package controllers;
 
+import clases.Colectivos;
 import clases.Foros;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
@@ -20,9 +21,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 
 @Named("forosController")
-@SessionScoped
+@ViewScoped
 public class ForosController implements Serializable {
 
     private DataModel items = null;
@@ -211,35 +213,36 @@ public class ForosController implements Serializable {
     }
 
     //CODIGO PERSONAL
-    private static Foros current;
-    private Foros foros_select = new Foros();
-    private static boolean hayForo = false;
+    private Foros current;
+    private Colectivos colectivoActual = ColectivosController.getColectivoActual();
+    private Foros foroSelect = new Foros();
 
-    public static void setCurrent(Foros current) {
-        ForosController.current = current;
+    public Colectivos getColectivoActual() {
+        return colectivoActual;
     }
     
-    public boolean isHayForo() {
-        return hayForo;
+    public Foros getForoSelect() {
+        return foroSelect;
     }
 
-    public static void setHayForo(boolean hayForo) {
-        ForosController.hayForo = hayForo;
+    public void setForoSelect(Foros foroSelect){
+        this.foroSelect = foroSelect;
+    }
+
+    public boolean isForoSelected(){
+        if (getForoSelect().getForoId() == null) return false;
+        else return true;
+    }
+            
+    public void prueba() {
+        JsfUtil.addSuccessMessage("entra "+" "+getForoSelect().getForoId()+" "+isForoSelected());
     }
     
-    public Foros getForos_select() {
-        return foros_select;
-    }
-
-    public void setForos_select(Foros foros_select){
-        this.foros_select = foros_select;
-    }
-
     public DataModel getItems() {
 //        if (items == null) {
 //            items = getPagination().createPageDataModel();
 //        }
-        return items = new ListDataModel((List) ColectivosController.getColectivoActual().getForosCollection());
+        return items = new ListDataModel((List) getColectivoActual().getForosCollection());
     }
 
     public void prepareCreate() {
@@ -251,15 +254,15 @@ public class ForosController implements Serializable {
         try {
             asignarTodo();
             getFacade().create(current);
-            if (!ColectivosController.getColectivoActual().getForosCollection().isEmpty()) {
+            if (!getColectivoActual().getForosCollection().isEmpty()) {
                 recreateModel();
-                ColectivosController.getColectivoActual().getForosCollection().add(current);
+                getColectivoActual().getForosCollection().add(current);
             } else {
                 List<Foros> lista = new ArrayList<>();
                 lista.add(current);
-                ColectivosController.getColectivoActual().setForosCollection(lista);
+                getColectivoActual().setForosCollection(lista);
             }
-            setForos_select(current);
+            setForoSelect(current);
             prepareCreate();
             JsfUtil.addSuccessMessage("Nuevo foro creado");
         } catch (Exception e) {
@@ -269,13 +272,12 @@ public class ForosController implements Serializable {
 
     public void asignarTodo() {
         current.setForoFecha(new Date());
-        current.setForoUsrId(UsuariosController.getUsurioActual());
-        current.setForoColectId(ColectivosController.getColectivoActual());
+        current.setForoUsrId(UsuariosController.getUsuarioActual());
+        current.setForoColectId(getColectivoActual());
     }
 
     public void RowSelect() {
         JsfUtil.addSuccessMessage("Row select");
-        ComentariosController.setForoActual(foros_select);
-        setHayForo(true);
+        ComentariosController.setForoActual(foroSelect);
     }
 }

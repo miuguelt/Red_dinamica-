@@ -21,7 +21,8 @@
                         <p:inputTextarea id="foroDescripcion" value="#{forosController.selected.foroDescripcion}" rows="6" cols="33" required="true" requiredMessage="#{bundle.CreateForosRequiredMessage_foroDescripcion}"/>
                     </h:panelGrid>
                     <br />
-                    <p:commandButton value="#{bundle.CreateForosSaveLink}" update=":forosTabView:forosFormBoton,:forosTabView:forosOverlay,:forosTabView:forosListForm" actionListener="#{forosController.create}"/>
+                    <p:commandButton value="#{bundle.CreateForosSaveLink}" update=":forosTabView:forosFormBoton,:forosTabView:forosOverlay,:forosTabView:forosListForm" 
+                                     actionListener="#{forosController.create}"/>
                     <br />
                 </h:form>
             </p:overlayPanel>

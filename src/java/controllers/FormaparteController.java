@@ -17,9 +17,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 
 @Named("formaparteController")
-@SessionScoped
+@ViewScoped
 public class FormaparteController implements Serializable {
 
     private Formaparte current;

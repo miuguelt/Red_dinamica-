@@ -7,6 +7,7 @@
 
     <ui:composition>
             <h:form id="versionCreateForm">
+                <p:fileUpload fileUploadListener="#{archivosController.handleFileUpload}" mode="advanced" dragDropSupport="false" required="true" requiredMessage="Seleccione archivo"/>
                 <p:commandButton value="#{bundle.CreateVersionSaveLink}" update="versionCreateForm,:forosTabView:versionListForm:versionListDataTable" actionListener="#{versionController.create}" styleClass="ui-priority-primary"/>
                 <br/>
                 <br/>

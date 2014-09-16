@@ -1,17 +1,16 @@
 package controllers;
 
+import clases.Conversacion;
 import clases.Mensaje;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import facade.MensajeFacade;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -19,12 +18,13 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 
 @Named("mensajeController")
-@RequestScoped
+@ViewScoped
 public class MensajeController implements Serializable {
 
-    private static Mensaje current;
+    private Mensaje current;
     private DataModel items = null;
     @EJB
     private facade.MensajeFacade ejbFacade;
@@ -49,7 +49,6 @@ public class MensajeController implements Serializable {
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
@@ -74,7 +73,6 @@ public class MensajeController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
-
 
     public String prepareEdit() {
         current = (Mensaje) getItems().getRowData();
@@ -137,14 +135,6 @@ public class MensajeController implements Serializable {
         if (selectedItemIndex >= 0) {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
-    }
-
-    public DataModel getItems() {
-//        if (items == null) {
-//            items = getPagination().createPageDataModel();
-//        }
-        recreateModel();
-        return items = new ListDataModel(mensaje_List); // = new ListDataModel((List) ConversacionController.getCurrent().getMensajeCollection()) ;
     }
 
     private void recreateModel() {
@@ -216,55 +206,60 @@ public class MensajeController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Mensaje.class.getName());
             }
         }
+    }
+    private Conversacion convSelect = new Conversacion();
 
+    public Conversacion getConvSelect() {
+        return convSelect;
+    }
+
+    public void setConvSelect(Conversacion convSelect) {
+        this.convSelect = convSelect;
     }
     
-    //CODIGO PERSONAL
-    static List<Mensaje> mensaje_List = new ArrayList<>();
-
-     
-    public static List<Mensaje> getMensaje_List() {
-        return mensaje_List;
+    public boolean isConvSelect(){
+        if (getConvSelect().getConvId() == null) return false;
+        else return true;
     }
 
-    public static void setMensaje_List(List<Mensaje> mensaje_List) {
-        MensajeController.mensaje_List = mensaje_List;
-    }       
-       
-    public static Mensaje getCurrent() {
-        return current;
+    public void row(Conversacion conv) {
+        setConvSelect(conv);
     }
 
-    public static void setCurrent(Mensaje current) {
-        MensajeController.current = current;
+    public void asignarTodo() {
+        current.setMsjFecha(new Date());
+        if (getConvSelect().getConvUsr1Id() == UsuariosController.getUsuarioActual()) {
+            current.setMsjDestinatario(getConvSelect().getConvUsr2Id());
+            current.setMsjRemitente(getConvSelect().getConvUsr1Id());
+        } else {
+            current.setMsjDestinatario(getConvSelect().getConvUsr1Id());
+            current.setMsjRemitente(getConvSelect().getConvUsr2Id());
+        }
+        current.setMsjConversacion(getConvSelect());
     }
-    
-    public void prepareCreate() {
+
+    public String prepareCreate() {
         current = new Mensaje();
         selectedItemIndex = -1;
-        JsfUtil.addSuccessMessage("prepare Crate");
+        return "Create";
     }
-        public void create() {
+
+    public void create() {
         try {
-            JsfUtil.addSuccessMessage("Create");
             asignarTodo();
             getFacade().create(current);
+            getConvSelect().getMensajeCollection().add(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MensajeCreated"));
-          prepareCreate();
+            prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
-        
-    public void asignarTodo() {
-        JsfUtil.addSuccessMessage("asignar todo");
-        current.setMsjFecha(new Date());
-        JsfUtil.addSuccessMessage("Destinatario" + ConversacionController.getCurrent().getConvUsr2Id());
-        current.setMsjDestinatario(ConversacionController.getCurrent().getConvUsr2Id());
-        current.setMsjRemitente(ConversacionController.getCurrent().getConvUsr1Id());
-        current.setMsjConversacion(ConversacionController.getCurrent());        
-        setMensaje_List((List<Mensaje>) ConversacionController.getCurrent().getMensajeCollection());
-        mensaje_List.add(current);
-        items = new ListDataModel(mensaje_List);
+
+    public DataModel getItems() {
+//        if (items == null) {
+//            items = getPagination().createPageDataModel();
+//        }
+        return items = new ListDataModel((List) getConvSelect().getMensajeCollection());
     }
 }

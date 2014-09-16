@@ -6,13 +6,16 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="formConversacion" >
-        <p:dataTable id="dataTableConversacion" value="#{conversacionController.items}" 
-                     emptyMessage="No hay Conversaciones" var="item"  style="border:solid 1px" 
-                     selectionMode="single"  selection="#{conversacionController.conv_select}"
-                     rowKey="#{item.convId}" editable="true" >
+    <h:form id="conversacionListForm" >
+        <p:dataTable value="#{conversacionController.items}" 
+                     emptyMessage="No hay Conversaciones" 
+                     var="item"  style="border:solid 1px" 
+                     selectionMode="single"  
+                     selection="#{conversacionController.convSelect}"
+                     rowKey="#{item.convId}">
             
-            <p:ajax event="rowSelect" listener="#{conversacionController.RowSelect}" update=""/>
+            <p:ajax event="rowSelect" listener="#{mensajeController.row(conversacionController.convSelect)}" 
+                    update=":mensajeListForm, :mensajeCreateForm"/>
             <p:column>
                 <h:panelGrid columns="2" style="width:100%" id="msgs1">
                     <p:graphicImage rendered="#{item.convUsr1Id.usrId == conversacionController.usrActual.usrId}"  value="/Recursos/Imagenes/perfil/#{item.convUsr2Id.usrFoto}" width="50px"/>

@@ -13,16 +13,16 @@
         <p:overlayPanel id="archivosOverlay" for=":forosTabView:archivosFormBoton:overlayBoton" appendToBody="true" hideEffect="fade"   >
             <h1><h:outputText value="#{bundle.CreateArchivosTitle}"></h:outputText></h1>
             <br />
-            <h:form id="archivosCreateForm">
+            <h:form id="archivosCreateForm" enctype="multipart/form-data">
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoNombre}" for="archivoNombre" />
-                    <h:inputText id="archivoNombre" value="#{archivosController.selected.archivoNombre}" title="#{bundle.CreateArchivosTitle_archivoNombre}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoNombre}"/>
+                    <p:inputText id="archivoNombre" value="#{archivosController.selected.archivoNombre}" title="#{bundle.CreateArchivosTitle_archivoNombre}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoNombre}"/>
                     <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoAutor}" for="archivoAutor" />
-                    <h:inputText id="archivoAutor" value="#{archivosController.selected.archivoAutor}" title="#{bundle.CreateArchivosTitle_archivoAutor}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoAutor}"/>
+                    <p:inputText id="archivoAutor" value="#{archivosController.selected.archivoAutor}" title="#{bundle.CreateArchivosTitle_archivoAutor}" required="true" requiredMessage="#{bundle.CreateArchivosRequiredMessage_archivoAutor}"/>
                     <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoTema}" for="archivoTema" />
-                    <h:inputText id="archivoTema" value="#{archivosController.selected.archivoTema}" title="#{bundle.CreateArchivosTitle_archivoTema}" />
+                    <p:inputText id="archivoTema" value="#{archivosController.selected.archivoTema}" title="#{bundle.CreateArchivosTitle_archivoTema}" />
                     <h:outputLabel value="#{bundle.CreateArchivosLabel_archivoResumen}" for="archivoResumen" />
-                    <h:inputTextarea rows="4" cols="30" id="archivoResumen" value="#{archivosController.selected.archivoResumen}" title="#{bundle.CreateArchivosTitle_archivoResumen}" />
+                    <p:inputTextarea rows="4" cols="30" id="archivoResumen" value="#{archivosController.selected.archivoResumen}" title="#{bundle.CreateArchivosTitle_archivoResumen}" />
                 </h:panelGrid>
                 <br />
                 <p:commandButton value="#{bundle.CreateArchivosSaveLink}" actionListener="#{archivosController.create}" update="archivosCreateForm,:forosTabView:archivosFormBoton,:forosTabView:archivosOverlay,:forosTabView:archivosListForm,:forosTabView:versionListForm"/>

@@ -28,10 +28,12 @@ body{
     border: none !important;
 }
 .classDataTable tr:nth-child(even){
-        background-color: #d0e5f5 !important; 
-
+    background-color: #d0e5f5 !important; 
 }
 
+.panelGrid tr:nth-child(even){    
+    background: none !important;
+}
 .ui-button{
     padding: 0px !important;
     margin: 0px !important;

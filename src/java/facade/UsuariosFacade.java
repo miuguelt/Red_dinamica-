@@ -35,7 +35,6 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
     }
 
     public void actulizarEm(Usuarios usuario) {
-
         em.merge(usuario);
         JsfUtil.addSuccessMessage("Merge");
         try {

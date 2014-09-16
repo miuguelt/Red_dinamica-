@@ -9,26 +9,26 @@
     <ui:composition>
         <h:form id="forosViewForm">
             
-            <p:panel header="#{forosController.foros_select.foroTema}">            
-                <h1><h:outputText escape="false" value="Seleccionar un foro" rendered="#{!forosController.hayForo}"/></h1>
-                <h:panelGrid columns="2" rendered="#{forosController.hayForo}">
+            <p:panel header="#{forosController.foroSelect.foroTema}">            
+                <h1><h:outputText escape="false" value="Seleccionar un foro" rendered="#{!forosController.foroSelected}"/></h1>
+                <h:panelGrid columns="2" rendered="#{forosController.foroSelected}">
                     <h:panelGroup>
                         <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
                         <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
                             <h:outputText value="#{bundle.ViewForosLabel_foroUsrId}"/>
-                            <h:outputText value="#{forosController.foros_select.foroUsrId.usrNombres}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
+                            <h:outputText value="#{forosController.foroSelect.foroUsrId.usrNombres}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
                             <h:outputText value="#{bundle.ViewForosLabel_foroUsrId}"/>
-                            <h:outputText value="#{forosController.foros_select.foroUsrId.usrApellidos}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
+                            <h:outputText value="#{forosController.foroSelect.foroUsrId.usrApellidos}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
                         </p:overlayPanel>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:outputText value="#{forosController.foros_select.foroFecha}" title="#{bundle.ViewForosTitle_foroFecha}">
+                        <h:outputText value="#{forosController.foroSelect.foroFecha}" title="#{bundle.ViewForosTitle_foroFecha}">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:panelGroup>
 
                     <h:outputText value="#{bundle.ViewForosLabel_foroDescripcion}"/>
-                    <h:outputText value="#{forosController.foros_select.foroDescripcion}" title="#{bundle.ViewForosTitle_foroDescripcion}"/>
+                    <h:outputText value="#{forosController.foroSelect.foroDescripcion}" title="#{bundle.ViewForosTitle_foroDescripcion}"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>

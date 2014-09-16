@@ -53,6 +53,9 @@ public class Version implements Serializable {
     @JoinColumn(name = "version_archivo_id", referencedColumnName = "archivo_id")
     @ManyToOne(optional = false)
     private Archivos versionArchivoId;
+    @JoinColumn(name = "version_usr_id", referencedColumnName = "usr_id")
+    @ManyToOne(optional = false)
+    private Usuarios versionUsrId;
 
     public Version() {
     }
@@ -97,6 +100,14 @@ public class Version implements Serializable {
 
     public void setVersionArchivoId(Archivos versionArchivoId) {
         this.versionArchivoId = versionArchivoId;
+    }
+
+    public Usuarios getVersionUsrId() {
+        return versionUsrId;
+    }
+
+    public void setVersionUsrId(Usuarios versionUsrId) {
+        this.versionUsrId = versionUsrId;
     }
 
     @Override

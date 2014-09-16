@@ -1,20 +1,28 @@
 package controllers;
 
 import clases.Archivos;
+import clases.Colectivos;
 import clases.Usuarios;
 import clases.Version;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import facade.ArchivosFacade;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -22,9 +30,12 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named("archivosController")
-@SessionScoped
+@ViewScoped
 public class ArchivosController implements Serializable {
 
     private Archivos current;
@@ -214,21 +225,22 @@ public class ArchivosController implements Serializable {
     @EJB
     private facade.VersionFacade ejbVersionFacade;
     private Archivos archivoSelect;
-    private static Usuarios usuario;
+    private Colectivos colectivoActual = ColectivosController.getColectivoActual();
+    private Usuarios usuarioActual = UsuariosController.getUsuarioActual();
     private DataModel itemsUsuario = null;
 
     public DataModel getItemsUsuario() {
-        return itemsUsuario = new ListDataModel((List) getUsuario().getArchivosCollection());
+        return itemsUsuario = new ListDataModel((List) getUsuarioActual().getArchivosCollection());
     }
 
-    public Usuarios getUsuario() {
-        return usuario;
-    }
-
-    public static void setUsuario(Usuarios usuario) {
-        ArchivosController.usuario = usuario;
+    public Colectivos getColectivoActual() {
+        return colectivoActual;
     }
     
+    public Usuarios getUsuarioActual() {
+        return usuarioActual;
+    }
+
     public Archivos getArchivoSelect() {
         return archivoSelect;
     }
@@ -236,7 +248,7 @@ public class ArchivosController implements Serializable {
     public void setArchivoSelect(Archivos archivoSelect) {
         this.archivoSelect = archivoSelect;
     }
-    
+
     public void setArchivoSelectVista() {
         setArchivoSelect(null);
     }
@@ -245,7 +257,7 @@ public class ArchivosController implements Serializable {
 //        if (items == null) {
 //            items = getPagination().createPageDataModel();
 //        }
-        return items = new ListDataModel((List) ColectivosController.getColectivoActual().getArchivosCollection());
+        return items = new ListDataModel((List) getColectivoActual().getArchivosCollection());
     }
 
     public String prepareCreate() {
@@ -262,16 +274,17 @@ public class ArchivosController implements Serializable {
             version.setVersionArchivoId(current);
             version.setVersionFecha(new Date());
             version.setVersionNumero(1);
+            version.setVersionUsrId(getUsuarioActual());
             ejbVersionFacade.create(version);
             List<Version> listaV = new ArrayList<>();
             listaV.add(version);
             current.setVersionCollection(listaV);
-            if (!ColectivosController.getColectivoActual().getArchivosCollection().isEmpty()) {
-                ColectivosController.getColectivoActual().getArchivosCollection().add(current);
+            if (!getColectivoActual().getArchivosCollection().isEmpty()) {
+                getColectivoActual().getArchivosCollection().add(current);
             } else {
                 List<Archivos> lista = new ArrayList<>();
                 lista.add(current);
-                ColectivosController.getColectivoActual().setArchivosCollection(lista);
+                getColectivoActual().setArchivosCollection(lista);
             }
             setArchivoSelect(current);
             VersionController.setArchivoSelect(current);
@@ -284,13 +297,88 @@ public class ArchivosController implements Serializable {
     }
 
     public void asignarTodo() {
-        current.setArchivoUsrId(UsuariosController.getUsurioActual());
-        current.setArchivoColectivoId(ColectivosController.getColectivoActual());
+        current.setArchivoUsrId(getUsuarioActual());
+        current.setArchivoColectivoId(getColectivoActual());
         current.setArchivoVisitas(0);
     }
 
     public void rowSelect() {
         JsfUtil.addSuccessMessage("Row select");
         VersionController.setArchivoSelect(getArchivoSelect());
+    }
+    //Subir Archivos
+    private UploadedFile file;
+    private InputStream in;
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public InputStream getIn() {
+        return in;
+    }
+
+    public void setIn(InputStream in) {
+        this.in = in;
+    }
+
+    public void prueba() {
+        JsfUtil.addSuccessMessage("entra");
+    }
+
+    public void handleFileUpload(FileUploadEvent event) throws IOException, URISyntaxException {
+            setIn(event.getFile().getInputstream());
+            setFile(event.getFile());
+            TransferFile(16);
+    }
+
+    public String getExtencion(String FileName) {
+        String extValidate;
+        String ext = FileName;
+        if (ext != null) {
+            extValidate = ext.substring(ext.indexOf(".") + 1);
+        } else {
+            extValidate = null;
+        }
+        return extValidate;
+    }
+
+    public String ruta() throws UnsupportedEncodingException {
+        String rutaca = ArchivosController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        rutaca = URLDecoder.decode(rutaca, "utf-8");
+        String[] base = rutaca.split("/");
+        String direccion = "";
+        for (int i = 0; i < base.length - 6; i++) {
+            direccion = direccion + base[i] + "/";
+        }
+        return direccion;
+    }
+
+    public void TransferFile(int usrId) {
+        try {
+            String direccion = ruta() + "web/" + "Usuarios/" + "Privado/" + usrId;
+            //Crear carpeta de usuarios
+            File folder = new File(direccion);
+            if (!folder.exists()) {
+                folder.mkdirs(); // esto crea la carpeta java, independientemente que exista el path completo, si no existe crea toda la ruta necesaria                 
+            }
+            JsfUtil.addSuccessMessage("Después de folder:" + ruta());
+            OutputStream out = new FileOutputStream(new File(direccion + "/" + getFile().getFileName()));
+            int read;
+            byte[] bytes = new byte[(int) getFile().getSize()];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+
+            JsfUtil.addSuccessMessage("Direccion " + direccion);
+        } catch (IOException e) {
+            JsfUtil.addErrorMessage("Error al subir el archivo");
+        }
     }
 }

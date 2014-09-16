@@ -7,11 +7,11 @@
     <ui:composition template="/templates/generalTemplate.xhtml">
 
         <ui:define name="body" class="bodys">        
+            
+            <p:tabView id="forosTabView" dynamic="true" scrollable="true" styleClass="tabView" orientation="top">
 
-            <p:tabView id="forosTabView" dynamic="true" scrollable="true" styleClass="tabView">
-                
                 <p:tab title="Foros" closable="true">
-                    
+
                     <p:layout>
                         <p:layoutUnit position="west" size="25%" header="Foros" collapsible="true" resizable="true" gutter="15">                            
                             <ui:include src="/web/foros/Create.xhtml" />

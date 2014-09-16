@@ -45,7 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuarios.findByUsrEstado", query = "SELECT u FROM Usuarios u WHERE u.usrEstado = :usrEstado"),
     @NamedQuery(name = "Usuarios.findByUsrFoto", query = "SELECT u FROM Usuarios u WHERE u.usrFoto = :usrFoto")})
 public class Usuarios implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -125,6 +124,8 @@ public class Usuarios implements Serializable {
     private Collection<Conversacion> conversacionCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoUsrId")
     private Collection<Archivos> archivosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "versionUsrId")
+    private Collection<Version> versionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "colectUsrId")
     private Collection<Colectivos> colectivosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitudUsrId")
@@ -188,7 +189,7 @@ public class Usuarios implements Serializable {
     }
 
     public Boolean getUsrSexo() {
-       return usrSexo;        
+        return usrSexo;
     }
 
     public void setUsrSexo(Boolean usrSexo) {
@@ -370,6 +371,15 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
+    public Collection<Version> getVersionCollection() {
+        return versionCollection;
+    }
+
+    public void setVersionCollection(Collection<Version> versionCollection) {
+        this.versionCollection = versionCollection;
+    }
+
+    @XmlTransient
     public Collection<Colectivos> getColectivosCollection() {
         return colectivosCollection;
     }
@@ -411,4 +421,5 @@ public class Usuarios implements Serializable {
     public String toString() {
         return "clases.Usuarios[ usrId=" + usrId + " ]";
     }
+    
 }

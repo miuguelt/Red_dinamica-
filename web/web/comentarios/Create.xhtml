@@ -8,12 +8,14 @@
 
     <ui:composition >        
         <h:form id="comentariosCreateForm" styleClass="createForm">
-            <h:panelGrid styleClass="centerPanel" columns="1" rendered="#{forosController.hayForo}">
+            <h:panelGrid styleClass="centerPanel" columns="1" rendered="#{forosController.foroSelected}" >
                 <f:facet name="header">
                     <h2><h:outputText value="Escriba su comentario"/></h2>
                 </f:facet>
-                <p:editor id="comentDescripcion" value="#{comentariosController.selected.comentDescripcion}" required="true" requiredMessage="#{bundle.CreateComentariosRequiredMessage_comentDescripcion}"/>
-                <p:commandButton actionListener="#{comentariosController.create}" value="#{bundle.CreateComentariosSaveLink}" update=":forosTabView:comentariosListForm,comentariosCreateForm" styleClass="ui-priority-primary" rendered="#{forosController.hayForo}"/>
+                <p:editor id="comentDescripcion" value="#{comentariosController.selected.comentDescripcion}" requiredMessage="#{bundle.CreateComentariosRequiredMessage_comentDescripcion}"/>
+                <p:commandButton actionListener="#{comentariosController.create}" value="#{bundle.CreateComentariosSaveLink}" 
+                                 update=":forosTabView:comentariosListForm,comentariosCreateForm" 
+                                 rendered="true"/>
             </h:panelGrid>
 
         </h:form>

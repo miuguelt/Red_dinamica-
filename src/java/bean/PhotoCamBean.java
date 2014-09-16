@@ -35,7 +35,7 @@ public class PhotoCamBean implements InterfaceBean, Serializable{
         final ServletContext servletContext = (ServletContext)FacesContext.getCurrentInstance().getExternalContext()
                 .getContext();
         //asignamos un nombre a la foto segun el usuario actual.
-        String foto = UsuariosController.getUsurioActual().getUsrId()+ ".png"; 
+        String foto = UsuariosController.getUsuarioActual().getUsrId()+ ".png"; 
         
         FacesContext context = FacesContext.getCurrentInstance(); 
        // context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Foto dir = "+foto, "Foto dir = "+foto));
@@ -75,7 +75,7 @@ public class PhotoCamBean implements InterfaceBean, Serializable{
     public boolean isVerFoto() {
         
         final ServletContext servletContext = (ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
-        Usuarios u = UsuariosController.getUsurioActual();
+        Usuarios u = UsuariosController.getUsuarioActual();
         String foto = ""+u.getUsrId();
         
         String fileFoto = servletContext.getRealPath("") + File.separator + "/Recursos/Imagenes/perfil/" + File.separator + foto;
@@ -88,7 +88,7 @@ public class PhotoCamBean implements InterfaceBean, Serializable{
     }
     //Arreglarlo
     public boolean isTieneFoto(){
-     Usuarios u = UsuariosController.getUsurioActual();
+     Usuarios u = UsuariosController.getUsuarioActual();
         if(u.getUsrFoto()!=null) return true;
         return false;
     }

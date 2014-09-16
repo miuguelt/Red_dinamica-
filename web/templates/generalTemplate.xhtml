@@ -19,11 +19,11 @@
         <p:growl id="growl" life="9000" autoUpdate="true"/>
         <p:layout fullPage="true">
 
-            <p:layoutUnit id="northRegistro" position="north" header="Red Colombiana de Dinámica de Sistemas" rendered="#{loggin.activa}">
+            <p:layoutUnit id="northRegistro" position="north" rendered="#{usuariosController.activa}">
                 <ui:include src="/componentes/menuregistro.xhtml"/>
             </p:layoutUnit>
 
-            <p:layoutUnit id="northGeneral" position="north" header="Red Colombiana de Dinámica de Sistemas" rendered="#{!loggin.activa}">
+            <p:layoutUnit id="northGeneral" position="north" header="Red Colombiana de Dinámica de Sistemas" rendered="#{!usuariosController.activa}">
                 <ui:include src="/componentes/menugeneral.xhtml"/>
             </p:layoutUnit>
 

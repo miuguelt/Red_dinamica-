@@ -214,7 +214,7 @@ public class UsuariosController implements Serializable {
     }
     //CODIGO PERSONAL
     private Usuarios current;
-    private static Usuarios usurioActual;
+    private static Usuarios usuarioActual;
     private boolean skip;
     private String usrPass2;
 
@@ -226,16 +226,16 @@ public class UsuariosController implements Serializable {
         this.usrPass2 = usrPass2;
     }
 
-    public static Usuarios getUsurioActual() {
-        return usurioActual;
+    public static Usuarios getUsuarioActual() {
+        return usuarioActual;
     }
 
-    public static void setUsurioActual(Usuarios usurioActual) {
-        UsuariosController.usurioActual = usurioActual;
+    public static void setUsuarioActual(Usuarios usuarioActual) {
+        UsuariosController.usuarioActual = usuarioActual;
     }
 
     public void setUsuarioSelectActual() {
-        setUsuarioSelect(getUsurioActual());
+        setUsuarioSelect(getUsuarioActual());
     }
 
     public DataModel getItems() {
@@ -257,7 +257,7 @@ public class UsuariosController implements Serializable {
             JsfUtil.addSuccessMessage("a: " + current.getUsrPass());
             current.setUsrPass(encriptarPass(current.getUsrPass()));
             getFacade().create(current);
-            setUsurioActual(current);
+            setUsuarioActual(current);
             FacesContext context2 = FacesContext.getCurrentInstance();
             HttpSession sessionv = (HttpSession) context2.getExternalContext().getSession(true);
             sessionv.setAttribute("user", current);
@@ -324,15 +324,14 @@ public class UsuariosController implements Serializable {
     }
 
     public void setPerfilPersonal() {
-        setUsuarioSelect(getUsurioActual());
-        ColectivosController.setUsuario(getUsuarioSelect());
-        ArchivosController.setUsuario(getUsuarioSelect());
+        setUsuarioSelect(getUsuarioActual());
+//        ColectivosController.setUsuario(getUsuarioSelect());
     }
 
-    public void setUsuarioPeril(Usuarios usuario) throws IOException { //Asigna el usuario para ver el perfil
+    public void setPerilUsuario(Usuarios usuario) throws IOException { //Asigna el usuario para ver el perfil
         setUsuarioSelect(usuario);
-        ColectivosController.setUsuario(usuario);
-        ArchivosController.setUsuario(usuario);
+        ColectivosController.setUsuarioSelect(usuario);
+        JsfUtil.addSuccessMessage("SetperfilUsuario");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/usuarios/indexPerfiles.xhtml");
     }
     //Cambiar clave
@@ -365,7 +364,7 @@ public class UsuariosController implements Serializable {
     }
 
     public void validarPassActual(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
-        current = getUsurioActual();
+        current = getUsuarioActual();
         String pas = encriptarPass(arg2.toString());
         String actual = current.getUsrPass();
         setActualPass(actual);
@@ -391,7 +390,68 @@ public class UsuariosController implements Serializable {
         update();
         JsfUtil.addSuccessMessage("Contraseña actualizada con éxito!");
     }
-//Buscador
+    //Inciar Sesion
+    private String cedula;
+    private String contrasena;
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public boolean isActiva() {
+        return session.isActiva();
+
+    }
+
+    public void logIn() { //Inicia sesion
+        try {
+            Usuarios user;
+            setContrasena(encriptarPass(getContrasena()));
+            user = (Usuarios) getFacade().find(Integer.parseInt(getCedula()));
+            if (user != null && user.getUsrPass().trim().matches(getContrasena())) {
+                setUsuarioActual(user);
+                HttpSession sessionv = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+                sessionv.setAttribute("user", user);
+                session.setActiva(true);
+                JsfUtil.addSuccessMessage("Sesion Iniciada");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/");
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique cédula y/o contraseña!", ""));
+
+            }
+        } catch (Exception e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique cédula y/o contraseña!  " + e, ""));
+            System.out.println("Excepcion!!!....");
+        }
+
+    }
+
+    //Cerrar Sesion
+    public void logOut() throws IOException {
+        HttpSession sessionv = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        sessionv.invalidate();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        session.setActiva(false);
+        getFacade().actulizarEm(UsuariosController.getUsuarioActual());
+        UsuariosController.setUsuarioActual(null);
+        JsfUtil.addSuccessMessage("Cerrar sesion");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/");
+    }
+    //Buscador
     private String nombre_buscar;
     private String filtrar_por = "1";// tipo de filtro al buscar usuarios:(1=nombre, 2= email, 3= universidad)
     @EJB
