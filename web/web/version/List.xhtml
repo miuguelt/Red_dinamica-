@@ -7,26 +7,34 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <h:form styleClass="jsfcrud_list_form" id="versionListForm">
-                <p:dataTable id="versionListDataTable" styleClass="classDataTable" value="#{versionController.items}" var="item" editable="true" >
-                    <f:facet name="header">
-                        <h:outputText value="Versiones"/>
-                    </f:facet>
-                    <p:column width="10%">
-                        <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
-                        <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
-                            <h:outputText value="#{item.versionArchivoId.archivoUsrId.usrNombres} #{item.versionArchivoId.archivoUsrId.usrApellidos}"/>
-                        </p:overlayPanel>
-                    </p:column>
-                    <p:column width="75%">
-                        <h:outputText id="display" value="#{item.versionNumero}" escape="false" />
-                    </p:column>
-                    <p:column>                            
-                        <h:outputText value="#{item.versionFecha}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
-                    </p:column>
-                </p:dataTable>
+        <h:form id="versionListForm" style="margin: 20px">
+            <p:dataTable styleClass="classDataTable" value="#{archivosController.itemsVersiones}" var="item" editable="true" 
+                         rendered="#{archivosController.archivoSelected}">
+
+                <f:facet name="header">
+                    <h:outputText value="Versiones"/>
+                </f:facet>
+                <p:column width="10%" headerText="Subido por">
+                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{item.versionArchivoId.archivoUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
+                    <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                        <h:outputText value="#{item.versionArchivoId.archivoUsrId.usrNombres} #{item.versionArchivoId.archivoUsrId.usrApellidos}"/>
+                    </p:overlayPanel>
+                </p:column>
+                <p:column width="75%" headerText="Número de Versión">
+                    <h:outputText id="display" value="#{item.versionNumero}" escape="false" />
+                </p:column>
+                <p:column headerText="Fecha">                            
+                    <h:outputText value="#{item.versionFecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <p:commandButton id="downloadLink" value="Download" ajax="false" actionListener="#{archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="#{archivosController.download}" />
+                    </p:commandButton>              
+                </p:column>                            
+
+            </p:dataTable>
             <br />           
         </h:form>
     </ui:composition>

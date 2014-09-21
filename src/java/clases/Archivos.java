@@ -6,6 +6,7 @@ package clases;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,7 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Archivos.findByArchivoNombre", query = "SELECT a FROM Archivos a WHERE a.archivoNombre = :archivoNombre"),
     @NamedQuery(name = "Archivos.findByArchivoAutor", query = "SELECT a FROM Archivos a WHERE a.archivoAutor = :archivoAutor"),
     @NamedQuery(name = "Archivos.findByArchivoTema", query = "SELECT a FROM Archivos a WHERE a.archivoTema = :archivoTema"),
-    @NamedQuery(name = "Archivos.findByArchivoVisitas", query = "SELECT a FROM Archivos a WHERE a.archivoVisitas = :archivoVisitas")})
+    @NamedQuery(name = "Archivos.findByArchivoVisitas", query = "SELECT a FROM Archivos a WHERE a.archivoVisitas = :archivoVisitas"),
+    @NamedQuery(name = "Archivos.findByArchivoDireccion", query = "SELECT a FROM Archivos a WHERE a.archivoDireccion = :archivoDireccion"),
+    @NamedQuery(name = "Archivos.findByArchivoExtencion", query = "SELECT a FROM Archivos a WHERE a.archivoExtencion = :archivoExtencion"),
+    @NamedQuery(name = "Archivos.findByArchivoFecha", query = "SELECT a FROM Archivos a WHERE a.archivoFecha = :archivoFecha")})
 public class Archivos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -72,6 +78,15 @@ public class Archivos implements Serializable {
     private String archivoResumen;
     @Column(name = "archivo_visitas")
     private Integer archivoVisitas;
+    @Size(max = 300)
+    @Column(name = "archivo_direccion")
+    private String archivoDireccion;
+    @Size(max = 45)
+    @Column(name = "archivo_extencion")
+    private String archivoExtencion;
+    @Column(name = "archivo_fecha")
+    @Temporal(TemporalType.DATE)
+    private Date archivoFecha;
     @JoinTable(name = "Clave_archivo", joinColumns = {
         @JoinColumn(name = "clave_archivo_id", referencedColumnName = "archivo_id")}, inverseJoinColumns = {
         @JoinColumn(name = "clave_clave_id", referencedColumnName = "palabra_id")})
@@ -156,6 +171,30 @@ public class Archivos implements Serializable {
 
     public void setArchivoVisitas(Integer archivoVisitas) {
         this.archivoVisitas = archivoVisitas;
+    }
+
+    public String getArchivoDireccion() {
+        return archivoDireccion;
+    }
+
+    public void setArchivoDireccion(String archivoDireccion) {
+        this.archivoDireccion = archivoDireccion;
+    }
+
+    public String getArchivoExtencion() {
+        return archivoExtencion;
+    }
+
+    public void setArchivoExtencion(String archivoExtencion) {
+        this.archivoExtencion = archivoExtencion;
+    }
+
+    public Date getArchivoFecha() {
+        return archivoFecha;
+    }
+
+    public void setArchivoFecha(Date archivoFecha) {
+        this.archivoFecha = archivoFecha;
     }
 
     @XmlTransient

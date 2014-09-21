@@ -7,27 +7,23 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>      
-        <h:form styleClass="jsfcrud_list_form" id="archivosListForm">
-            <h:outputText escape="false" value="#{bundle.ListArchivosEmpty}" rendered="#{archivosController.items.rowCount == 0}"/>
-            <h:panelGroup rendered="#{archivosController.items.rowCount > 0}">
-                <p:dataTable id="archivosListDataTable" value="#{archivosController.items}" emptyMessage="No hay Versiones" var="item" selectionMode="single"  selection="#{archivosController.archivoSelect}" rowKey="#{item.archivoId}" editable="true" >
-                    <p:ajax event="rowSelect" listener="#{archivosController.rowSelect}" update=":forosTabView:versionListForm,:forosTabView:archivoViewForm"/>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListArchivosTitle_archivoId}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.archivoId}"/>
-                    </p:column>
+        <h:form id="archivosListForm">
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListArchivosTitle_archivoNombre}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.archivoNombre}"/>
-                    </p:column>
-                </p:dataTable>
-            </h:panelGroup>
-            <br />
+            <p:dataTable value="#{archivosController.items}"
+                         emptyMessage="No hay Archivos" var="item" selectionMode="single"  
+                         selection="#{archivosController.archivoSelect}" rowKey="#{item.archivoId}">
+
+                <p:ajax event="rowSelect" listener="#{archivosController.rowSelect}" 
+                        update=":forosTabView:versionListForm,:forosTabView:versionCreateForm,:forosTabView:archivoViewForm"/>
+
+                <p:column sortBy="#{item.archivoNombre}" filterBy="#{item.archivoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListArchivosTitle_archivoNombre}"/>
+                    </f:facet>
+                    <h3><h:outputText value="#{item.archivoNombre} (.#{item.archivoExtencion})"/></h3>
+                    <h:outputText value="#{item.archivoTema}"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </ui:composition>
 </html>

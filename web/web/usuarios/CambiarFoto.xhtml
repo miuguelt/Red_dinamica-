@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="cambiarFotoForm">
+        <h:panelGrid columns="2" style="margin-top:10px">
+            <p:commandLink id="fotoLink" onclick="fotoDialog.show()">
+                <p:graphicImage id="foto" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}"
+                                style="height: 120px;"/>
+            </p:commandLink>
+
+            <p:dialog header="Toma una foto" widgetVar="fotoDialog">
+                <p:fileUpload fileUploadListener="#{archivosController.handleFileUploadFoto}" mode="advanced" dragDropSupport="false" required="true" 
+                              requiredMessage="Seleccione archivo" label="Subir Archivo"
+                              oncomplete="fotoDialog.hide();">
+                    <h1>Seleccione un archivo</h1>
+                </p:fileUpload>
+                <!--<p:photoCam widgetVar="pc" listener="# {photoCamBean.oncapture}" update="growlfoto" />-->
+<!--                <p:commandButton type="button" value="Tomar foto" onclick="pc.capture()" update="growlfoto">
+                    <p:ajax oncomplete="fotoDialog.hide();"  update="growlfoto"/>
+                </p:commandButton>-->
+            </p:dialog> 
+
+        </h:panelGrid> 
+        <h:panelGrid columns="4" > 
+
+            <p:commandButton id="cambiarFoto" onclick="fotoDialog.show()" value="Cambiar Foto" icon="ui-icon-disk"/>
+        </h:panelGrid>
+    </h:form>
+</ui:composition>

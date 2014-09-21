@@ -30,10 +30,10 @@
                 </p:tab>
 
                 <p:tab title="Archivos" >              
-                    <p:layout>
-                        <p:layoutUnit position="west" size="30%" >
-                            <ui:include src="/web/archivos/List.xhtml" />
+                    <p:layout style="position: relative">
+                        <p:layoutUnit position="west" size="30%" style="min-height: 370px;">
                             <ui:include src="/web/archivos/Create.xhtml" />
+                            <ui:include src="/web/archivos/List.xhtml" />
                         </p:layoutUnit>
 
                         <p:layoutUnit position="center">

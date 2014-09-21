@@ -234,10 +234,6 @@ public class ForosController implements Serializable {
         else return true;
     }
             
-    public void prueba() {
-        JsfUtil.addSuccessMessage("entra "+" "+getForoSelect().getForoId()+" "+isForoSelected());
-    }
-    
     public DataModel getItems() {
 //        if (items == null) {
 //            items = getPagination().createPageDataModel();

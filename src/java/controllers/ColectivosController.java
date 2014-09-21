@@ -216,6 +216,7 @@ public class ColectivosController implements Serializable {
     private Usuarios usuario = UsuariosController.getUsuarioActual();
     private static Usuarios usuarioSelect;
     private static Colectivos colectivoActual;
+    private Colectivos colectivoActualVista;
     private DataModel items = null;
     private DataModel itemsAdministrador = null;
     private DataModel itemsColaborador = null;
@@ -230,9 +231,17 @@ public class ColectivosController implements Serializable {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         setColectivosAllList(getFacade().findAll());
         asignarBoton();
+    }
+
+    public Colectivos getColectivoActualVista() {
+        return colectivoActualVista;
+    }
+
+    public void setColectivoActualVista(Colectivos colectivoActualVista) {
+        this.colectivoActualVista = colectivoActualVista;
     }
 
     public static Usuarios getUsuarioSelect() {
@@ -318,10 +327,10 @@ public class ColectivosController implements Serializable {
         try {
             asignarTodo();
             getFacade().create(current);
-            JsfUtil.addSuccessMessage("Nuevo colectivo Creado");
             UsuariosController.getUsuarioActual().getColectivosCollection().add(current);
             colectivosAllList.add(current);
-            //FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/List.xhtml");
+            setColectivoActual(current);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/index.xhtml");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -344,5 +353,10 @@ public class ColectivosController implements Serializable {
         UsuariosController.getUsuarioActual().getFormaparteCollection().add(formaparte);
         colectivosAllList.get(colectivosAllList.indexOf(colectivo)).setColectEstado(true);
         JsfUtil.addSuccessMessage("Colectivo Agregado a la Lista Personal");
+    }
+
+    public void rowSelect() throws IOException {//Al seleccionar foro 
+        setColectivoActual(getColectivoActualVista());
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/index.xhtml");
     }
 }

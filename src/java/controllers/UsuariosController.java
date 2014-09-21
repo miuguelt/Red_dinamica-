@@ -4,6 +4,7 @@ import static bean.InterfaceBean.session;
 import clases.Conversacion;
 import clases.Universidades;
 import clases.Usuarios;
+import static controllers.ColectivosController.getUsuarioSelect;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import controllers.util.PasswordService;
@@ -89,7 +90,7 @@ public class UsuariosController implements Serializable {
 
     public void update() {
         try {
-            getFacade().edit(getUsuarioSelect());
+            getFacade().edit(getUsuarioActualVista());
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsuariosUpdated"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -214,10 +215,17 @@ public class UsuariosController implements Serializable {
     }
     //CODIGO PERSONAL
     private Usuarios current;
-    private static Usuarios usuarioActual;
+    private Usuarios usuarioSelect;
+    private static Usuarios usuarioActual; //Permita pasar al Usuario a travez de muchos controlers
+    private Usuarios usuarioActualVista; //Permite mostrar los datos del usuario actual en la vista
+    private DataModel itemsUsuarioSelectArchivos = null;
     private boolean skip;
     private String usrPass2;
 
+    public DataModel getItemsUsuarioSelectArchivos() {
+        return itemsUsuarioSelectArchivos = new ListDataModel((List) getUsuarioSelect().getArchivosCollection());
+    }    
+    
     public String getUsrPass2() {
         return usrPass2;
     }
@@ -226,16 +234,28 @@ public class UsuariosController implements Serializable {
         this.usrPass2 = usrPass2;
     }
 
+    public Usuarios getUsuarioSelect() {
+        return usuarioSelect;
+    }
+
+    public void setUsuarioSelect(Usuarios usuarioSelect) {
+        this.usuarioSelect = usuarioSelect;
+    }
+
+    public void setUsuarioActualVista(Usuarios usuarioActualVista) {
+        this.usuarioActualVista = usuarioActualVista;
+    }
+
+    public Usuarios getUsuarioActualVista() {
+        return usuarioActualVista;
+    }
+
     public static Usuarios getUsuarioActual() {
         return usuarioActual;
     }
 
     public static void setUsuarioActual(Usuarios usuarioActual) {
         UsuariosController.usuarioActual = usuarioActual;
-    }
-
-    public void setUsuarioSelectActual() {
-        setUsuarioSelect(getUsuarioActual());
     }
 
     public DataModel getItems() {
@@ -305,18 +325,17 @@ public class UsuariosController implements Serializable {
         }
     }
     //Ver perifil de usuarios
-    private Usuarios usuarioSelect;
-
-    public Usuarios getUsuarioSelect() {
-        return usuarioSelect;
-    }
-
-    public void setUsuarioSelect(Usuarios usuarioSelect) {
-        this.usuarioSelect = usuarioSelect;
-    }
 
     public String sexo() {
         if (getUsuarioSelect().getUsrSexo()) {
+            return "Hombre";
+        } else {
+            return "Mujer";
+        }
+    }
+
+    public String sexoUsuarioVista() {
+        if (getUsuarioActual().getUsrSexo()) {
             return "Hombre";
         } else {
             return "Mujer";
@@ -329,10 +348,18 @@ public class UsuariosController implements Serializable {
     }
 
     public void setPerilUsuario(Usuarios usuario) throws IOException { //Asigna el usuario para ver el perfil
-        setUsuarioSelect(usuario);
-        ColectivosController.setUsuarioSelect(usuario);
-        JsfUtil.addSuccessMessage("SetperfilUsuario");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/usuarios/indexPerfiles.xhtml");
+    }
+    //
+    private DataModel itemsAdminSelect = null;
+    private DataModel itemsColaboradorSelect = null;
+
+    public DataModel getItemsAdminSelect() {
+        return itemsAdminSelect = new ListDataModel(new ArrayList<>(getUsuarioSelect().getColectivosCollection()));
+    }
+
+    public DataModel getItemsColaboradorSelect() {
+        return itemsColaboradorSelect = new ListDataModel(new ArrayList<>(getUsuarioSelect().getFormaparteCollection()));
     }
     //Cambiar clave
     String actualPass;
@@ -422,6 +449,7 @@ public class UsuariosController implements Serializable {
             user = (Usuarios) getFacade().find(Integer.parseInt(getCedula()));
             if (user != null && user.getUsrPass().trim().matches(getContrasena())) {
                 setUsuarioActual(user);
+                setUsuarioActualVista(user);
                 HttpSession sessionv = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                 sessionv.setAttribute("user", user);
                 session.setActiva(true);
@@ -451,7 +479,11 @@ public class UsuariosController implements Serializable {
         JsfUtil.addSuccessMessage("Cerrar sesion");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/");
     }
-    //Buscador
+        public void rowSelect() {
+            JsfUtil.addSuccessMessage("Entra");
+        }
+
+    //////////////////////////////////Buscador
     private String nombre_buscar;
     private String filtrar_por = "1";// tipo de filtro al buscar usuarios:(1=nombre, 2= email, 3= universidad)
     @EJB

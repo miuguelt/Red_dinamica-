@@ -8,12 +8,9 @@
 
         <ui:define name="body">
             <p:tabView id="colectivosTabView" styleClass="tabView">  
-                <p:tab title="Todos" >
+                <p:tab title="Personales">
                     <ui:include src="/web/colectivos/List.xhtml"/>
                     <ui:include src="/web/colectivos/Create.xhtml"/>
-                </p:tab>
-                <p:tab title="Personales">
-
                     <p:accordionPanel id="colectivosAccordionPanel" multiple="true">
 
                         <p:tab title="Colaborador" >

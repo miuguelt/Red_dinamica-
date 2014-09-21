@@ -6,55 +6,55 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-        <h:form id="datosBasicos">
-            <p:panel header="Datos Básicos">
-                <h:panelGrid columns="3">
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrMail" />
-                    <p:inputText id="usrMail" type="email" value="#{usuariosController.usuarioSelect.usrEmail}" validator="#{validadorRegistro.asignarCorreo}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true">
-                        <f:validateLength minimum="3" maximum="45"/>    
-                        <p:ajax update="msgMail" event="keyup"/>
-                    </p:inputText>
-                    <p:message for="usrMail" id="msgMail" display="tooltip" />
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombre" />
-                    <p:inputText id="usrNombre" value="#{usuariosController.usuarioSelect.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}">
-                        <f:validateLength minimum="3" maximum="45"/>  
-                        <p:ajax update="msgNombre" event="keyup" />
-                    </p:inputText>
-                    <p:message for="usrNombre" id="msgNombre" display="tooltip" />
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellido" />
-                    <p:inputText id="usrApellido" value="#{usuariosController.usuarioSelect.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}">
-                        <f:validateLength minimum="3" maximum="45"/>
-                        <p:ajax update="msgApellido" event="keyup" />
-                    </p:inputText>
-                    <p:message for="usrApellido" id="msgApellido" display="tooltip" />
-                </h:panelGrid>
-            </p:panel>
-            <p:panel header="Datos adicionales">
-                <p:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrSexo}" for="usrGenero" />
-                    <p:selectOneMenu value="#{usuariosController.usuarioSelect.usrSexo}" >  
-                        <f:selectItem itemLabel="Hombre" itemValue="1" />
-                        <f:selectItem itemLabel="Mujer" itemValue="0" />
-                    </p:selectOneMenu>  
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}" for="departamentosdepartamentoid" />
-                    <h:selectOneMenu id="departamentosdepartamentoid" value="#{usuariosController.usuarioSelect.usrDepartamento}" title="#{bundle.CreateUsuariosTitle_usrDepartamento}" validator="#{ciudadController.asignarDepartamento}"  >                        
-                        <f:selectItems  value="#{departamentosController.itemsAvailableSelectOne}"/>                        
-                        <p:ajax  listener="#{ciudadController.asignarCiudades}"   update="ciudades" />  
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}" for="ciudadciudadid" />
-                    <h:selectOneMenu id="ciudades" value="#{usuariosController.usuarioSelect.usrCiudad}" title="#{bundle.CreateUsuariosTitle_usrCiudad}"  validator="#{universidadesController.asignarCiudad}">                         
-                        <f:selectItem itemLabel="" itemValue="" />
-                        <f:selectItems value="#{ciudadController.ciudades}"/>
-                        <p:ajax  listener="#{universidadesController.asignarUniversidades}"   update="universidadesuniversidadid" /> 
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}" for="universidadesuniversidadid" />
-                    <h:selectOneMenu id="universidadesuniversidadid" value="#{usuariosController.usuarioSelect.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
-                        <f:selectItem itemLabel="" itemValue="" />
-                        <f:selectItems value="#{universidadesController.universidad}"/>
-                    </h:selectOneMenu>
-                </p:panelGrid>
-            </p:panel>
-            <br />
-            <h:commandButton action="#{usuariosController.update}"  value="Actualizar" />
-        </h:form>
+    <h:form id="datosBasicos">
+        <p:panel header="Datos Básicos">
+            <h:panelGrid columns="3">
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrMail" />
+                <p:inputText id="usrMail" type="email" value="#{usuariosController.usuarioActualVista.usrEmail}" validator="#{validadorRegistro.asignarCorreo}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true">
+                    <f:validateLength minimum="3" maximum="45"/>    
+                    <p:ajax update="msgMail" event="keyup"/>
+                </p:inputText>
+                <p:message for="usrMail" id="msgMail" display="tooltip" />
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombre" />
+                <p:inputText id="usrNombre" value="#{usuariosController.usuarioActualVista.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}">
+                    <f:validateLength minimum="3" maximum="45"/>  
+                    <p:ajax update="msgNombre" event="keyup" />
+                </p:inputText>
+                <p:message for="usrNombre" id="msgNombre" display="tooltip" />
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellido" />
+                <p:inputText id="usrApellido" value="#{usuariosController.usuarioActualVista.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}">
+                    <f:validateLength minimum="3" maximum="45"/>
+                    <p:ajax update="msgApellido" event="keyup" />
+                </p:inputText>
+                <p:message for="usrApellido" id="msgApellido" display="tooltip" />
+            </h:panelGrid>
+        </p:panel>
+        <p:panel header="Datos adicionales">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="usrGenero" value="#{bundle.CreateUsuariosLabel_usrSexo}"/>
+                <p:selectOneMenu id="usrGenero" value="#{usuariosController.usuarioActualVista.usrSexo}">
+                    <f:selectItem itemLabel="Hombre" itemValue="true" />
+                    <f:selectItem itemLabel="Mujer" itemValue="false" />
+                </p:selectOneMenu>
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}" for="departamentosdepartamentoid" />
+                <h:selectOneMenu id="departamentosdepartamentoid" value="#{usuariosController.usuarioActualVista.usrDepartamento}" title="#{bundle.CreateUsuariosTitle_usrDepartamento}" validator="#{ciudadController.asignarDepartamento}"  >                        
+                    <f:selectItems  value="#{departamentosController.itemsAvailableSelectOne}"/>                        
+                    <p:ajax  listener="#{ciudadController.asignarCiudades}"   update="ciudades" />  
+                </h:selectOneMenu>
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}" for="ciudadciudadid" />
+                <h:selectOneMenu id="ciudades" value="#{usuariosController.usuarioActualVista.usrCiudad}" title="#{bundle.CreateUsuariosTitle_usrCiudad}"  validator="#{universidadesController.asignarCiudad}">                         
+                    <f:selectItem itemLabel="" itemValue="" />
+                    <f:selectItems value="#{ciudadController.ciudades}"/>
+                    <p:ajax  listener="#{universidadesController.asignarUniversidades}"   update="universidadesuniversidadid" /> 
+                </h:selectOneMenu>
+                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}" for="universidadesuniversidadid" />
+                <h:selectOneMenu id="universidadesuniversidadid" value="#{usuariosController.usuarioActualVista.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
+                    <f:selectItem itemLabel="" itemValue="" />
+                    <f:selectItems value="#{universidadesController.universidad}"/>
+                </h:selectOneMenu>
+            </p:panelGrid>
+        </p:panel>
+        <br />
+        <h:commandButton action="#{usuariosController.update}"  value="Actualizar" />
+    </h:form>
 </ui:composition>

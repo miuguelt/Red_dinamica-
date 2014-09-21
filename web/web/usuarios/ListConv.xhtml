@@ -6,15 +6,14 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="usuariosFormBoton" > 
-        <p:commandButton id="usuariosBoton" value="#{bundle.CreateConversacionTitle}" type="button"/>
+    <h:form id="usuariosConvFormBoton" > 
+        <p:commandButton id="usuariosConvBoton" value="#{bundle.CreateConversacionTitle}" type="button"/>
     </h:form>
-    <p:overlayPanel id="usuariosOverlay" for="usuariosFormBoton:usuariosBoton" appendToBody="true" hideEffect="fade">
+    <p:overlayPanel id="usuariosConvOverlay" for="usuariosConvFormBoton:usuariosConvBoton" appendToBody="true" hideEffect="fade">
 
-        <h:form styleClass="jsfcrud_list_form" >
+        <h:form>
             <h:panelGroup>
-                <p:dataTable id="usuariosListForm"
-                             styleClass="classDataTable"
+                <p:dataTable styleClass="classDataTable"
                              value="#{usuariosController.items}"
                              var="item"
                              rowKey="#{item.usrId}"
@@ -28,24 +27,20 @@
                     <f:facet name="header">
                         <h:outputText value="Comunidad"/>
                     </f:facet>
-                    
+
                     <p:ajax event="rowSelect" listener="#{conversacionController.cargarConversacion()}" 
-                            update=":usuariosOverlay,:conversacionListForm,:mensajeListForm,:mensajeCreateForm"/>  
+                            update=":usuariosConvOverlay,:conversacionListForm,:mensajeListForm,:mensajeCreateForm"/>  
 
                     <p:ajax event="rowSelect" listener="#{mensajeController.setConvSelect(conversacionController.convSelect)}"/>  
-                    
-                    <p:column sortBy="#{item.usrId}" filterBy="#{item.usrId}">
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrId}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.usrId}"/>
-                    </p:column>
 
+                    <p:column width="8%">
+                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usrId}" style="height: 60px;"/>
+                    </p:column>
+                    
                     <p:column sortBy="#{item.usrNombres}" filterBy="#{item.usrNombres}">
                         <f:facet name="header">
                             <h:outputText value="#{bundle.ListUsuariosTitle_usrNombres}"/>
                         </f:facet>
-                        <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
                         <h:outputText value=" #{item.usrNombres}"/>
                     </p:column>
 

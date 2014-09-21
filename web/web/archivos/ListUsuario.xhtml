@@ -8,22 +8,17 @@
 
     <ui:composition>      
         <h:form styleClass="jsfcrud_list_form" id="archivosListForm">
-                <p:dataTable id="archivosListDataTable" value="#{archivosController.itemsUsuario}" emptyMessage="No hay Archivos" var="item" selectionMode="single"  selection="#{archivosController.archivoSelect}" rowKey="#{item.archivoId}" editable="true" >
-                    <p:ajax event="rowSelect" listener="#{archivosController.rowSelect}" update=":usuariosTabView:archivoViewForm,:usuariosTabView:versionListForm"/>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListArchivosTitle_archivoId}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.archivoId}"/>
-                    </p:column>
+            <p:dataTable id="archivosListDataTable" value="#{archivosController.itemsUsuario}" emptyMessage="No hay Archivos" var="item" selectionMode="single"  selection="#{archivosController.archivoSelect}" rowKey="#{item.archivoId}" editable="true" >
+                <p:ajax event="rowSelect" listener="#{archivosController.rowSelect}" update=":usuariosTabView:archivoViewForm,:usuariosTabView:versionListForm"/>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListArchivosTitle_archivoNombre}"/>
-                        </f:facet>
-                        <h:outputText value="#{item.archivoNombre}"/>
-                    </p:column>
-                </p:dataTable>
+                <p:column sortBy="#{item.archivoNombre}" filterBy="#{item.archivoNombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListArchivosTitle_archivoNombre}"/>
+                    </f:facet>
+                    <h3><h:outputText value="#{item.archivoNombre} (.#{item.archivoExtencion})"/></h3>
+                    <h:outputText value="#{item.archivoTema}"/>
+                </p:column>
+            </p:dataTable>
             <br />
         </h:form>
     </ui:composition>

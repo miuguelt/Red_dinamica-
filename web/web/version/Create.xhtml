@@ -6,11 +6,12 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-            <h:form id="versionCreateForm">
-                <p:fileUpload fileUploadListener="#{archivosController.handleFileUpload}" mode="advanced" dragDropSupport="false" required="true" requiredMessage="Seleccione archivo"/>
-                <p:commandButton value="#{bundle.CreateVersionSaveLink}" update="versionCreateForm,:forosTabView:versionListForm:versionListDataTable" actionListener="#{versionController.create}" styleClass="ui-priority-primary"/>
-                <br/>
-                <br/>
+        <h:form id="versionCreateForm">
+            <p:fileUpload fileUploadListener="#{archivosController.handleFileUploadVersion}" mode="advanced" dragDropSupport="false" 
+                          required="true" requiredMessage="Seleccione archivo" rendered="#{archivosController.archivoSelected}"
+                          update=":forosTabView:versionListForm">
+                                    <h1>Subir nueva versión</h1>
+                </p:fileUpload>
             </h:form>
     </ui:composition>
 

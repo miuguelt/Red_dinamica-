@@ -9,10 +9,8 @@
         <h:panelGrid styleClass="centerPanel" width="90%">
             <!--Foto-->
             <h:panelGrid columns="2">            
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrFoto}"/>
-                <h:outputText value="#{usuariosController.usuarioSelect.usrFoto}" title="#{bundle.ViewUsuariosTitle_usrFoto}"/>
-                <p:graphicImage value="#{pageContext.contextPath}/Recursos/Imagenes/perfil/#{usuariosController.usuarioSelect.usrFoto}"
-                                cache="false" style="height: 120px;"/>
+                <p:graphicImage value="/faces/Usuarios/foto/#{usuariosController.usuarioSelect.usrId}"
+                                style="height: 120px;"/>
             </h:panelGrid>
             <!--Datos básicos-->
             <h:panelGrid columns="2" >

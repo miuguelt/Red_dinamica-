@@ -8,10 +8,10 @@
     <ui:composition>
         <p:commandButton id="perfilBoton" value="Sesion" type="button"/>
         <p:overlayPanel id="perfilOverlay" for="menuRegistroForm:perfilBoton" hideEffect="fade">       
-            <h:panelGrid columns="2">
+            <h:panelGrid columns="2" id="panelPerfil">
                 <h:outputLabel for="nombre" class="destacado" value="#{usuariosController.getUsuarioActual().usrNombres}  #{usuariosController.getUsuarioActual().usrApellidos}" />
-                <p:commandLink action="/index">
-                    <p:graphicImage value="Inicio" url="/faces/Recursos/Imagenes/inicio_p.png" style="height: 45px;"/>  
+                <p:commandLink action="/web/usuarios/indexPersonal.xhtml" update=":menuRegistroForm">
+                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}" style="cursor:pointer; height: 60px;"/>
                 </p:commandLink>                   
                 <p:commandLink value="Cerrar sesión" action="#{usuariosController.logOut()}"/>
             </h:panelGrid>

@@ -11,12 +11,12 @@
                      emptyMessage="No hay Conversaciones" 
                      var="item" styleClass="classDataTable"
                      rowKey="#{item.convId}">
-                     
+
             <f:facet name="header">
                 <h:outputText value="#{bundle.ListMensajeTitle_msjRemitente}"/>
             </f:facet>
             <p:column width="10%">
-                <p:graphicImage value="/Recursos/Imagenes/perfil/#{item.msjRemitente.usrFoto}" width="50px"/>
+                <p:graphicImage value="/faces/Usuarios/foto/#{item.msjRemitente.usrId}" style="height: 50px;"/>
             </p:column>
             <p:column>
                 <h:panelGrid columns="1" styleClass="panelGrid"> 

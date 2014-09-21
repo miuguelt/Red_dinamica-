@@ -9,25 +9,30 @@
     <h:form id="conversacionListForm" >
         <p:dataTable value="#{conversacionController.items}" 
                      emptyMessage="No hay Conversaciones" 
-                     var="item"  style="border:solid 1px" 
-                     selectionMode="single"  
+                     var="item" selectionMode="single"  
                      selection="#{conversacionController.convSelect}"
-                     rowKey="#{item.convId}">
-            
+                     rowKey="#{item.convId}" styleClass="tablaSinBorde">
+
             <p:ajax event="rowSelect" listener="#{mensajeController.row(conversacionController.convSelect)}" 
                     update=":mensajeListForm, :mensajeCreateForm"/>
+           
             <p:column>
-                <h:panelGrid columns="2" style="width:100%" id="msgs1">
-                    <p:graphicImage rendered="#{item.convUsr1Id.usrId == conversacionController.usrActual.usrId}"  value="/Recursos/Imagenes/perfil/#{item.convUsr2Id.usrFoto}" width="50px"/>
-                    <h:outputText rendered="#{item.convUsr1Id.usrId == conversacionController.usrActual.usrId}" value="#{item.convUsr2Id.usrNombres} #{item.convUsr2Id.usrApellidos}" style="width: 70%;font-size: 15px;font-weight: bold"/>
-                    <p:graphicImage rendered="#{item.convUsr2Id.usrId == conversacionController.usrActual.usrId}" value="/Recursos/Imagenes/perfil/#{item.convUsr1Id.usrFoto}" width="50px"/>
-                    <h:outputText rendered="#{item.convUsr2Id.usrId == conversacionController.usrActual.usrId}" value="#{item.convUsr1Id.usrNombres} #{item.convUsr1Id.usrApellidos}" style="width: 70%;font-size: 15px;font-weight: bold"/>
-                    <h:outputText rendered="#//{item.convUsr2Id.usrId == conversacionController.ust_act.usrId}" value="usr2 es actu" />
-                    <h:outputText rendered="#//{item.convUsr1Id.usrId == conversacionController.ust_act.usrId}" value="usr1 es actu" />
+                <h:panelGrid columns="2" id="msgs1" style="border: none;">
+                    <p:graphicImage value="/faces/Usuarios/foto/#{item.convUsr2Id.usrId}"
+                                    rendered="#{item.convUsr2Id.usrId != conversacionController.usrActual.usrId}"
+                                    style="height: 80px;"/>
+                    <h:outputText rendered="#{item.convUsr2Id.usrId != conversacionController.usrActual.usrId}" 
+                                  value="#{item.convUsr2Id.usrNombres} #{item.convUsr2Id.usrApellidos}" 
+                                  style="width: 70%;font-size: 15px;font-weight: bold"/>
+                    <p:graphicImage value="/faces/Usuarios/foto/#{item.convUsr1Id.usrId}"
+                                    rendered="#{item.convUsr1Id.usrId != conversacionController.usrActual.usrId}"
+                                    style="height: 80px;"/>
+                    <h:outputText rendered="#{item.convUsr1Id.usrId != conversacionController.usrActual.usrId}" 
+                                  value="#{item.convUsr1Id.usrNombres} #{item.convUsr1Id.usrApellidos}" 
+                                  style="width: 70%;font-size: 15px;font-weight: bold"/>
                     <h:outputText value="#{item.convUltimo}">
                         <f:convertDateTime pattern="HH:mm:ss" />
                     </h:outputText>
-                    <h:outputText value="#{item.convAsunto}"/>
                 </h:panelGrid>
             </p:column>                
         </p:dataTable>                    

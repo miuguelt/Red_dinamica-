@@ -8,28 +8,28 @@
 
     <ui:composition>       
         <h:form id="comentariosListForm">
-                    <p:dataTable id="comentariosListDataTable" styleClass="classDataTable" 
-                                 rendered="#{forosController.foroSelected}"
-                                 value="#{comentariosController.items}" emptyMessage="No hay Comentarios" var="item" editable="true" >
-                         <f:facet name="header">
-                                <h:outputText value="Comentarios del Foro"/>
-                            </f:facet>
-                        <p:column width="10%">
-                            <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
-                            <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
-                                <h:outputText value="#{item.comentUsrId.usrNombres} #{item.comentUsrId.usrApellidos}"/>
-                            </p:overlayPanel>
-                        </p:column>
-                        <p:column width="75%">
-                            <h:outputText id="display" value="#{item.comentDescripcion}" escape="false" />
-                        </p:column>
-                        <p:column>                            
-                            <h:outputText value="#{item.comentFecha}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>
-            </h:form>
+            <p:dataTable id="comentariosListDataTable" styleClass="classDataTable" 
+                         rendered="#{forosController.foroSelected}"
+                         value="#{comentariosController.items}" emptyMessage="No hay Comentarios" var="item" editable="true" >
+                <f:facet name="header">
+                    <h:outputText value="Comentarios del Foro"/>
+                </f:facet>
+                <p:column width="10%">
+                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{item.comentUsrId.usrId}" style="cursor:pointer; height: 50px;"/>
+                    <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                        <h:outputText value="#{item.comentUsrId.usrNombres} #{item.comentUsrId.usrApellidos}"/>
+                    </p:overlayPanel>
+                </p:column>
+                <p:column width="75%">
+                    <h:outputText id="display" value="#{item.comentDescripcion}" escape="false" />
+                </p:column>
+                <p:column>                            
+                    <h:outputText value="#{item.comentFecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </h:form>
     </ui:composition>
 
 </html>

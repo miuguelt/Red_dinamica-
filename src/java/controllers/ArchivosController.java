@@ -8,6 +8,7 @@ import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import facade.ArchivosFacade;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,9 +22,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.faces.application.FacesMessage;
+import javax.inject.Named;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -32,6 +34,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @Named("archivosController")
@@ -225,18 +228,25 @@ public class ArchivosController implements Serializable {
     @EJB
     private facade.VersionFacade ejbVersionFacade;
     private Archivos archivoSelect;
+    private boolean archivoSelected = false;
+    private boolean archivoSubido = false;
     private Colectivos colectivoActual = ColectivosController.getColectivoActual();
     private Usuarios usuarioActual = UsuariosController.getUsuarioActual();
     private DataModel itemsUsuario = null;
+    private DataModel itemsVersiones = null;
 
     public DataModel getItemsUsuario() {
         return itemsUsuario = new ListDataModel((List) getUsuarioActual().getArchivosCollection());
     }
 
+    public DataModel getItemsVersiones() {
+        return itemsVersiones = new ListDataModel((List) getArchivoSelect().getVersionCollection());
+    }
+
     public Colectivos getColectivoActual() {
         return colectivoActual;
     }
-    
+
     public Usuarios getUsuarioActual() {
         return usuarioActual;
     }
@@ -247,6 +257,26 @@ public class ArchivosController implements Serializable {
 
     public void setArchivoSelect(Archivos archivoSelect) {
         this.archivoSelect = archivoSelect;
+    }
+
+    public boolean isArchivoSelected() {
+        return archivoSelected;
+    }
+
+    public void setArchivoSelected(boolean archivoSelected) {
+        this.archivoSelected = archivoSelected;
+    }
+
+    public boolean isArchivoSubido() {
+        return archivoSubido;
+    }
+
+    public void setArchivoSubido(boolean archivoSubido) {
+        this.archivoSubido = archivoSubido;
+    }
+
+    public void prueba() {
+        JsfUtil.addSuccessMessage("prueba: " + isArchivoSubido());
     }
 
     public void setArchivoSelectVista() {
@@ -287,6 +317,8 @@ public class ArchivosController implements Serializable {
                 getColectivoActual().setArchivosCollection(lista);
             }
             setArchivoSelect(current);
+            setArchivoSelected(true);
+            setArchivoSubido(true);
             VersionController.setArchivoSelect(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArchivosCreated"));
             return prepareCreate();
@@ -300,10 +332,18 @@ public class ArchivosController implements Serializable {
         current.setArchivoUsrId(getUsuarioActual());
         current.setArchivoColectivoId(getColectivoActual());
         current.setArchivoVisitas(0);
+        current.setArchivoFecha(new Date());
+        current.setArchivoTipo(1);  //(1) privado
     }
 
     public void rowSelect() {
         JsfUtil.addSuccessMessage("Row select");
+        setArchivoSelected(true);
+        if (getArchivoSelect().getArchivoDireccion() == null) {
+            setArchivoSubido(true);
+        } else {
+            setArchivoSubido(false);
+        }
         VersionController.setArchivoSelect(getArchivoSelect());
     }
     //Subir Archivos
@@ -326,14 +366,50 @@ public class ArchivosController implements Serializable {
         this.in = in;
     }
 
-    public void prueba() {
-        JsfUtil.addSuccessMessage("entra");
+    public void handleFileUploadFoto(FileUploadEvent event) throws IOException, URISyntaxException { //Cambiar foto
+        setIn(event.getFile().getInputstream());
+        setFile(event.getFile());
+        TransferFile(getUsuarioActual().getUsrId(),"foto");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/usuarios/indexPersonal.xhtml");
+
+        JsfUtil.addSuccessMessage("El archivo a sido cargado con exito");
+        JsfUtil.addSuccessMessage("E: " + getExtencion(getFile().getFileName()));
+        
+//            int nombreArchivo = new ArrayList<>(getArchivoSelect().getVersionCollection()).
+//                    get(getArchivoSelect().getVersionCollection().size()).getVersionNumero(); //VersionNumero = nombreVersion
+    }
+
+    public void handleFileUploadVersion(FileUploadEvent event) throws IOException, URISyntaxException {//Metodo para subir nuevas versiones
+        setIn(event.getFile().getInputstream());
+        setFile(event.getFile());
+        int nombreAnterior = new ArrayList<>(getArchivoSelect().getVersionCollection()).
+                get(getArchivoSelect().getVersionCollection().size() - 1).getVersionNumero(); //nombreanterior = numeroVersion+1
+        TransferFile(nombreAnterior + 1, getDirectorio());
+        Version version = new Version();
+        version.setVersionArchivoId(getArchivoSelect());
+        version.setVersionFecha(new Date());
+        version.setVersionNumero(nombreAnterior + 1);
+        version.setVersionUsrId(getUsuarioActual());
+        ejbVersionFacade.create(version);
+        List<Version> listaV = new ArrayList<>();
+        listaV.addAll(getArchivoSelect().getVersionCollection());
+        listaV.add(version);
+        getArchivoSelect().setVersionCollection(listaV);
+        JsfUtil.addSuccessMessage("El archivo a sido cargado con exito");
+
     }
 
     public void handleFileUpload(FileUploadEvent event) throws IOException, URISyntaxException {
-            setIn(event.getFile().getInputstream());
-            setFile(event.getFile());
-            TransferFile(16);
+        setIn(event.getFile().getInputstream());
+        setFile(event.getFile());
+        getArchivoSelect().setArchivoDireccion(TransferFile(1, getDirectorio()));
+        getArchivoSelect().setArchivoExtencion(getExtencion(getFile().getFileName()));
+        getFacade().edit(getArchivoSelect());
+        setArchivoSubido(false); //Mostrar vista subir
+        JsfUtil.addSuccessMessage("El archivo a sido cargado con exito");
+        JsfUtil.addSuccessMessage("E: " + getExtencion(getFile().getFileName()));
+//            int nombreArchivo = new ArrayList<>(getArchivoSelect().getVersionCollection()).
+//                    get(getArchivoSelect().getVersionCollection().size()).getVersionNumero(); //VersionNumero = nombreVersion
     }
 
     public String getExtencion(String FileName) {
@@ -347,7 +423,7 @@ public class ArchivosController implements Serializable {
         return extValidate;
     }
 
-    public String ruta() throws UnsupportedEncodingException {
+    public String ruta() throws UnsupportedEncodingException { //Retorna la direccion de un archivo para ubicar una ruta
         String rutaca = ArchivosController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         rutaca = URLDecoder.decode(rutaca, "utf-8");
         String[] base = rutaca.split("/");
@@ -355,19 +431,32 @@ public class ArchivosController implements Serializable {
         for (int i = 0; i < base.length - 6; i++) {
             direccion = direccion + base[i] + "/";
         }
-        return direccion;
+        return direccion + "web/" + "Usuarios/";
     }
 
-    public void TransferFile(int usrId) {
-        try {
-            String direccion = ruta() + "web/" + "Usuarios/" + "Privado/" + usrId;
+    public String getDirectorio() {
+        switch (getArchivoSelect().getArchivoTipo()) {
+            case 0:
+                return "publico/" + getArchivoSelect().getArchivoId() + "/";
+            case 1:
+                return "privado/" + getArchivoSelect().getArchivoId() + "/";
+            case 2:
+                return "eventos/";
+            case 3:
+                return "usuario/";
+        }
+        return "";
+    }
+
+    public String TransferFile(int nombreArchivo, String directorioTipo) {
+        try {           
+            String direccion = ruta() + directorioTipo;
             //Crear carpeta de usuarios
             File folder = new File(direccion);
             if (!folder.exists()) {
                 folder.mkdirs(); // esto crea la carpeta java, independientemente que exista el path completo, si no existe crea toda la ruta necesaria                 
             }
-            JsfUtil.addSuccessMessage("Después de folder:" + ruta());
-            OutputStream out = new FileOutputStream(new File(direccion + "/" + getFile().getFileName()));
+            OutputStream out = new FileOutputStream(new File(direccion + "/" + nombreArchivo));
             int read;
             byte[] bytes = new byte[(int) getFile().getSize()];
             while ((read = in.read(bytes)) != -1) {
@@ -375,10 +464,32 @@ public class ArchivosController implements Serializable {
             }
             in.close();
             out.flush();
-
-            JsfUtil.addSuccessMessage("Direccion " + direccion);
+            return direccion;
         } catch (IOException e) {
             JsfUtil.addErrorMessage("Error al subir el archivo");
+            return null;
         }
+    }
+    //Descarga
+    private DefaultStreamedContent download;
+
+    public void setDownload(DefaultStreamedContent download) {
+        this.download = download;
+    }
+
+    public DefaultStreamedContent getDownload() throws Exception {
+        System.out.println("GET = " + download.getName());
+        return download;
+    }
+
+    public void prepDownload(Version version) throws Exception {
+        JsfUtil.addSuccessMessage(ruta() + getDirectorio() + "1");
+        File fileD = new File(ruta() + getDirectorio() + version.getVersionNumero());
+        InputStream input = new FileInputStream(fileD);
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(fileD.getName()), fileD.getName()));
+        System.out.println("PREP = " + download.getName());
+        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "PREP = " + download.getName(), null);
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

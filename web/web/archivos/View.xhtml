@@ -3,36 +3,49 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
         <h:form id="archivoViewForm">
-            <p:panel header="#{archivosController.archivoSelect.archivoTema}">
+            <p:panel header="#{archivosController.archivoSelect.archivoNombre} .#{archivosController.archivoSelect.archivoExtencion}" style="border: none;">
+                <h1><h:outputText value="Seleccione o Cree un nuevo archivo" rendered="#{!archivosController.archivoSelected}"/></h1>
+
                 <p:fileUpload fileUploadListener="#{archivosController.handleFileUpload}" mode="advanced" dragDropSupport="false" required="true" 
-                              requiredMessage="Seleccione archivo"
-                              label="LABEL">
-                   
+                              requiredMessage="Seleccione archivo" label="Subir Archivo" 
+                              update=":forosTabView:versionListForm,:forosTabView:versionCreateForm,:forosTabView:archivoViewForm,:forosTabView:archivosListForm"
+                              rendered="#{archivosController.archivoSubido}">
                     <h1>Seleccione un archivo</h1>
                 </p:fileUpload>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoId}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoId}" title="#{bundle.ViewArchivosTitle_archivoId}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoTipo}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoTipo}" title="#{bundle.ViewArchivosTitle_archivoTipo}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoNombre}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoNombre}" title="#{bundle.ViewArchivosTitle_archivoNombre}"/>
+                <h:panelGrid rendered="#{archivosController.archivoSelected}">
+                    <h:panelGroup>
+                        <p:graphicImage id="img" value="/faces/Usuarios/foto/#{archivosController.archivoSelect.archivoUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
+                        <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                            <h:outputText value="#{archivosController.archivoSelect.archivoUsrId.usrNombres} " title="#{bundle.ViewForosTitle_foroUsrId}"/>
+                            <h:outputText value="#{archivosController.archivoSelect.archivoUsrId.usrApellidos}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
+                        </p:overlayPanel>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h:outputText value="#{archivosController.archivoSelect.archivoFecha}" title="#{bundle.ViewForosTitle_foroFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:panelGrid columns="2" rendered="#{archivosController.archivoSelected}">
+
                     <h:outputText value="#{bundle.ViewArchivosLabel_archivoAutor}"/>
                     <h:outputText value="#{archivosController.archivoSelect.archivoAutor}" title="#{bundle.ViewArchivosTitle_archivoAutor}"/>
                     <h:outputText value="#{bundle.ViewArchivosLabel_archivoTema}"/>
                     <h:outputText value="#{archivosController.archivoSelect.archivoTema}" title="#{bundle.ViewArchivosTitle_archivoTema}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoResumen}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoResumen}" title="#{bundle.ViewArchivosTitle_archivoResumen}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoVisitas}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoVisitas}" title="#{bundle.ViewArchivosTitle_archivoVisitas}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoUsrId}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoUsrId}" title="#{bundle.ViewArchivosTitle_archivoUsrId}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoColectivoId}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoColectivoId}" title="#{bundle.ViewArchivosTitle_archivoColectivoId}"/>
+                    <p:outputPanel>
+                        <h3><h:outputText value="#{bundle.ViewArchivosLabel_archivoResumen}"/>
+                        </h3>
+                        <p><h:outputText value="#{archivosController.archivoSelect.archivoResumen}" title="#{bundle.ViewArchivosTitle_archivoResumen}"/>
+                        </p>
+                        <h:outputText value="#{bundle.ViewArchivosLabel_archivoVisitas}"/>
+                        <h:outputText value="#{archivosController.archivoSelect.archivoVisitas}" title="#{bundle.ViewArchivosTitle_archivoVisitas}"/>
+                    </p:outputPanel>
+
                 </h:panelGrid>
             </p:panel>
         </h:form>

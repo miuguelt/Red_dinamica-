@@ -8,16 +8,14 @@
 
     <ui:composition>
         <h:form id="forosViewForm">
-            
+
             <p:panel header="#{forosController.foroSelect.foroTema}">            
                 <h1><h:outputText escape="false" value="Seleccionar un foro" rendered="#{!forosController.foroSelected}"/></h1>
-                <h:panelGrid columns="2" rendered="#{forosController.foroSelected}">
+                <h:panelGrid columns="1" rendered="#{forosController.foroSelected}">
                     <h:panelGroup>
-                        <p:graphicImage id="img" name="/demo/images/images.png" style="cursor:pointer"/>
+                        <p:graphicImage id="img" value="/faces/Usuarios/foto/#{forosController.foroSelect.foroUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
                         <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
-                            <h:outputText value="#{bundle.ViewForosLabel_foroUsrId}"/>
-                            <h:outputText value="#{forosController.foroSelect.foroUsrId.usrNombres}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
-                            <h:outputText value="#{bundle.ViewForosLabel_foroUsrId}"/>
+                            <h:outputText value="#{forosController.foroSelect.foroUsrId.usrNombres} " title="#{bundle.ViewForosTitle_foroUsrId}"/>
                             <h:outputText value="#{forosController.foroSelect.foroUsrId.usrApellidos}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
                         </p:overlayPanel>
                     </h:panelGroup>
@@ -26,10 +24,15 @@
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
                     </h:panelGroup>
-
-                    <h:outputText value="#{bundle.ViewForosLabel_foroDescripcion}"/>
-                    <h:outputText value="#{forosController.foroSelect.foroDescripcion}" title="#{bundle.ViewForosTitle_foroDescripcion}"/>
                 </h:panelGrid>
+                <p:outputPanel rendered="#{forosController.foroSelected}">
+                    <h3>
+                        <h:outputText value="#{bundle.ViewForosLabel_foroDescripcion}"/>
+                    </h3>
+                    <p>
+                        <h:outputText value="#{forosController.foroSelect.foroDescripcion}" title="#{bundle.ViewForosTitle_foroDescripcion}"/>
+                    </p>
+                </p:outputPanel>
             </p:panel>
         </h:form>
     </ui:composition>

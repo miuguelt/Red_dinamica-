@@ -48,3 +48,12 @@ body{
 .centerPanel{
     margin: 0 auto !important;
 }
+.tablaSinBorde td, .tablaSinBorde tr{
+    border: none !important;
+    border-style: none!important;
+}
+
+.ui-panel .ui-panel-content {
+    padding: 0;
+    border: none;
+}

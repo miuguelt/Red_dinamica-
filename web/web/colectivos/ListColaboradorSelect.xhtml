@@ -7,7 +7,7 @@
 
     <ui:composition>        
         <h:form id="colectivosListColaboradorForm">
-                <p:dataTable sortMode="multiple"  value="#{colectivosController.itemsColaboradorSelect}" var="itemCol"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
+            <p:dataTable sortMode="multiple"  value="#{usuariosController.itemsColaboradorSelect}" var="itemCol"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
 
                     <p:column id="idColu" style="width:5%" headerText="Usuario" filterValue="#{itemCol.usuarios.usrNombres}"
                               filterMatchMode="contains" sortBy="#{itemCol.usuarios.usrNombres}" filterBy="#{itemCol.item.usuarios.usrNombres}">
@@ -27,10 +27,6 @@
                     <p:column id="descripcionColumn" style="width:20%"  headerText="Descripción" filterValue="#{itemCol.colectivos.colectDescripcion}"
                               filterMatchMode="contains" sortBy="#{itemCol.colectivos.colectDescripcion}" filterBy="#{itemCol.colectivos.colectDescripcion}">
                         <h:outputText value="#{itemCol.colectivos.colectDescripcion}"/>
-                    </p:column>
-
-                    <p:column style="width:20%">
-                        <p:commandButton icon="ui-icon-folder-open" action="#{colectivosController.setColectivo(itemCol.colectivos)}" title="Acceder a Colectivo" />
                     </p:column>
 
                 </p:dataTable>

@@ -7,9 +7,8 @@
 
     <ui:composition>        
         <h:form id="colectivosListAdminForm">
-            <h:outputText escape="false" value="#{bundle.ListColectivosEmpty}" rendered="#{colectivosController.itemsAdministrador.rowCount == 0}"/>
-            <h:panelGroup rendered="#{colectivosController.itemsAdministrador.rowCount > 0}">
-                <p:dataTable sortMode="multiple"  value="#{colectivosController.itemsAdminSelect}" var="itemAdmin"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
+      
+            <p:dataTable sortMode="multiple"  value="#{usuariosController.itemsAdminSelect}" var="itemAdmin"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
 
                     <p:column id="titulo" style="width:10%"  headerText="Usuario" filterValue="#{itemAdmin.colectUsrId.usrNombres}"
                               filterMatchMode="contains" sortBy="#{itemAdmin.colectUsrId.usrNombres}" filterBy="#{itemAdmin.colectUsrId.usrNombres}">
@@ -25,13 +24,7 @@
                               filterMatchMode="contains" sortBy="#{itemAdmin.colectDescripcion}" filterBy="#{itemAdmin.colectDescripcion}">
                         <h:outputText value="#{itemAdmin.colectDescripcion}"/>
                     </p:column>
-
-                    <p:column style="width:20%">
-                        <p:commandButton icon="ui-icon-folder-open" action="#{colectivosController.setColectivo(itemAdmin)}" title="Acceder a Colectivo" />
-                    </p:column>
-
                 </p:dataTable>
-            </h:panelGroup>
         </h:form>
     </ui:composition>
 </html>

@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Version.findAll", query = "SELECT v FROM Version v"),
     @NamedQuery(name = "Version.findByVersionId", query = "SELECT v FROM Version v WHERE v.versionId = :versionId"),
     @NamedQuery(name = "Version.findByVersionFecha", query = "SELECT v FROM Version v WHERE v.versionFecha = :versionFecha"),
-    @NamedQuery(name = "Version.findByVersionNumero", query = "SELECT v FROM Version v WHERE v.versionNumero = :versionNumero")})
+    @NamedQuery(name = "Version.findByVersionNumero", query = "SELECT v FROM Version v WHERE v.versionNumero = :versionNumero"),
+    @NamedQuery(name = "Version.findByVersionDescargas", query = "SELECT v FROM Version v WHERE v.versionDescargas = :versionDescargas")})
 public class Version implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,12 +51,14 @@ public class Version implements Serializable {
     @NotNull
     @Column(name = "version_numero")
     private int versionNumero;
-    @JoinColumn(name = "version_archivo_id", referencedColumnName = "archivo_id")
-    @ManyToOne(optional = false)
-    private Archivos versionArchivoId;
+    @Column(name = "version_descargas")
+    private Integer versionDescargas;
     @JoinColumn(name = "version_usr_id", referencedColumnName = "usr_id")
     @ManyToOne(optional = false)
     private Usuarios versionUsrId;
+    @JoinColumn(name = "version_archivo_id", referencedColumnName = "archivo_id")
+    @ManyToOne(optional = false)
+    private Archivos versionArchivoId;
 
     public Version() {
     }
@@ -94,12 +97,12 @@ public class Version implements Serializable {
         this.versionNumero = versionNumero;
     }
 
-    public Archivos getVersionArchivoId() {
-        return versionArchivoId;
+    public Integer getVersionDescargas() {
+        return versionDescargas;
     }
 
-    public void setVersionArchivoId(Archivos versionArchivoId) {
-        this.versionArchivoId = versionArchivoId;
+    public void setVersionDescargas(Integer versionDescargas) {
+        this.versionDescargas = versionDescargas;
     }
 
     public Usuarios getVersionUsrId() {
@@ -108,6 +111,14 @@ public class Version implements Serializable {
 
     public void setVersionUsrId(Usuarios versionUsrId) {
         this.versionUsrId = versionUsrId;
+    }
+
+    public Archivos getVersionArchivoId() {
+        return versionArchivoId;
+    }
+
+    public void setVersionArchivoId(Archivos versionArchivoId) {
+        this.versionArchivoId = versionArchivoId;
     }
 
     @Override

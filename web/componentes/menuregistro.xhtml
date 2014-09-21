@@ -12,7 +12,6 @@
             <p:menubar>
                 <p:menuitem value="Inicio" outcome="/index" icon="ui-icon-home"/>
                 <p:menuitem value="Perfil" outcome="/web/usuarios/indexPersonal.xhtml" icon="ui-icon-home"/>
-                <p:menuitem value="Comunidad" outcome="/web/usuarios/index.xhtml" icon="ui-icon-home"/>
                 <p:menuitem value="Colectivos" outcome="/web/colectivos/index.xhtml" icon="ui-icon-home"/>
                 <p:menuitem value="Mensajes" outcome="/web/conversacion/index.xhtml" icon="ui-icon-home"/>
                 <p:submenu label="Todo">
@@ -27,7 +26,7 @@
                     <p:menuitem value="Foros" outcome="/web/foros/List.xhtml" />
                     <p:menuitem value="Gruposinvestiga" outcome="/web/gruposinvestiga/List.xhtml" />
                     <p:menuitem value="Historialarchivos" outcome="/web/historialarchivos/List.xhtml" />
-                    <p:menuitem value="Mensaje" outcome="/web/mensaje/List.xhtml" />
+                    <p:menuitem value="Mensaje" outcome="/web/mensaje/List.xhtml"/>
                     <p:menuitem value="Noticias" outcome="/web/noticias/List.xhtml" />
                     <p:menuitem value="Palabrasclave" outcome="/web/palabrasclave/List.xhtml" />
                     <p:menuitem value="Respuestascoment" outcome="/web/respuestascoment/List.xhtml" />
@@ -37,11 +36,10 @@
                     <p:menuitem value="Version" outcome="/web/version/List.xhtml" />
                 </p:submenu>
                 <f:facet name="options">
-                    <p:inputText placeholder="Search"/>
-                    <p:commandButton type="button" value="Logout" icon="ui-icon-extlink"/>
-                </f:facet>
-                <f:facet name="options">
-                    <ui:include src="/web/usuarios/perfil.xhtml" />
+                    <p:panel style="border: none;"> 
+                        <ui:include src="/web/usuarios/List.xhtml" />
+                        <ui:include src="/web/usuarios/perfil.xhtml" />
+                    </p:panel>
                 </f:facet>
             </p:menubar>
         </h:form>
