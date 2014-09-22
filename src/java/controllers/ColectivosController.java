@@ -222,6 +222,7 @@ public class ColectivosController implements Serializable {
     private DataModel itemsColaborador = null;
     private DataModel itemsAdminSelect = null;
     private DataModel itemsColaboradorSelect = null;
+    private DataModel itemsUsuariosColectivo = null;
     private List<Colectivos> colectivosAllList;
     @EJB
     private facade.FormaparteFacade ejbFormaParteFacade;
@@ -250,6 +251,10 @@ public class ColectivosController implements Serializable {
 
     public static void setUsuarioSelect(Usuarios usuarioSelect) {
         ColectivosController.usuarioSelect = usuarioSelect;
+    }
+
+    public DataModel getItemsUsuariosColectivo() {
+        return itemsUsuariosColectivo = new ListDataModel(new ArrayList<>(getColectivoActual().getFormaparteCollection()));
     }
 
     public DataModel getItemsAdminSelect() {

@@ -308,6 +308,8 @@ public class ConversacionController implements Serializable {
 
     public void enviarMsj() {
         try {
+            convSelect.getMensajeCollection();
+            usrActual.getMensajeCollection1();
             setExiste_conv(true);
             Date fechaActual = new Date();
             Mensaje mensaje = new Mensaje();

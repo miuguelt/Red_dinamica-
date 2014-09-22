@@ -7,7 +7,7 @@
     <ui:composition template="/templates/generalTemplate.xhtml">
 
         <ui:define name="body" class="bodys">        
-            
+
             <p:tabView id="forosTabView" dynamic="true" scrollable="true" styleClass="tabView" orientation="top">
 
                 <p:tab title="Foros" closable="true">
@@ -43,11 +43,12 @@
                         </p:layoutUnit>
                     </p:layout>
                 </p:tab>
+
                 <p:tab title="Participantes" >
                     <p:layout>
                         <p:layoutUnit position="west" size="30%" >
+                            <ui:include src="/web/usuarios/ListColectivos.xhtml"/>
                         </p:layoutUnit>
-
                         <p:layoutUnit position="center">
                         </p:layoutUnit>
                     </p:layout>
