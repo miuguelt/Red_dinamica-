@@ -2,12 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:composition template="/templates/generalTemplate.xhtml">
 
         <ui:define name="body" class="bodys">        
-
+            <h:panelGrid id="gridF" width="100%">
+                <p:panel header="#{forosController.titulo}" />
+            </h:panelGrid>
+            <ui:include src="/web/colectivos/List.xhtml"/>
             <p:tabView id="forosTabView" dynamic="true" scrollable="true" styleClass="tabView" orientation="top">
 
                 <p:tab title="Foros" closable="true">
@@ -15,7 +20,11 @@
                     <p:layout>
                         <p:layoutUnit position="west" size="25%" header="Foros" collapsible="true" resizable="true" gutter="15">                            
                             <ui:include src="/web/foros/Create.xhtml" />
+                            <br/>
+                            <ui:include src="/web/usuarios/ListColectivos.xhtml"/>
+                            <br/>
                             <ui:include src="/web/foros/List.xhtml"/>
+
                         </p:layoutUnit>
 
                         <p:layoutUnit id="forosCenterLayout" position="center" style="border: none;">
@@ -23,13 +32,14 @@
                                 <ui:include src="/web/foros/View.xhtml"/>
                                 <ui:include src="/web/comentarios/Create.xhtml" />
                                 <ui:include src="/web/comentarios/List.xhtml" />
+
                             </p:panel>
                         </p:layoutUnit>
 
                     </p:layout>
                 </p:tab>
 
-                <p:tab title="Archivos" >              
+                <p:tab title="Archivos de trabajo" >              
                     <p:layout style="position: relative">
                         <p:layoutUnit position="west" size="30%" style="min-height: 370px;">
                             <ui:include src="/web/archivos/Create.xhtml" />
@@ -44,15 +54,6 @@
                     </p:layout>
                 </p:tab>
 
-                <p:tab title="Participantes" >
-                    <p:layout>
-                        <p:layoutUnit position="west" size="30%" >
-                            <ui:include src="/web/usuarios/ListColectivos.xhtml"/>
-                        </p:layoutUnit>
-                        <p:layoutUnit position="center">
-                        </p:layoutUnit>
-                    </p:layout>
-                </p:tab>
             </p:tabView>  
         </ui:define>
 

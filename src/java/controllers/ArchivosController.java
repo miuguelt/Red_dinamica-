@@ -320,7 +320,7 @@ public class ArchivosController implements Serializable {
             setArchivoSelected(true);
             setArchivoSubido(true);
             VersionController.setArchivoSelect(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArchivosCreated"));
+            JsfUtil.addSuccessMessage("Archivo creado!");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -366,17 +366,18 @@ public class ArchivosController implements Serializable {
         this.in = in;
     }
 
+    public void handleFileUploadAfiche(FileUploadEvent event) throws IOException, URISyntaxException { //Subir afiche de Evento
+        setIn(event.getFile().getInputstream());
+        setFile(event.getFile());
+        TransferFile(getUsuarioActual().getUsrId(),"foto");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/usuarios/indexPersonal.xhtml");
+    }
+    
     public void handleFileUploadFoto(FileUploadEvent event) throws IOException, URISyntaxException { //Cambiar foto
         setIn(event.getFile().getInputstream());
         setFile(event.getFile());
         TransferFile(getUsuarioActual().getUsrId(),"foto");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/usuarios/indexPersonal.xhtml");
-
-        JsfUtil.addSuccessMessage("El archivo a sido cargado con exito");
-        JsfUtil.addSuccessMessage("E: " + getExtencion(getFile().getFileName()));
-        
-//            int nombreArchivo = new ArrayList<>(getArchivoSelect().getVersionCollection()).
-//                    get(getArchivoSelect().getVersionCollection().size()).getVersionNumero(); //VersionNumero = nombreVersion
     }
 
     public void handleFileUploadVersion(FileUploadEvent event) throws IOException, URISyntaxException {//Metodo para subir nuevas versiones
@@ -398,6 +399,7 @@ public class ArchivosController implements Serializable {
         JsfUtil.addSuccessMessage("El archivo a sido cargado con exito");
 
     }
+  
 
     public void handleFileUpload(FileUploadEvent event) throws IOException, URISyntaxException {
         setIn(event.getFile().getInputstream());

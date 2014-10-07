@@ -15,25 +15,23 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewVersionLabel_versionId}"/>
-                    <h:outputText value="#{versionController.selected.versionId}" title="#{bundle.ViewVersionTitle_versionId}"/>
-                    <h:outputText value="#{bundle.ViewVersionLabel_versionFecha}"/>
-                    <h:outputText value="#{versionController.selected.versionFecha}" title="#{bundle.ViewVersionTitle_versionFecha}"/>
-                    <h:outputText value="#{bundle.ViewVersionLabel_versionArchivoId}"/>
-                    <h:outputText value="#{versionController.selected.versionArchivoId}" title="#{bundle.ViewVersionTitle_versionArchivoId}"/>
+                    <h:outputText value="Fecha"/>
+                    <h:outputText value="#{versionController.selected.versionFecha}" title="Fecha"/>
+                    <h:outputText value="ArchivoId"/>
+                    <h:outputText value="#{versionController.selected.versionArchivoId}" title="ArchivoId"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{versionController.destroyAndView}" value="#{bundle.ViewVersionDestroyLink}"/>
                 <br />
                 <br />
-                <h:link outcome="Edit" value="#{bundle.ViewVersionEditLink}"/>
+                <h:link outcome="Edit" value="Editar"/>
                 <br />
-                <h:commandLink action="#{versionController.prepareCreate}" value="#{bundle.ViewVersionCreateLink}" />
+                <h:commandLink action="#{versionController.prepareCreate}" value="Crear" />
                 <br />
-                <h:commandLink action="#{versionController.prepareList}" value="#{bundle.ViewVersionShowAllLink}"/>
+                <h:commandLink action="#{versionController.prepareList}" value="Listar"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.ViewVersionIndexLink}"/>
+                <h:link outcome="/index" value="Inicio"/>
 
             </h:form>
         </ui:define>

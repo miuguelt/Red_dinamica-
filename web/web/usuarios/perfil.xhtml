@@ -11,8 +11,11 @@
             <h:panelGrid columns="2" id="panelPerfil">
                 <h:outputLabel for="nombre" class="destacado" value="#{usuariosController.getUsuarioActual().usrNombres}  #{usuariosController.getUsuarioActual().usrApellidos}" />
                 <p:commandLink action="/web/usuarios/indexPersonal.xhtml" update=":menuRegistroForm">
-                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}" style="cursor:pointer; height: 60px;"/>
-                </p:commandLink>                   
+                    <p:graphicImage rendered="#{usuariosController.verFoto}" id="img" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}" style="cursor:pointer; height: 60px;"/>
+                </p:commandLink> 
+                <p:commandLink rendered="#{!usuariosController.verFoto}" action="/web/usuarios/indexPersonal.xhtml" update=":menuRegistroForm">
+                     <p:graphicImage id="imgd"  value="/faces/Usuarios/foto/default" style="height: 60px;"/>
+                </p:commandLink> 
                 <p:commandLink value="Cerrar sesión" action="#{usuariosController.logOut()}"/>
             </h:panelGrid>
         </p:overlayPanel> 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="evaluarPonentesListDlg" widgetVar="evaluarPonentesListDialog" modal="true" resizable="false" appendTo="@(body)" 
+              header="Ponencias" closeOnEscape="true" width="48%" >
+
+        <h:form>
+            <p:dataTable value="#{eventosController.itemsEvaluarPonentes}"
+                         var="item"
+                         rowKey="#{item.usuarios.usrId}"
+                         emptyMessage="No hay Usuarios Registrados"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="10,15,20" >
+
+                <p:column width="5%" sortBy="#{item.usuarios.usrNombres}" filterBy="#{item.usuarios.usrNombres}" headerText="Ponente">
+                    <p:graphicImage id="imgEvaluar" value="/faces/Usuarios/foto/#{item.usuarios.usrId}" 
+                                    style="cursor:pointer; width: 60px;"/>
+                    <p:overlayPanel for="imgEvaluar" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout"
+                                    style="margin: auto;">
+                        <h:outputText value="#{item.usuarios.usrNombres} #{item.usuarios.usrApellidos}"/>
+                    </p:overlayPanel>
+                </p:column>
+
+                <p:column width="15" sortBy="#{item.ponenciaTitulo}" filterBy="#{item.ponenciaTitulo}" headerText="Ponencias">
+                    <h:outputText value="#{item.ponenciaTitulo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}" headerText="Universidad">
+                    <h:outputText value="#{item.usuarios.usrUniversidad}"/>
+                </p:column>
+                <p:column width="15%">
+                        <p:commandButton value="Descargar" ajax="false" actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                            <p:fileDownload value="# {archivosController.download}" />
+                        </p:commandButton> <br/>
+                        <p:commandButton icon="ui-icon-plus" value="Evaluar" 
+                                         oncomplete="PF('evaluarPonentesListDialog').show()"
+                                         actionListener="# {eventosController.prepareEditConferencia}"
+                                         rendered="true"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:dialog>
+</ui:composition>

@@ -10,13 +10,14 @@
         <p:dialog id="colectivosCreateDlg" widgetVar="colectivosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Colectivo">
             <h:form id="colectivosCreateForm">
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateColectivosLabel_colectTitulo}" for="colectTitulo" />
-                    <h:inputText id="colectTitulo" value="#{colectivosController.selected.colectTitulo}" title="#{bundle.CreateColectivosTitle_colectTitulo}" required="true" requiredMessage="#{bundle.CreateColectivosRequiredMessage_colectTitulo}"/>
-                    <h:outputLabel value="#{bundle.CreateColectivosLabel_colectDescripcion}" for="colectDescripcion" />
-                    <h:inputTextarea rows="4" cols="30" id="colectDescripcion" value="#{colectivosController.selected.colectDescripcion}" title="#{bundle.CreateColectivosTitle_colectDescripcion}" required="true" requiredMessage="#{bundle.CreateColectivosRequiredMessage_colectDescripcion}"/>
+                    <h:outputLabel value="Titulo" for="colectTitulo" />
+                    <h:inputText id="colectTitulo" value="#{colectivosController.selected.colectTitulo}" title="Titulo" required="true" requiredMessage="Titulo requerido"/>
+                    <h:outputLabel value="Descripcion" for="colectDescripcion" />
+                    <h:inputTextarea rows="4" cols="30" id="colectDescripcion" value="#{colectivosController.selected.colectDescripcion}" title="Descripcion" required="true" requiredMessage="Descripcion requerida"/>
                 </h:panelGrid>
                 <br />
-                <p:commandButton value="Crear Colectivo" id="enviarBoton" action="#{colectivosController.create}" update=":colectivosTabView:colectivosAccordionPanel:colectivosListAdminForm,:colectivosTabView:colectivosListForm,colectivosCreateForm" oncomplete="handleSubmit(args,'colectivosCreateDialog');"/>
+                <p:commandButton value="Crear Colectivo" id="enviarBoton" action="#{colectivosController.create}" 
+                                 update=":colectivosTabView:colectivosAccordionPanel:colectivosListAdminForm,:colectivosTabView:colectivosListForm,colectivosCreateForm" oncomplete="handleSubmit(args,'colectivosCreateDialog');"/>
             </h:form>
         </p:dialog>
 

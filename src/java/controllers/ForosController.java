@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -216,7 +215,12 @@ public class ForosController implements Serializable {
     private Foros current;
     private Colectivos colectivoActual = ColectivosController.getColectivoActual();
     private Foros foroSelect = new Foros();
+    private String titulo=colectivoActual.getColectTitulo();
 
+    public String getTitulo() {
+        return titulo;
+    }
+    
     public Colectivos getColectivoActual() {
         return colectivoActual;
     }

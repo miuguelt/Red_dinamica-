@@ -63,12 +63,12 @@ public class Conversacion implements Serializable {
     private int convNumero;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "msjConversacion")
     private Collection<Mensaje> mensajeCollection;
-    @JoinColumn(name = "conv_usr1_id", referencedColumnName = "usr_id")
-    @ManyToOne(optional = false)
-    private Usuarios convUsr1Id;
     @JoinColumn(name = "conv_usr2_id", referencedColumnName = "usr_id")
     @ManyToOne(optional = false)
     private Usuarios convUsr2Id;
+    @JoinColumn(name = "conv_usr1_id", referencedColumnName = "usr_id")
+    @ManyToOne(optional = false)
+    private Usuarios convUsr1Id;
 
     public Conversacion() {
     }
@@ -125,20 +125,20 @@ public class Conversacion implements Serializable {
         this.mensajeCollection = mensajeCollection;
     }
 
-    public Usuarios getConvUsr1Id() {
-        return convUsr1Id;
-    }
-
-    public void setConvUsr1Id(Usuarios convUsr1Id) {
-        this.convUsr1Id = convUsr1Id;
-    }
-
     public Usuarios getConvUsr2Id() {
         return convUsr2Id;
     }
 
     public void setConvUsr2Id(Usuarios convUsr2Id) {
         this.convUsr2Id = convUsr2Id;
+    }
+
+    public Usuarios getConvUsr1Id() {
+        return convUsr1Id;
+    }
+
+    public void setConvUsr1Id(Usuarios convUsr1Id) {
+        this.convUsr1Id = convUsr1Id;
     }
 
     @Override

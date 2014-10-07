@@ -1,7 +1,9 @@
 package controllers;
 
 import static bean.InterfaceBean.session;
+import clases.Ciudad;
 import clases.Conversacion;
+import clases.Departamentos;
 import clases.Universidades;
 import clases.Usuarios;
 import static controllers.ColectivosController.getUsuarioSelect;
@@ -9,6 +11,7 @@ import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import controllers.util.PasswordService;
 import facade.UsuariosFacade;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.FlowEvent;
 
@@ -91,7 +95,7 @@ public class UsuariosController implements Serializable {
     public void update() {
         try {
             getFacade().edit(getUsuarioActualVista());
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsuariosUpdated"));
+            JsfUtil.addSuccessMessage("Usuario editado!");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -224,8 +228,8 @@ public class UsuariosController implements Serializable {
 
     public DataModel getItemsUsuarioSelectArchivos() {
         return itemsUsuarioSelectArchivos = new ListDataModel((List) getUsuarioSelect().getArchivosCollection());
-    }    
-    
+    }
+
     public String getUsrPass2() {
         return usrPass2;
     }
@@ -265,11 +269,10 @@ public class UsuariosController implements Serializable {
         return items = new ListDataModel(getFacade().findAll()); //= new ListDataModel(listaUsrs);
     }
 
-    public String prepareCreate() {
+    public void prepareCreate() {
         current = new Usuarios();
-        selectedItemIndex = -1;
         setUsrPass2(null);
-        return "Index";
+        JsfUtil.addSuccessMessage(" sfd");
     }
 
     public void create() {
@@ -293,10 +296,12 @@ public class UsuariosController implements Serializable {
     //Variables de registro 
 
     public boolean isSkip() {
+
         return skip;
     }
 
     public void setSkip(boolean skip) {
+        getSexoUsuarioCurrent();
         this.skip = skip;
     }
 
@@ -325,21 +330,52 @@ public class UsuariosController implements Serializable {
         }
     }
     //Ver perifil de usuarios
+    private String sexoUsuarioSelect;
+    private String sexoUsuarioActual;
+    private String sexoUsuarioCurrent;
 
-    public String sexo() {
-        if (getUsuarioSelect().getUsrSexo()) {
-            return "Hombre";
+    public String getSexoUsuarioCurrent() {
+        if (getSelected().getUsrSexo()) {
+            return sexoUsuarioCurrent = "Hombre";
         } else {
-            return "Mujer";
+            return sexoUsuarioCurrent = "Mujer";
+        }
+
+    }
+
+    public void setSexoUsuarioCurrent(String sexoUsuarioCurrent) {
+        this.sexoUsuarioCurrent = sexoUsuarioCurrent;
+    }
+
+    public void asignarSexoCurrent() {
+        getSexoUsuarioCurrent();
+    }
+
+    public String getSexoUsuarioActual() {
+
+        if (getUsuarioActual().getUsrSexo()) {
+            return sexoUsuarioActual = "Hombre";
+        } else {
+            return sexoUsuarioActual = "Mujer";
         }
     }
 
-    public String sexoUsuarioVista() {
-        if (getUsuarioActual().getUsrSexo()) {
-            return "Hombre";
+    public String getSexoUsuarioSelect() {
+        if (usuarioSelect.getUsrSexo() != null) {
+
+            if (getUsuarioSelect().getUsrSexo()) {
+                return sexoUsuarioSelect = "Hombre";
+            } else {
+                return sexoUsuarioSelect = "Mujer";
+            }
+
         } else {
-            return "Mujer";
+            return "";
         }
+    }
+
+    public void setSexoUsuarioSelect(String sexoUsuarioSelect) {
+        this.sexoUsuarioSelect = sexoUsuarioSelect;
     }
 
     public void setPerfilPersonal() {
@@ -465,7 +501,6 @@ public class UsuariosController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique cédula y/o contraseña!  " + e, ""));
             System.out.println("Excepcion!!!....");
         }
-
     }
 
     //Cerrar Sesion
@@ -479,10 +514,10 @@ public class UsuariosController implements Serializable {
         JsfUtil.addSuccessMessage("Cerrar sesion");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/");
     }
-        public void rowSelect() {
-            JsfUtil.addSuccessMessage("Entra");
-        }
 
+    public void rowSelect() {
+        JsfUtil.addSuccessMessage("Entra");
+    }
     //////////////////////////////////Buscador
     private String nombre_buscar;
     private String filtrar_por = "1";// tipo de filtro al buscar usuarios:(1=nombre, 2= email, 3= universidad)
@@ -691,6 +726,79 @@ public class UsuariosController implements Serializable {
         } catch (Exception e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error filtro: " + e + "\nLocalize: " + e.getLocalizedMessage(), "  nombre no asignado: " + e + "\nLocalize: " + e.getLocalizedMessage()));
+        }
+    }
+    //Asignar ciudades a departamento
+    private Departamentos departamentoSelect;
+
+    public Departamentos getDepartamentoSelect() {
+        return departamentoSelect;
+    }
+
+    public void setDepartamentoSelect(Departamentos departamentoSelect) {
+        this.departamentoSelect = departamentoSelect;
+    }
+
+    public void asignarDepartamento() {
+        try {
+            this.departamentoSelect = getSelected().getUsrDepartamento();
+            this.ciudadSelect = null;
+            getSelected().setUsrDepartamento(departamentoSelect);
+
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Error al asignar el departamento: " + e);
+        }
+    }
+//Asignar ciudades a ciudades
+    private Ciudad ciudadSelect;
+
+    public Ciudad getCiudadSelect() {
+        return ciudadSelect;
+    }
+
+    public void setCiudadSelect(Ciudad ciudadSelect) {
+        this.ciudadSelect = ciudadSelect;
+    }
+
+    public void asignarCiudad() {
+        try {
+
+            this.ciudadSelect = getSelected().getUsrCiudad();
+
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Error al asignar el departamento: " + e);
+        }
+    }
+    private boolean verFoto;
+    private boolean verFotoSelect;
+
+    public boolean isVerFoto() {
+        try {
+        final ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        Usuarios u = UsuariosController.getUsuarioActual();
+        String foto = "" + u.getUsrId();
+        String fileFoto = servletContext.getRealPath("") + File.separator + "/Usuarios/foto/" + File.separator + foto;
+
+        File file = new File(fileFoto);
+        return verFoto = file.exists();
+         } catch (Exception e) {
+             JsfUtil.addErrorMessage("Error en foto");
+             return false;
+        }
+    }
+
+    public boolean isVerFotoSelect() {
+        try {
+        final ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String foto = "";
+        if (usuarioSelect != null) {
+            foto = "" + this.usuarioSelect.getUsrId();
+        }
+        String fileFoto = servletContext.getRealPath("") + File.separator + "/Usuarios/foto/" + File.separator + foto;
+        File file = new File(fileFoto);
+        return verFotoSelect = file.exists();
+        } catch (Exception e) {
+            return false;
         }
     }
 }

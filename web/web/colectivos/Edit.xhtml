@@ -15,30 +15,28 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditColectivosLabel_colectId}" for="colectId" />
-                    <h:inputText id="colectId" value="#{colectivosController.selected.colectId}" title="#{bundle.EditColectivosTitle_colectId}" required="true" requiredMessage="#{bundle.EditColectivosRequiredMessage_colectId}"/>
-                    <h:outputLabel value="#{bundle.EditColectivosLabel_colectTitulo}" for="colectTitulo" />
-                    <h:inputText id="colectTitulo" value="#{colectivosController.selected.colectTitulo}" title="#{bundle.EditColectivosTitle_colectTitulo}" required="true" requiredMessage="#{bundle.EditColectivosRequiredMessage_colectTitulo}"/>
-                    <h:outputLabel value="#{bundle.EditColectivosLabel_colectDescripcion}" for="colectDescripcion" />
-                    <h:inputTextarea rows="4" cols="30" id="colectDescripcion" value="#{colectivosController.selected.colectDescripcion}" title="#{bundle.EditColectivosTitle_colectDescripcion}" required="true" requiredMessage="#{bundle.EditColectivosRequiredMessage_colectDescripcion}"/>
-                    <h:outputLabel value="#{bundle.EditColectivosLabel_colectFecha}" for="colectFecha" />
-                    <h:inputText id="colectFecha" value="#{colectivosController.selected.colectFecha}" title="#{bundle.EditColectivosTitle_colectFecha}" required="true" requiredMessage="#{bundle.EditColectivosRequiredMessage_colectFecha}">
+                    <h:outputLabel value="Titulo" for="colectTitulo" />
+                    <h:inputText id="colectTitulo" value="#{colectivosController.selected.colectTitulo}" title="Titulo" required="true" requiredMessage="Titulo requerido"/>
+                    <h:outputLabel value="Descripcion" for="colectDescripcion" />
+                    <h:inputTextarea rows="4" cols="30" id="colectDescripcion" value="#{colectivosController.selected.colectDescripcion}" title="Descripcion" required="true" requiredMessage="Descripcion requerida"/>
+                    <h:outputLabel value="Fecha" for="colectFecha" />
+                    <h:inputText id="colectFecha" value="#{colectivosController.selected.colectFecha}" title="Fecha" required="true" requiredMessage="Fecha requerida">
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:inputText>
-                    <h:outputLabel value="#{bundle.EditColectivosLabel_colectUsrId}" for="colectUsrId" />
-                    <h:selectOneMenu id="colectUsrId" value="#{colectivosController.selected.colectUsrId}" title="#{bundle.EditColectivosTitle_colectUsrId}" required="true" requiredMessage="#{bundle.EditColectivosRequiredMessage_colectUsrId}">
+                    <h:outputLabel value="UsrId" for="colectUsrId" />
+                    <h:selectOneMenu id="colectUsrId" value="#{colectivosController.selected.colectUsrId}" title="UsrId" required="true" requiredMessage="UsrId  requerido">
                         <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{colectivosController.update}" value="#{bundle.EditColectivosSaveLink}"/>
+                <h:commandLink action="#{colectivosController.update}" value="Guardar"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundle.EditColectivosViewLink}"/>
+                <h:link outcome="View" value="Ver"/>
                 <br />
-                <h:commandLink action="#{colectivosController.prepareList}" value="#{bundle.EditColectivosShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{colectivosController.prepareList}" value="Listar" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.EditColectivosIndexLink}" />
+                <h:link outcome="/index" value="Inicio" />
             </h:form>
         </ui:define>
     </ui:composition>

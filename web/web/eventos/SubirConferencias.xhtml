@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+
+    <p:dialog id="conferenciaCreateDlg" widgetVar="conferenciaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Subir Conferencia">
+        <h:form>
+            <h:outputLabel value="Titulo " for="titulo"/>
+            <h:inputText id="titulo" value="#{eventosController.titulo}" title="Titulo de Ponencia">
+                <f:ajax event="blur"/>
+            </h:inputText>
+            <p:fileUpload fileUploadListener="#{eventosController.handleFileUploadConferencia}" mode="advanced" dragDropSupport="false" required="true" 
+                          requiredMessage="Seleccione archivo" label="Subir Archivo" oncomplete="handleSubmit(args,'ponenciaCreateDialog');" 
+                          update=":eventosTabView:conferenciaCreateDlg">
+
+                <h1>Seleccione conferencia</h1>
+            </p:fileUpload>
+        </h:form>
+    </p:dialog>
+</ui:composition>

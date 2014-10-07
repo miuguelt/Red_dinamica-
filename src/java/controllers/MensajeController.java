@@ -249,7 +249,7 @@ public class MensajeController implements Serializable {
             asignarTodo();
             getFacade().create(current);
             getConvSelect().getMensajeCollection().add(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("MensajeCreated"));
+            JsfUtil.addSuccessMessage("Mensaje enviado!");
             prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

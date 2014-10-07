@@ -15,12 +15,10 @@
                     <h:outputText value="Versiones"/>
                 </f:facet>
                 <p:column width="10%" headerText="Subido por">
-                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{item.versionArchivoId.archivoUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
-                    <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
-                        <h:outputText value="#{item.versionArchivoId.archivoUsrId.usrNombres} #{item.versionArchivoId.archivoUsrId.usrApellidos}"/>
-                    </p:overlayPanel>
+                    <p:graphicImage title="#{item.versionArchivoId.archivoUsrId.usrNombres} #{item.versionArchivoId.archivoUsrId.usrApellidos}" value="/faces/Usuarios/foto/#{item.versionArchivoId.archivoUsrId.usrId}" style="height: 60px;"/>
+                    
                 </p:column>
-                <p:column width="75%" headerText="Número de Versión">
+                <p:column width="75%" headerText="Número de Versión" >
                     <h:outputText id="display" value="#{item.versionNumero}" escape="false" />
                 </p:column>
                 <p:column headerText="Fecha">                            

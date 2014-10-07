@@ -2,7 +2,6 @@ package controllers;
 
 import clases.Comentarios;
 import clases.Foros;
-import com.sun.org.apache.bcel.internal.Constants;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
 import facade.ComentariosFacade;

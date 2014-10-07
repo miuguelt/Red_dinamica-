@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="fromNoticiasA">
+            <p:dataTable id="noticiasListForm"
+                         styleClass="classDataTable"
+                         value="#{noticiasController.items}"
+                         var="item"
+                         rowKey="#{item.noticiaId}"
+                         emptyMessage="No hay Noticias" 
+                         paginator="true"
+                         rows="4"
+                         >
+                <p:column sortBy="#{item.noticiaFecha}" filterBy="#{item.noticiaTitulo}" width="100%">
+                    
+                    <h:panelGrid id="grid" width="100%">
+                        <p:panel header="#{item.noticiaTitulo}" />
+
+                        <h:outputText value="#{item.noticiaFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <p:panel id="basic" style="margin-bottom:20px">
+                        <h:panelGrid columns="2" cellpadding="10">
+                           <p:graphicImage id="noticiaImg" value="/faces/Usuarios/noticias/#{item.noticiaId}" style="width:190px;"/>
+                            <h:outputText value="#{item.noticiaDescripcion}" />
+                        </h:panelGrid>
+                            <p:commandButton id="leerMas" icon="ui-icon-plus"  update=":noticiasViewDlg" value="Leer más" actionListener="#{noticiasController.leerMas(item)}" oncomplete="PF('noticiasViewDialog').show()"/>
+                    </p:panel>
+                    <h:outputText value="Fuente: #{item.noticiaFuente}"/>
+                    
+
+                    </h:panelGrid>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+    </ui:composition>
+
+</html>

@@ -8,28 +8,24 @@
 
     <ui:composition>        
         <h:form id="colectivosFormBoton" > 
-            <p:commandButton id="colectivosBoton" value="Colectivos" type="button"/>
+            <p:commandButton id="colectivosBoton" value="Ver Colectivos" type="button"/>
+            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Colectivo" actionListener="#{colectivosController.prepareCreate}" oncomplete="PF('colectivosCreateDialog').show()"/>
         </h:form>
-        <p:overlayPanel id="colectivosOverlay" for=":colectivosTabView:colectivosFormBoton:colectivosBoton" appendToBody="true" hideEffect="fade">
+        <p:overlayPanel id="colectivosOverlay" for=":colectivosFormBoton:colectivosBoton" appendToBody="true" hideEffect="fade">
             <h:form id="colectivosListForm">
                 <h:panelGroup>
                     <p:dataTable id="usuariosListForm"
-                         styleClass="classDataTable"
-                         value="#{colectivosController.items}"
-                         var="item"
-                         rowKey="#{item.colectId}"
-                         emptyMessage="No hay Usuarios Registrados" 
-                         paginator="true"
-                         selectionMode="single" selection="#{colectivosController.colectivoActualVista}"
-                         rows="10"
-                         rowsPerPageTemplate="10,20,30,40,50" >
-                       
-                        <p:ajax event="rowSelect" listener="#{colectivosController.rowSelect}"/>
+                                 styleClass="classDataTable"
+                                 value="#{colectivosController.items}"
+                                 var="item"
+                                 rowKey="#{item.colectId}"
+                                 emptyMessage="No hay Usuarios Registrados" 
+                                 paginator="true"
+                                 selectionMode="single" selection="#{colectivosController.colectivoActualVista}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50" >
 
-                        <p:column id="idColumn" style="width:10%" headerText="Id" filterValue="#{item.colectId}"
-                                  filterMatchMode="contains" sortBy="#{item.colectId}" filterBy="#{item.colectId}">
-                            <h:outputText value="#{item.colectId}"/>
-                        </p:column>
+                        <p:ajax event="rowSelect" listener="#{colectivosController.rowSelect}" update=":forosTabView"/>
 
                         <p:column id="tituloColumn" style="width:10%" headerText="Titulo" filterValue="#{item.colectTitulo}"
                                   filterMatchMode="contains" sortBy="#{item.colectTitulo}" filterBy="#{item.colectTitulo}">
@@ -42,11 +38,8 @@
                         </p:column>
 
                         <p:column style="width:20%">
-                            <p:commandButton icon="ui-icon-plusthick" disabled="#{item.colectEstado}"  actionListener="#{colectivosController.AsignarEstado(item)}" title="Agregar Colectivo" update=":colectivosTabView:colectivosListForm,:colectivosTabView:colectivosAccordionPanel:colectivosListColaboradorForm"/>
                         </p:column>             
-                        <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Colectivo" actionListener="#{colectivosController.prepareCreate}" oncomplete="PF('colectivosCreateDialog').show()"/>
-                        </f:facet>
+
                     </p:dataTable>
                 </h:panelGroup>
             </h:form>

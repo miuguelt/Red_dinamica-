@@ -7,15 +7,10 @@
 
     <ui:composition>        
         <h:form id="colectivosListAdminForm">
-            <h:outputText escape="false" value="#{bundle.ListColectivosEmpty}" rendered="#{colectivosController.itemsAdministrador.rowCount == 0}"/>
+            <h:outputText escape="false" value="No administras ningún Colectivo" rendered="#{colectivosController.itemsAdministrador.rowCount == 0}"/>
             <h:panelGroup rendered="#{colectivosController.itemsAdministrador.rowCount > 0}">
                 <p:dataTable sortMode="multiple"  value="#{colectivosController.itemsAdministrador}" var="itemAdmin"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
 
-                    <p:column id="titulo" style="width:10%"  headerText="Usuario" filterValue="#{itemAdmin.colectUsrId.usrNombres}"
-                              filterMatchMode="contains" sortBy="#{itemAdmin.colectUsrId.usrNombres}" filterBy="#{itemAdmin.colectUsrId.usrNombres}">
-                        <h:outputText value="#{itemAdmin.colectUsrId.usrNombres}"/>
-                    </p:column>
-                    
                     <p:column id="tituloColumn" style="width:10%"  headerText="Titulo" filterValue="#{itemAdmin.colectTitulo}"
                               filterMatchMode="contains" sortBy="#{itemAdmin.colectTitulo}" filterBy="#{itemAdmin.colectTitulo}">
                         <h:outputText value="#{itemAdmin.colectTitulo}"/>

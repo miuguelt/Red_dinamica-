@@ -9,19 +9,19 @@
     <h:form id="datosBasicos">
         <p:panel header="Datos Básicos">
             <h:panelGrid columns="3">
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrEmail}" for="usrMail" />
+                <h:outputLabel value="Email" for="usrMail" />
                 <p:inputText id="usrMail" type="email" value="#{usuariosController.usuarioActualVista.usrEmail}" validator="#{validadorRegistro.asignarCorreo}" title="#{bundle.CreateUsuariosTitle_usrEmail}" required="true">
                     <f:validateLength minimum="3" maximum="45"/>    
                     <p:ajax update="msgMail" event="keyup"/>
                 </p:inputText>
                 <p:message for="usrMail" id="msgMail" display="tooltip" />
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrNombres}" for="usrNombre" />
+                <h:outputLabel value="Nombres" for="usrNombre" />
                 <p:inputText id="usrNombre" value="#{usuariosController.usuarioActualVista.usrNombres}" title="#{bundle.CreateUsuariosTitle_usrNombres}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrNombres}">
                     <f:validateLength minimum="3" maximum="45"/>  
                     <p:ajax update="msgNombre" event="keyup" />
                 </p:inputText>
                 <p:message for="usrNombre" id="msgNombre" display="tooltip" />
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrApellidos}" for="usrApellido" />
+                <h:outputLabel value="Apellidos" for="usrApellido" />
                 <p:inputText id="usrApellido" value="#{usuariosController.usuarioActualVista.usrApellidos}" title="#{bundle.CreateUsuariosTitle_usrApellidos}" required="true" requiredMessage="#{bundle.CreateUsuariosRequiredMessage_usrApellidos}">
                     <f:validateLength minimum="3" maximum="45"/>
                     <p:ajax update="msgApellido" event="keyup" />
@@ -31,26 +31,26 @@
         </p:panel>
         <p:panel header="Datos adicionales">
             <p:panelGrid columns="2">
-                <p:outputLabel for="usrGenero" value="#{bundle.CreateUsuariosLabel_usrSexo}"/>
+                <p:outputLabel for="usrGenero" value="Sexo"/>
                 <p:selectOneMenu id="usrGenero" value="#{usuariosController.usuarioActualVista.usrSexo}">
                     <f:selectItem itemLabel="Hombre" itemValue="true" />
                     <f:selectItem itemLabel="Mujer" itemValue="false" />
                 </p:selectOneMenu>
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrDepartamento}" for="departamentosdepartamentoid" />
-                <h:selectOneMenu id="departamentosdepartamentoid" value="#{usuariosController.usuarioActualVista.usrDepartamento}" title="#{bundle.CreateUsuariosTitle_usrDepartamento}" validator="#{ciudadController.asignarDepartamento}"  >                        
-                    <f:selectItems  value="#{departamentosController.itemsAvailableSelectOne}"/>                        
-                    <p:ajax  listener="#{ciudadController.asignarCiudades}"   update="ciudades" />  
+                <h:outputLabel value="Departamento" for="departamentosdepartamentoid" />
+                <h:selectOneMenu id="departamentosdepartamentoid"  value="#{usuariosController.usuarioActualVista.usrDepartamento}" >                        
+                    <f:selectItems  value="#{departamentosController.itemsAvailableSelectOne}" />                        
+                    <p:ajax  listener="#{departamentosController.asignarDepartamento}"   update="ciudades,universidades" /> 
                 </h:selectOneMenu>
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrCiudad}" for="ciudadciudadid" />
+                <h:outputLabel value="Ciudad" for="ciudades" id="select" />
                 <h:selectOneMenu id="ciudades" value="#{usuariosController.usuarioActualVista.usrCiudad}" title="#{bundle.CreateUsuariosTitle_usrCiudad}"  validator="#{universidadesController.asignarCiudad}">                         
                     <f:selectItem itemLabel="" itemValue="" />
-                    <f:selectItems value="#{ciudadController.ciudades}"/>
-                    <p:ajax  listener="#{universidadesController.asignarUniversidades}"   update="universidadesuniversidadid" /> 
+                    <f:selectItems  value="#{departamentosController.departamentoSelect.ciudadCollection}"/>
+                    <p:ajax  listener="#{departamentosController.asignarCiudad}"   update="universidades" /> 
                 </h:selectOneMenu>
-                <h:outputLabel value="#{bundle.CreateUsuariosLabel_usrUniversidad}" for="universidadesuniversidadid" />
-                <h:selectOneMenu id="universidadesuniversidadid" value="#{usuariosController.usuarioActualVista.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
+                <h:outputLabel value="Universidad" for="universidades" />
+                <h:selectOneMenu id="universidades" value="#{usuariosController.usuarioActualVista.usrUniversidad}" title="#{bundle.CreateUsuariosTitle_usrUniversidad}" >
                     <f:selectItem itemLabel="" itemValue="" />
-                    <f:selectItems value="#{universidadesController.universidad}"/>
+                    <f:selectItems value="#{departamentosController.ciudadSelect.universidadesCollection}"/>
                 </h:selectOneMenu>
             </p:panelGrid>
         </p:panel>

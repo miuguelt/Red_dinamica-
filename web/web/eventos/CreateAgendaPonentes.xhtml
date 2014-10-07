@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form id="agendaPonenteFormBoton" > 
+        <p:commandButton id="agendaPonenteBoton" value="Agendar Ponentes" type="button"/>
+    </h:form>
+
+    <p:overlayPanel id="agendaPonenteOverlay" for=":eventosTabView:eventosAccordionPanel:agendaPonenteFormBoton:agendaPonenteBoton" appendToBody="true" hideEffect="fade">
+
+        <h:form id="agendaPonenteListForm">
+            <p:dataTable styleClass="classDataTable"
+                         value="#{eventosController.itemsPonentes}"
+                         var="item"
+                         rowKey="#{item.usuarios.usrId}"
+                         emptyMessage="No hay Usuarios Registrados"
+                         selectionMode="single"
+                         selection="#{eventosController.ponencia}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50" >
+
+                <p:ajax event="rowSelect" oncomplete="PF('agendaCreateDialog').show()" listener="#{eventosController.prepareCreateAgendaPonente()}"/>
+                <p:column width="8%">
+                    <f:facet name="header">
+                        <h:outputText value="Ponente"/>
+                    </f:facet>
+                    <p:graphicImage id="img" value="/faces/Usuarios/foto/#{item.usuarios.usrId}" style="cursor:pointer; height: 50px;"/>
+                    <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                        <h:outputText value="#{item.usuarios.usrNombres} #{item.usuarios.usrApellidos}"/>
+                    </p:overlayPanel>
+                </p:column>
+                <p:column sortBy="#{item.ponenciaTitulo}" filterBy="#{item.ponenciaTitulo}">
+                    <f:facet name="header">
+                        <h:outputText value="Ponencia"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ponenciaTitulo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuariosTitle_usrUniversidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarios.usrUniversidad}"/>
+                </p:column>
+                <p:column>
+                    <p:commandButton id="downloadLink" value="Download Ponencia" ajax="false" actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                        <p:fileDownload value="# {archivosController.download}" />
+                    </p:commandButton>              
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:overlayPanel>
+</ui:composition>

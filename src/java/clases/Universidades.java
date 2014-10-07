@@ -46,6 +46,8 @@ public class Universidades implements Serializable {
     private String universidadNombre;
     @OneToMany(mappedBy = "usrUniversidad")
     private Collection<Usuarios> usuariosCollection;
+    @OneToMany(mappedBy = "eventoUniversidadId")
+    private Collection<Eventos> eventosCollection;
     @JoinColumn(name = "universidad_ciudad", referencedColumnName = "ciudad_id")
     @ManyToOne(optional = false)
     private Ciudad universidadCiudad;
@@ -82,6 +84,15 @@ public class Universidades implements Serializable {
 
     public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
         this.usuariosCollection = usuariosCollection;
+    }
+
+    @XmlTransient
+    public Collection<Eventos> getEventosCollection() {
+        return eventosCollection;
+    }
+
+    public void setEventosCollection(Collection<Eventos> eventosCollection) {
+        this.eventosCollection = eventosCollection;
     }
 
     public Ciudad getUniversidadCiudad() {

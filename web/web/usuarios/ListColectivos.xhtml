@@ -23,42 +23,42 @@
                              rowsPerPageTemplate="10,20,30,40,50" >
 
                     <f:facet name="header">
-                        <h:outputText value="Comunidad"/>
+                        <h:outputText value="Integrantes Colectivo"/>
                     </f:facet>
 
                     <p:column width="8%">
-                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usuarios.usrId}" style="height: 60px;"/>
+                        <p:graphicImage  value="/faces/Usuarios/foto/#{item.usuarios.usrId}" style="height: 60px;"/>
                     </p:column>
                     
                     <p:column sortBy="#{item.usuarios.usrNombres}" filterBy="#{item.usuarios.usrNombres}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrNombres}"/>
+                            <h:outputText value="Nombres"/>
                         </f:facet>
                         <h:outputText value=" #{item.usuarios.usrNombres}"/>
                     </p:column>
 
                     <p:column sortBy="#{item.usuarios.usrApellidos}" filterBy="#{item.usuarios.usrApellidos}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrApellidos}"/>
+                            <h:outputText value="Apellidos"/>
                         </f:facet>
                         <h:outputText value="#{item.usuarios.usrApellidos}"/>
                     </p:column>
                     <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrUniversidad}"/>
+                            <h:outputText value="Universidad"/>
                         </f:facet>
                         <h:outputText value="#{item.usuarios.usrUniversidad}"/>
                     </p:column>
                     <p:column sortBy="#{item.usuarios.usrDepartamento}" filterBy="#{item.usuarios.usrDepartamento}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrDepartamento}"/>
+                            <h:outputText value="Departamento"/>
                         </f:facet>
                         <h:outputText value="#{item.usuarios.usrDepartamento}"/>
                     </p:column>
 
                     <p:column sortBy="#{item.usuarios.usrCiudad}" filterBy="#{item.usuarios.usrCiudad}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrCiudad}"/>
+                            <h:outputText value="Ciudad"/>
                         </f:facet>
                         <h:outputText value="#{item.usuarios.usrCiudad}"/>
                     </p:column>

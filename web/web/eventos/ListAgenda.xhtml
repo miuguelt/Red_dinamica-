@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form>
+            <p:commandButton value="Agenda" 
+                             oncomplete="PF('agendaListDialog').show()"/>
+        </h:form>
+
+        <p:dialog id="agendaListDlg" widgetVar="agendaListDialog" modal="true" resizable="false" appendTo="@(body)" 
+                  header="Agenda" closeOnEscape="true" width="48%">
+
+            <h:form id="agendaListForm">
+                <p:dataTable styleClass="classDataTable"
+                             value="#{eventosController.itemsAgenda}"
+                             var="item"
+                             rowKey="#{item.usuarios.usrId}"
+                             emptyMessage="No hay Usuarios Registrados"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Expositor"/>
+                        </f:facet>
+                        <p:graphicImage id="img" value="/faces/Usuarios/foto/#{item.usuarios.usrId}" style="cursor:pointer; height: 50px;"/>
+                        <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
+                            <h:outputText value="#{item.usuarios.usrNombres} #{item.usuarios.usrApellidos}"/>
+                        </p:overlayPanel>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Día"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendaDía}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Inicia"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendaHoraInicio}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Termina"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendaHoraFin}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Actividad"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendaActividad}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Lugar"/>
+                        </f:facet>
+                        <h:outputText value="#{item.agendaLugar}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+</ui:composition>

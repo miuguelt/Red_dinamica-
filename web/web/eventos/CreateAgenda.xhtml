@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <p:dialog id="agendaCreateDlg" widgetVar="agendaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Colectivo"> 
+        <h:form>
+            <h:panelGrid columns="2">
+                <p:outputLabel for="agendaDia" value="Día " />
+                <p:calendar id="agendaDia" value="#{eventosController.agenda.agendaDía}" />
+                <h:outputLabel value="Hora de Inicio " for="agendaHoraInicio" />
+                <p:calendar id="agendaHoraInicio" value="#{eventosController.agenda.agendaHoraInicio}" pattern="HH:mm:ss" timeOnly="true"  />
+                <h:outputLabel value="Hora fin" for="agendaHoraFin" />
+                <p:calendar id="agendaHoraFin" value="#{eventosController.agenda.agendaHoraFin}" pattern="HH:mm:ss" timeOnly="true"  />
+                <h:outputLabel value="Lugar" for="agendaLugar" />
+                <h:inputText id="agendaLugar" value="#{eventosController.agenda.agendaLugar}"/>
+            </h:panelGrid>
+            <p:commandButton value="Agendar" action="#{eventosController.createAgenda}" oncomplete="handleSubmit(args,'agendaCreateDialog');"/>
+        </h:form>
+    </p:dialog>
+</ui:composition>

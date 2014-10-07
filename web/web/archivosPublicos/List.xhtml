@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="archivosPFormBoton" > 
+        <p:commandButton id="archivosPBoton" value="Biblioteca" type="button"/>
+    </h:form>    
+    <p:overlayPanel id="archivosPOverlay" for="archivosPFormBoton:archivosPBoton" appendToBody="true" hideEffect="fade" style="width: 60%">
+
+        <h:form>
+            <p:dataTable styleClass="classDataTable"
+                         value="#{archivosPublicosController.items}"
+                         var="item"
+                         rowKey="#{item.archivoId}"
+                         emptyMessage="No hay Archivos subidos"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50" >
+
+                <p:column width="8%" headerText="Subido por:">
+                    <p:graphicImage value="/faces/Usuarios/foto/#{item.archivoUsrId.usrId}" style="height: 60px;"/>
+                    <h:outputText value="#{item.archivoVisitas}"/>
+                </p:column>
+                <p:column sortBy="#{item.archivoTitulo}" filterBy="#{item.archivoTitulo}">
+                    <f:facet name="header">
+                        <h:outputText value="Titulo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoTitulo}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.archivoAutor}" filterBy="#{item.archivoAutor}">
+                    <f:facet name="header">
+                        <h:outputText value="Autor"/>
+                    </f:facet>
+                    <h:outputText value="#{item.archivoAutor}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:overlayPanel>
+</ui:composition>

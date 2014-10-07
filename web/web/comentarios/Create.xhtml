@@ -13,8 +13,8 @@
                     <h2><h:outputText value="Escriba su comentario"/></h2>
                 </f:facet>
                 <p:editor id="comentDescripcion" value="#{comentariosController.selected.comentDescripcion}" 
-                          requiredMessage="#{bundle.CreateComentariosRequiredMessage_comentDescripcion}"/>
-                <p:commandButton actionListener="#{comentariosController.create}" value="#{bundle.CreateComentariosSaveLink}" 
+                          requiredMessage="Inserte un Comentario"/>
+                <p:commandButton actionListener="#{comentariosController.create}" value="Comentar" 
                                  update=":forosTabView:comentariosListForm,comentariosCreateForm" 
                                  rendered="true"/>
             </h:panelGrid>

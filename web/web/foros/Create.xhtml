@@ -8,20 +8,20 @@
     <ui:composition >
        
             <h:form id="forosFormBoton" > 
-                <p:commandButton id="forosBoton" value="#{bundle.CreateForosTitle}" type="button"/>
+                <p:commandButton id="forosBoton" value="Crear Foro" type="button"/>
             </h:form>
             <p:overlayPanel id="forosOverlay" for=":forosTabView:forosFormBoton:forosBoton" appendToBody="true" hideEffect="fade" style="width:500px">
-                <h1><h:outputText value="#{bundle.CreateForosTitle}"></h:outputText></h1>
+                <h1><h:outputText value="Crear Foro"></h:outputText></h1>
                 <br />
                 <h:form id="forosCreateForm">
                     <h:panelGrid columns="2">                   
-                        <h:outputLabel value="#{bundle.CreateForosLabel_foroTema}" for="foroTema" />
-                        <h:inputText id="foroTema" value="#{forosController.selected.foroTema}" title="#{bundle.CreateForosTitle_foroTema}" required="true" requiredMessage="#{bundle.CreateForosRequiredMessage_foroTema}"/>
-                        <h:outputLabel value="#{bundle.CreateForosLabel_foroDescripcion}" for="foroDescripcion" />
-                        <p:inputTextarea id="foroDescripcion" value="#{forosController.selected.foroDescripcion}" rows="6" cols="33" required="true" requiredMessage="#{bundle.CreateForosRequiredMessage_foroDescripcion}"/>
+                        <h:outputLabel value="Tema" for="foroTema" />
+                        <h:inputText id="foroTema" value="#{forosController.selected.foroTema}" title="Tema del Foro" required="true" requiredMessage="Tema obligatorio"/>
+                        <h:outputLabel value="Descripcion" for="foroDescripcion" />
+                        <p:inputTextarea id="foroDescripcion" value="#{forosController.selected.foroDescripcion}" rows="6" cols="33" required="true" requiredMessage="Descripcion abligatoria"/>
                     </h:panelGrid>
                     <br />
-                    <p:commandButton value="#{bundle.CreateForosSaveLink}" 
+                    <p:commandButton value="Crear Foro" 
                                      update=":forosTabView:forosFormBoton,:forosTabView:forosOverlay,:forosTabView:forosListForm,:forosTabView:forosViewForm,:forosTabView:comentariosCreateForm,:forosTabView:comentariosListForm" 
                                      actionListener="#{forosController.create}"/>
                     <br />

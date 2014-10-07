@@ -15,9 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -87,11 +85,6 @@ public class Archivos implements Serializable {
     @Column(name = "archivo_fecha")
     @Temporal(TemporalType.DATE)
     private Date archivoFecha;
-    @JoinTable(name = "Clave_archivo", joinColumns = {
-        @JoinColumn(name = "clave_archivo_id", referencedColumnName = "archivo_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "clave_clave_id", referencedColumnName = "palabra_id")})
-    @ManyToMany
-    private Collection<Palabrasclave> palabrasclaveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "historialArchivoId")
     private Collection<Historialarchivos> historialarchivosCollection;
     @JoinColumn(name = "archivo_usr_id", referencedColumnName = "usr_id")
@@ -195,15 +188,6 @@ public class Archivos implements Serializable {
 
     public void setArchivoFecha(Date archivoFecha) {
         this.archivoFecha = archivoFecha;
-    }
-
-    @XmlTransient
-    public Collection<Palabrasclave> getPalabrasclaveCollection() {
-        return palabrasclaveCollection;
-    }
-
-    public void setPalabrasclaveCollection(Collection<Palabrasclave> palabrasclaveCollection) {
-        this.palabrasclaveCollection = palabrasclaveCollection;
     }
 
     @XmlTransient

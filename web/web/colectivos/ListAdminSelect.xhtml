@@ -10,11 +10,6 @@
       
             <p:dataTable sortMode="multiple"  value="#{usuariosController.itemsAdminSelect}" var="itemAdmin"  style="border: 0px" emptyMessage="Todos los usuarios son tus contactos" paginator="true" rows="10" >
 
-                    <p:column id="titulo" style="width:10%"  headerText="Usuario" filterValue="#{itemAdmin.colectUsrId.usrNombres}"
-                              filterMatchMode="contains" sortBy="#{itemAdmin.colectUsrId.usrNombres}" filterBy="#{itemAdmin.colectUsrId.usrNombres}">
-                        <h:outputText value="#{itemAdmin.colectUsrId.usrNombres}"/>
-                    </p:column>
-                    
                     <p:column id="tituloColumn" style="width:10%"  headerText="Titulo" filterValue="#{itemAdmin.colectTitulo}"
                               filterMatchMode="contains" sortBy="#{itemAdmin.colectTitulo}" filterBy="#{itemAdmin.colectTitulo}">
                         <h:outputText value="#{itemAdmin.colectTitulo}"/>

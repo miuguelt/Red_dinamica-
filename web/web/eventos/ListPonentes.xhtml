@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+        <h:form>
+            <p:commandButton id="createPonentesButton" value="Ponentes" 
+                             oncomplete="PF('ponentesListDialog').show()"/>
+        </h:form>
+
+        <p:dialog id="ponentesListDlg" widgetVar="ponentesListDialog" modal="true" resizable="false" appendTo="@(body)" 
+                  header="Ponentes" closeOnEscape="true" width="48%">
+
+            <h:form id="ponentesListForm">
+                <p:dataTable styleClass="classDataTable"
+                             value="#{eventosController.itemsPonentes}"
+                             var="item"
+                             rowKey="#{item.usuarios.usrId}"
+                             emptyMessage="No hay Usuarios Registrados"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" >
+
+                    <p:column width="8%">
+                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usuarios.usrId}" style="height: 60px;"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usuarios.usrNombres}" filterBy="#{item.usuarios.usrNombres}" headerText="Nombres">
+                        <h:outputText value=" #{item.usuarios.usrNombres}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usuarios.usrApellidos}" filterBy="#{item.usuarios.usrApellidos}" headerText="Apellidos">
+                        <h:outputText value="#{item.usuarios.usrApellidos}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}" headerText="Universidad">
+                        <h:outputText value="#{item.usuarios.usrUniversidad}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+</ui:composition>

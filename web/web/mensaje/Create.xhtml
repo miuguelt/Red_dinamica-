@@ -8,13 +8,13 @@
 
     <h:form id="mensajeCreateForm">
         <h:panelGrid columns="2" rendered="#{mensajeController.convSelect}">
-            <h:outputLabel value="#{bundle.CreateMensajeLabel_msjTexto}" for="msjTexto" />
+            <h:outputLabel value="Mensaje" for="msjTexto" />
             <h:inputTextarea rows="4" cols="30" id="msjTexto" label="Firstname"
                              required="true" requiredMessage="Escriva un Mensaje" 
-                             value="#{mensajeController.selected.msjTexto}" title="#{bundle.CreateMensajeTitle_msjTexto}" />                    
+                             value="#{mensajeController.selected.msjTexto}" title="Texto mensaje" />                    
         </h:panelGrid>
         <br />
-        <p:commandButton action="#{mensajeController.create}" value="#{bundle.CreateMensajeSaveLink}" 
+        <p:commandButton action="#{mensajeController.create}" value="Enviar mensaje" 
                          update=":mensajeListForm,mensajeCreateForm" rendered="#{mensajeController.convSelect}"/>
     </h:form>
 

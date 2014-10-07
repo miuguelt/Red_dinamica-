@@ -62,12 +62,12 @@ public class Foros implements Serializable {
     @Size(min = 1, max = 700)
     @Column(name = "foro_descripcion")
     private String foroDescripcion;
-    @JoinColumn(name = "foro_usr_id", referencedColumnName = "usr_id")
-    @ManyToOne(optional = false)
-    private Usuarios foroUsrId;
     @JoinColumn(name = "foro_colect_id", referencedColumnName = "colect_id")
     @ManyToOne(optional = false)
     private Colectivos foroColectId;
+    @JoinColumn(name = "foro_usr_id", referencedColumnName = "usr_id")
+    @ManyToOne(optional = false)
+    private Usuarios foroUsrId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comentForoId")
     private Collection<Comentarios> comentariosCollection;
 
@@ -117,20 +117,20 @@ public class Foros implements Serializable {
         this.foroDescripcion = foroDescripcion;
     }
 
-    public Usuarios getForoUsrId() {
-        return foroUsrId;
-    }
-
-    public void setForoUsrId(Usuarios foroUsrId) {
-        this.foroUsrId = foroUsrId;
-    }
-
     public Colectivos getForoColectId() {
         return foroColectId;
     }
 
     public void setForoColectId(Colectivos foroColectId) {
         this.foroColectId = foroColectId;
+    }
+
+    public Usuarios getForoUsrId() {
+        return foroUsrId;
+    }
+
+    public void setForoUsrId(Usuarios foroUsrId) {
+        this.foroUsrId = foroUsrId;
     }
 
     @XmlTransient

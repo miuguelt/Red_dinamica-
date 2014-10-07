@@ -15,7 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -66,6 +68,11 @@ public class Colectivos implements Serializable {
     private Date colectFecha;
     @Column(name = "colect_estado")
     private Boolean colectEstado;
+    @JoinTable(name = "BibliografiaColectivo", joinColumns = {
+        @JoinColumn(name = "biblio_colect_id", referencedColumnName = "colect_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "biblio_archivo_id", referencedColumnName = "archivo_id")})
+    @ManyToMany
+    private Collection<ArchivosPublicos> archivosPublicosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "colectivos")
     private Collection<Formaparte> formaparteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foroColectId")
@@ -128,6 +135,15 @@ public class Colectivos implements Serializable {
 
     public void setColectEstado(Boolean colectEstado) {
         this.colectEstado = colectEstado;
+    }
+
+    @XmlTransient
+    public Collection<ArchivosPublicos> getArchivosPublicosCollection() {
+        return archivosPublicosCollection;
+    }
+
+    public void setArchivosPublicosCollection(Collection<ArchivosPublicos> archivosPublicosCollection) {
+        this.archivosPublicosCollection = archivosPublicosCollection;
     }
 
     @XmlTransient

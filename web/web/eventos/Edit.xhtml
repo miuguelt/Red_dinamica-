@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.EditEventosTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <p:tab title="Archivos del evento" >
+        <h:form>
+            <p:panel style="margin-bottom:20px">
+                <p:fileUpload fileUploadListener="#{eventosController.handleFileUploadAfiche}" mode="advanced" dragDropSupport="false" required="true" 
+                              requiredMessage="Seleccione archivo" label="Subir Afiche">
+                    <h1>Suba el afiche del evento</h1>
+                </p:fileUpload>
+                <p:fileUpload fileUploadListener="# {eventosController.handleFileUploadAfiche}" mode="advanced" dragDropSupport="false" required="true" 
+                              requiredMessage="Seleccione archivo" label="Subir guia Evaluador">
+                    <h1>Suba la guia del evaluador en .pdf</h1>
+                </p:fileUpload>
+            </p:panel>
+        </h:form>
+    </p:tab>
+    <p:tab title="Datos básicos del evento">
+        <h:form id="eventoEditForm"> 
+            <p:panel style="margin-bottom:20px">
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditEventosLabel_eventoId}" for="eventoId" />
-                    <h:inputText id="eventoId" value="#{eventosController.selected.eventoId}" title="#{bundle.EditEventosTitle_eventoId}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_eventoId}"/>
                     <h:outputLabel value="#{bundle.EditEventosLabel_eventoTitulo}" for="eventoTitulo" />
-                    <h:inputText id="eventoTitulo" value="#{eventosController.selected.eventoTitulo}" title="#{bundle.EditEventosTitle_eventoTitulo}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_eventoTitulo}"/>
+                    <h:inputText id="eventoTitulo" value="#{eventosController.eventoSelect.eventoTitulo}" title="#{bundle.EditEventosTitle_eventoTitulo}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_eventoTitulo}"/>
                     <h:outputLabel value="#{bundle.EditEventosLabel_eventoDescripcion}" for="eventoDescripcion" />
-                    <h:inputText id="eventoDescripcion" value="#{eventosController.selected.eventoDescripcion}" title="#{bundle.EditEventosTitle_eventoDescripcion}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_eventoDescripcion}"/>
-                    <h:outputLabel value="#{bundle.EditEventosLabel_eventoUsrId}" for="eventoUsrId" />
-                    <h:selectOneMenu id="eventoUsrId" value="#{eventosController.selected.eventoUsrId}" title="#{bundle.EditEventosTitle_eventoUsrId}" required="true" requiredMessage="#{bundle.EditEventosRequiredMessage_eventoUsrId}">
-                        <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
+                    <h:inputText id="eventoDescripcion" value="#{eventosController.eventoSelect.eventoDescripcion}" title="#{bundle.EditEventosTitle_eventoDescripcion}" />
+
+                    <p:outputLabel for="eventoInicio" value="Inicio:" />
+                    <p:calendar id="eventoInicio" value="#{eventosController.eventoSelect.eventoInicio}" locale="de" navigator="true" pattern="MM/dd/yyyy" title="#{bundle.CreateEventosTitle_eventoInicio}" />
+                    <p:outputLabel for="eventoFin" value="#{bundle.CreateEventosLabel_eventoFin}" />
+                    <p:calendar id="eventoFin" value="#{eventosController.eventoSelect.eventoFin}" locale="de" navigator="true" pattern="MM/dd/yyyy" title="#{bundle.CreateEventosTitle_eventoFin}"/>
+                    <h:outputLabel value="#{bundle.EditEventosLabel_eventoUniversidadId}" for="eventoUniversidadId" />
+                    <h:selectOneMenu id="eventoUniversidadId" value="#{eventosController.eventoSelect.eventoUniversidadId}" title="#{bundle.EditEventosTitle_eventoUniversidadId}" >
+                        <f:selectItems value="#{universidadesController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{eventosController.update}" value="#{bundle.EditEventosSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{bundle.EditEventosViewLink}"/>
-                <br />
-                <h:commandLink action="#{eventosController.prepareList}" value="#{bundle.EditEventosShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.EditEventosIndexLink}" />
-            </h:form>
-        </ui:define>
-    </ui:composition>
-
-</html>
+                <p:commandButton action="#{eventosController.update}" value="Modificar Datos"/>
+            </p:panel>
+        </h:form>
+    </p:tab>
+</ui:composition>

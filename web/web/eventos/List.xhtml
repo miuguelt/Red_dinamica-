@@ -5,55 +5,39 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
-       
-            <h:form styleClass="jsfcrud_list_form" >
-                
-                <h:outputText escape="false" value="#{bundle.ListEventosEmpty}" rendered="#{eventosController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{eventosController.items.rowCount > 0}">
-                    <h:outputText value="#{eventosController.pagination.pageFirstItem + 1}..#{eventosController.pagination.pageLastItem + 1}/#{eventosController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{eventosController.previous}" value="#{bundle.Previous} #{eventosController.pagination.pageSize}" rendered="#{eventosController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{eventosController.next}" value="#{bundle.Next} #{eventosController.pagination.pageSize}" rendered="#{eventosController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{eventosController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventosTitle_eventoId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.eventoId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventosTitle_eventoTitulo}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.eventoTitulo}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventosTitle_eventoDescripcion}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.eventoDescripcion}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListEventosTitle_eventoUsrId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.eventoUsrId}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{eventosController.prepareView}" value="#{bundle.ListEventosViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{eventosController.prepareEdit}" value="#{bundle.ListEventosEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{eventosController.destroy}" value="#{bundle.ListEventosDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{eventosController.prepareCreate}" value="#{bundle.ListEventosCreateLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ListEventosIndexLink}"/>
-            </h:form>      
-    </ui:composition>
+
+    <h:form id="eventosListFormBoton" > 
+        <p:commandButton id="eventosListBoton" value="Eventos" type="button"/>
+    </h:form>
+    <p:overlayPanel id="eventosListOverlay" for="eventosListFormBoton:eventosListBoton" appendToBody="true" hideEffect="fade" style="width: 60%">
+
+        <h:form id="eventosListForm">
+            <p:dataTable id="eventosListDataTable" value="#{eventosController.items}" 
+                         emptyMessage="No hay Foros" var="item" 
+                         rowKey="#{item.eventoId}" editable="true"
+                         selectionMode="single" selection="#{eventosController.eventoSelect}"
+                         style="height: 30%">
+
+                <p:ajax event="rowSelect"
+                        update=":eventosTabView:prepareForm,@([id$=eventosListFormBoton]),:eventosListOverlay,:eventosTabView:eventosViewForm,
+                        :grid,:eventosTabView:eventosCreateAsistentesForm,
+                        :eventosTabView:asistenteListDlg,:eventosTabView:eventosAccordionPanel:eventosListAdministradoresOverlay,
+                        :eventosTabView:eventosAccordionPanel:agendaPonenteOverlay,:eventosTabView:eventosAccordionPanel:evaluadorListOverlay,
+                        :eventosTabView:eventosAccordionPanel:agendaConferenciasOverlay,:eventosTabView:agendaListForm,
+                        :eventosTabView:novedadesListForm,
+                        :eventosTabView:novedadCreateForm,
+                        :eventosTabView:eventosAccordionPanel:eventoEditForm,
+                        :eventosTabView:notificacionesViewForm,
+                        :eventosTabView:ponentesListDlg,
+                        :eventosTabView:conferenciaListDlg,
+                        :eventosTabView:evaluarPonentesListDlg"/>
+
+                <p:column filterValue="#{item.eventoTitulo}" filterMatchMode="contains" sortBy="#{item.eventoTitulo}" 
+                          filterBy="#{item.eventoTitulo}">
+                    <h3><h:outputText value="#{item.eventoTitulo}"/></h3>
+                    <h:outputText value="#{item.eventoDescripcion}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </p:overlayPanel>
+</ui:composition>

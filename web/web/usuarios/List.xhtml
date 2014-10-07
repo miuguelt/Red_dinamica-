@@ -29,38 +29,39 @@
 
                     <p:ajax event="rowSelect" listener="#{usuariosController.setPerilUsuario(item)}"/>
                     <p:column width="8%">
-                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usrId}" style="height: 30px;"/>
+                        <p:graphicImage  value="/faces/Usuarios/foto/#{item.usrId}" style="height: 30px;"/>
+                       
                     </p:column>
 
                     <p:column sortBy="#{item.usrNombres}" filterBy="#{item.usrNombres}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrNombres}"/>
+                            <h:outputText value="Nombres"/>
                         </f:facet>
                         <h:outputText value=" #{item.usrNombres}"/>
                     </p:column>
 
                     <p:column sortBy="#{item.usrApellidos}" filterBy="#{item.usrApellidos}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrApellidos}"/>
+                            <h:outputText value="Apellidos"/>
                         </f:facet>
                         <h:outputText value="#{item.usrApellidos}"/>
                     </p:column>
                     <p:column sortBy="#{item.usrUniversidad}" filterBy="#{item.usrUniversidad}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrUniversidad}"/>
+                            <h:outputText value="Universidad"/>
                         </f:facet>
                         <h:outputText value="#{item.usrUniversidad}"/>
                     </p:column>
                     <p:column sortBy="#{item.usrDepartamento}" filterBy="#{item.usrDepartamento}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrDepartamento}"/>
+                            <h:outputText value="Departamento"/>
                         </f:facet>
                         <h:outputText value="#{item.usrDepartamento}"/>
                     </p:column>
 
                     <p:column sortBy="#{item.usrCiudad}" filterBy="#{item.usrCiudad}">
                         <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUsuariosTitle_usrCiudad}"/>
+                            <h:outputText value="Ciudad"/>
                         </f:facet>
                         <h:outputText value="#{item.usrCiudad}"/>
                     </p:column>
@@ -70,11 +71,11 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{usuariosController.prepareView}" value="#{bundle.ListUsuariosViewLink}"/>
+                            <h:commandLink action="#{usuariosController.prepareView}" value="Ver"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{usuariosController.prepareEdit}" value="#{bundle.ListUsuariosEditLink}"/>
+                            <h:commandLink action="#{usuariosController.prepareEdit}" value="Editar"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{usuariosController.destroy}" value="#{bundle.ListUsuariosDestroyLink}"/>
+                            <h:commandLink action="#{usuariosController.destroy}" value="Eliminar"/>
                         </h:column>
                     </h:dataTable>
                 </p:dataTable>

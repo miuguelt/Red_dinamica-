@@ -7,11 +7,12 @@
 
     <h:form id="cambiarFotoForm">
         <h:panelGrid columns="2" style="margin-top:10px">
-            <p:commandLink id="fotoLink" onclick="fotoDialog.show()">
-                <p:graphicImage id="foto" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}"
-                                style="height: 120px;"/>
+            <p:commandLink id="fotoLink" rendered="#{usuariosController.verFoto}" onclick="fotoDialog.show()">
+                <p:graphicImage id="foto"  value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}" style="height: 120px;"/>
             </p:commandLink>
-
+            <p:commandLink id="fotoLinkd" rendered="#{!usuariosController.verFoto}" onclick="fotoDialog.show()">
+                <p:graphicImage id="fotod"  value="/faces/Usuarios/foto/default" style="height: 120px;"/>
+            </p:commandLink>
             <p:dialog header="Toma una foto" widgetVar="fotoDialog">
                 <p:fileUpload fileUploadListener="#{archivosController.handleFileUploadFoto}" mode="advanced" dragDropSupport="false" required="true" 
                               requiredMessage="Seleccione archivo" label="Subir Archivo"
@@ -19,14 +20,13 @@
                     <h1>Seleccione un archivo</h1>
                 </p:fileUpload>
                 <!--<p:photoCam widgetVar="pc" listener="# {photoCamBean.oncapture}" update="growlfoto" />-->
-<!--                <p:commandButton type="button" value="Tomar foto" onclick="pc.capture()" update="growlfoto">
-                    <p:ajax oncomplete="fotoDialog.hide();"  update="growlfoto"/>
-                </p:commandButton>-->
+                <!--                <p:commandButton type="button" value="Tomar foto" onclick="pc.capture()" update="growlfoto">
+                                    <p:ajax oncomplete="fotoDialog.hide();"  update="growlfoto"/>
+                                </p:commandButton>-->
             </p:dialog> 
 
         </h:panelGrid> 
         <h:panelGrid columns="4" > 
-
             <p:commandButton id="cambiarFoto" onclick="fotoDialog.show()" value="Cambiar Foto" icon="ui-icon-disk"/>
         </h:panelGrid>
     </h:form>

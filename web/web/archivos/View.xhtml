@@ -26,24 +26,27 @@
                         </p:overlayPanel>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:outputText value="#{archivosController.archivoSelect.archivoFecha}" title="#{bundle.ViewForosTitle_foroFecha}">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="Creado: "/>
+                        <h:outputText value="#{archivosController.archivoSelect.archivoFecha}" title="Fecha de Creación">
                             <f:convertDateTime pattern="MM/dd/yyyy" />
                         </h:outputText>
+                            </h:panelGrid>
                     </h:panelGroup>
                 </h:panelGrid>
                 <h:panelGrid columns="2" rendered="#{archivosController.archivoSelected}">
 
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoAutor}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoAutor}" title="#{bundle.ViewArchivosTitle_archivoAutor}"/>
-                    <h:outputText value="#{bundle.ViewArchivosLabel_archivoTema}"/>
-                    <h:outputText value="#{archivosController.archivoSelect.archivoTema}" title="#{bundle.ViewArchivosTitle_archivoTema}"/>
+                    <h:outputText value="Autor"/>
+                    <h:outputText value="#{archivosController.archivoSelect.archivoAutor}" title="Autor"/>
+                    <h:outputText value="Tema"/>
+                    <h:outputText value="#{archivosController.archivoSelect.archivoTema}" title="Tema"/>
                     <p:outputPanel>
-                        <h3><h:outputText value="#{bundle.ViewArchivosLabel_archivoResumen}"/>
+                        <h3><h:outputText value="Resumen"/>
                         </h3>
-                        <p><h:outputText value="#{archivosController.archivoSelect.archivoResumen}" title="#{bundle.ViewArchivosTitle_archivoResumen}"/>
+                        <p><h:outputText value="#{archivosController.archivoSelect.archivoResumen}" title="Resumen"/>
                         </p>
-                        <h:outputText value="#{bundle.ViewArchivosLabel_archivoVisitas}"/>
-                        <h:outputText value="#{archivosController.archivoSelect.archivoVisitas}" title="#{bundle.ViewArchivosTitle_archivoVisitas}"/>
+                        <h:outputText value="Visitas: "/>
+                        <h:outputText value="#{archivosController.archivoSelect.archivoVisitas}" title="Visitas"/>
                     </p:outputPanel>
 
                 </h:panelGrid>

@@ -233,8 +233,11 @@ public class ColectivosController implements Serializable {
 
     @PostConstruct
     public void init() {
+        try {
         setColectivosAllList(getFacade().findAll());
         asignarBoton();
+        } catch (Exception e) {
+        }
     }
 
     public Colectivos getColectivoActualVista() {
@@ -318,9 +321,14 @@ public class ColectivosController implements Serializable {
     }
 
     public void setColectivo(Colectivos colectivo) throws IOException {
+        try {
+            
         setColectivoActual(colectivo);
-        JsfUtil.addSuccessMessage("Segundo mensaje");
         FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/index.xhtml");
+        
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Eror al fijar el colectivo: "+e);
+        }
     }
 
     public void prepareCreate() {
@@ -362,6 +370,6 @@ public class ColectivosController implements Serializable {
 
     public void rowSelect() throws IOException {//Al seleccionar foro 
         setColectivoActual(getColectivoActualVista());
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/index.xhtml");
+//        FacesContext.getCurrentInstance().getExternalContext().redirect("/red_dinamica/faces/web/foros/index.xhtml");
     }
 }

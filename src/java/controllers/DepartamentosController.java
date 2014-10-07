@@ -1,5 +1,6 @@
 package controllers;
 
+import clases.Ciudad;
 import clases.Departamentos;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;
@@ -184,6 +185,10 @@ public class DepartamentosController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
+        if(departamentoSelect==null && UsuariosController.getUsuarioActual()!=null){
+           departamentoSelect=UsuariosController.getUsuarioActual().getUsrDepartamento();
+           ciudadSelect=UsuariosController.getUsuarioActual().getUsrCiudad();
+      }            
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
@@ -230,5 +235,48 @@ public class DepartamentosController implements Serializable {
         }
 
     }
+    //Asignar ciudades a departamento
+    private Departamentos departamentoSelect;
+
+    public Departamentos getDepartamentoSelect() {
+        return departamentoSelect;
+    }
+
+    public void setDepartamentoSelect(Departamentos departamentoSelect) {
+        this.departamentoSelect = departamentoSelect;
+    }
+    public void asignarDepartamento() {
+        try {
+            this.departamentoSelect = UsuariosController.getUsuarioActual().getUsrDepartamento();
+            this.ciudadSelect=null;
+            UsuariosController.getUsuarioActual().setUsrDepartamento(departamentoSelect);
+            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Error al asignar el departamento: "+e);
+        }
+    }  
+    
+//Asignar ciudades a ciudades
+    private Ciudad ciudadSelect;
+
+    public Ciudad getCiudadSelect() {
+        return ciudadSelect;
+    }
+
+    public void setCiudadSelect(Ciudad ciudadSelect) {
+        this.ciudadSelect = ciudadSelect;
+    }
+
+ 
+    public void asignarCiudad() {
+        try {
+            
+            this.ciudadSelect = UsuariosController.getUsuarioActual().getUsrCiudad();
+            
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Error al asignar el departamento: "+e);
+        }
+    }        
+
 
 }

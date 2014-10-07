@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="usuariosConvFormBoton" > 
+        <p:commandButton id="usuariosConvBoton" value="Asistentes" type="button"/>
+    </h:form>
+    <p:overlayPanel id="usuariosConvOverlay" for="usuariosConvFormBoton:usuariosConvBoton" appendToBody="true" hideEffect="fade">
+
+        <h:form id="eventosListAsistentesForm">
+            <h:panelGroup>
+                <p:dataTable styleClass="classDataTable"
+                             value="#{eventosController.itemsAsistes}"
+                             var="item"
+                             rowKey="#{item.usrId}"
+                             emptyMessage="No hay Usuarios Registrados"
+                             paginator="true"
+                             rows="10"
+                             rowsPerPageTemplate="10,20,30,40,50" >
+
+                    <f:facet name="header">
+                        <h:outputText value="Comunidad"/>
+                    </f:facet>
+
+                    <p:column width="8%">
+                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usrId}" style="height: 60px;"/>
+                    </p:column>
+                    
+                    <p:column sortBy="#{item.usrNombres}" filterBy="#{item.usrNombres}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrNombres}"/>
+                        </f:facet>
+                        <h:outputText value=" #{item.usrNombres}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usrApellidos}" filterBy="#{item.usrApellidos}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrApellidos}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrApellidos}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.usrUniversidad}" filterBy="#{item.usrUniversidad}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrUniversidad}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrUniversidad}"/>
+                    </p:column>
+                    <p:column sortBy="#{item.usrDepartamento}" filterBy="#{item.usrDepartamento}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrDepartamento}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrDepartamento}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usrCiudad}" filterBy="#{item.usrCiudad}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUsuariosTitle_usrCiudad}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usrCiudad}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </h:form>
+    </p:overlayPanel>
+</ui:composition>

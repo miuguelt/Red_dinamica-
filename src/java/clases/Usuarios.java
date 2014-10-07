@@ -84,6 +84,16 @@ public class Usuarios implements Serializable {
     @Size(max = 45)
     @Column(name = "usr_foto")
     private String usrFoto;
+    @JoinTable(name = "AdministrarEventos", joinColumns = {
+        @JoinColumn(name = "admin_usr_id", referencedColumnName = "usr_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "admin_evento_id", referencedColumnName = "evento_id")})
+    @ManyToMany
+    private Collection<Eventos> eventosCollection;
+    @JoinTable(name = "Asistentes", joinColumns = {
+        @JoinColumn(name = "asistente_usr_id", referencedColumnName = "usr_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "asistente_evento_id", referencedColumnName = "evento_id")})
+    @ManyToMany
+    private Collection<Eventos> eventosCollection1;
     @JoinTable(name = "Contactos", joinColumns = {
         @JoinColumn(name = "cont_usr_id", referencedColumnName = "usr_id")}, inverseJoinColumns = {
         @JoinColumn(name = "cont_contacto_id", referencedColumnName = "usr_id")})
@@ -91,45 +101,51 @@ public class Usuarios implements Serializable {
     private Collection<Usuarios> usuariosCollection;
     @ManyToMany(mappedBy = "usuariosCollection")
     private Collection<Usuarios> usuariosCollection1;
+    @JoinColumn(name = "usr_ciudad", referencedColumnName = "ciudad_id")
+    @ManyToOne
+    private Ciudad usrCiudad;
     @JoinColumn(name = "usr_universidad", referencedColumnName = "universidad_id")
     @ManyToOne
     private Universidades usrUniversidad;
     @JoinColumn(name = "usr_departamento", referencedColumnName = "departamento_id")
     @ManyToOne
     private Departamentos usrDepartamento;
-    @JoinColumn(name = "usr_ciudad", referencedColumnName = "ciudad_id")
-    @ManyToOne
-    private Ciudad usrCiudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
     private Collection<Formaparte> formaparteCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "noticiaUsrId")
-    private Collection<Noticias> noticiasCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
+    private Collection<Conferencias> conferenciasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "historialUsrId")
     private Collection<Historialarchivos> historialarchivosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "respUsrId")
-    private Collection<Respuestascoment> respuestascomentCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "noticiaUsrId")
+    private Collection<Noticias> noticiasCollection;
+    @OneToMany(mappedBy = "ponenciasEvaluadorId")
+    private Collection<Ponencias> ponenciasCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
+    private Collection<Ponencias> ponenciasCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "msjDestinatario")
     private Collection<Mensaje> mensajeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "msjRemitente")
     private Collection<Mensaje> mensajeCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foroUsrId")
     private Collection<Foros> forosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoUsrId")
+    private Collection<ArchivosPublicos> archivosPublicosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comentUsrId")
     private Collection<Comentarios> comentariosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventoUsrId")
-    private Collection<Eventos> eventosCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "convUsr1Id")
-    private Collection<Conversacion> conversacionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
+    private Collection<Agenda> agendaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "convUsr2Id")
+    private Collection<Conversacion> conversacionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "convUsr1Id")
     private Collection<Conversacion> conversacionCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoUsrId")
     private Collection<Archivos> archivosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "versionUsrId")
     private Collection<Version> versionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colectUsrId")
-    private Collection<Colectivos> colectivosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "solicitudUsrId")
     private Collection<Solicitudes> solicitudesCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "colectUsrId")
+    private Collection<Colectivos> colectivosCollection;
 
     public Usuarios() {
     }
@@ -221,6 +237,24 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
+    public Collection<Eventos> getEventosCollection() {
+        return eventosCollection;
+    }
+
+    public void setEventosCollection(Collection<Eventos> eventosCollection) {
+        this.eventosCollection = eventosCollection;
+    }
+
+    @XmlTransient
+    public Collection<Eventos> getEventosCollection1() {
+        return eventosCollection1;
+    }
+
+    public void setEventosCollection1(Collection<Eventos> eventosCollection1) {
+        this.eventosCollection1 = eventosCollection1;
+    }
+
+    @XmlTransient
     public Collection<Usuarios> getUsuariosCollection() {
         return usuariosCollection;
     }
@@ -236,6 +270,14 @@ public class Usuarios implements Serializable {
 
     public void setUsuariosCollection1(Collection<Usuarios> usuariosCollection1) {
         this.usuariosCollection1 = usuariosCollection1;
+    }
+
+    public Ciudad getUsrCiudad() {
+        return usrCiudad;
+    }
+
+    public void setUsrCiudad(Ciudad usrCiudad) {
+        this.usrCiudad = usrCiudad;
     }
 
     public Universidades getUsrUniversidad() {
@@ -254,14 +296,6 @@ public class Usuarios implements Serializable {
         this.usrDepartamento = usrDepartamento;
     }
 
-    public Ciudad getUsrCiudad() {
-        return usrCiudad;
-    }
-
-    public void setUsrCiudad(Ciudad usrCiudad) {
-        this.usrCiudad = usrCiudad;
-    }
-
     @XmlTransient
     public Collection<Formaparte> getFormaparteCollection() {
         return formaparteCollection;
@@ -272,12 +306,12 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Noticias> getNoticiasCollection() {
-        return noticiasCollection;
+    public Collection<Conferencias> getConferenciasCollection() {
+        return conferenciasCollection;
     }
 
-    public void setNoticiasCollection(Collection<Noticias> noticiasCollection) {
-        this.noticiasCollection = noticiasCollection;
+    public void setConferenciasCollection(Collection<Conferencias> conferenciasCollection) {
+        this.conferenciasCollection = conferenciasCollection;
     }
 
     @XmlTransient
@@ -290,12 +324,30 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Respuestascoment> getRespuestascomentCollection() {
-        return respuestascomentCollection;
+    public Collection<Noticias> getNoticiasCollection() {
+        return noticiasCollection;
     }
 
-    public void setRespuestascomentCollection(Collection<Respuestascoment> respuestascomentCollection) {
-        this.respuestascomentCollection = respuestascomentCollection;
+    public void setNoticiasCollection(Collection<Noticias> noticiasCollection) {
+        this.noticiasCollection = noticiasCollection;
+    }
+
+    @XmlTransient
+    public Collection<Ponencias> getPonenciasCollection() {
+        return ponenciasCollection;
+    }
+
+    public void setPonenciasCollection(Collection<Ponencias> ponenciasCollection) {
+        this.ponenciasCollection = ponenciasCollection;
+    }
+
+    @XmlTransient
+    public Collection<Ponencias> getPonenciasCollection1() {
+        return ponenciasCollection1;
+    }
+
+    public void setPonenciasCollection1(Collection<Ponencias> ponenciasCollection1) {
+        this.ponenciasCollection1 = ponenciasCollection1;
     }
 
     @XmlTransient
@@ -326,6 +378,15 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
+    public Collection<ArchivosPublicos> getArchivosPublicosCollection() {
+        return archivosPublicosCollection;
+    }
+
+    public void setArchivosPublicosCollection(Collection<ArchivosPublicos> archivosPublicosCollection) {
+        this.archivosPublicosCollection = archivosPublicosCollection;
+    }
+
+    @XmlTransient
     public Collection<Comentarios> getComentariosCollection() {
         return comentariosCollection;
     }
@@ -335,12 +396,12 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Eventos> getEventosCollection() {
-        return eventosCollection;
+    public Collection<Agenda> getAgendaCollection() {
+        return agendaCollection;
     }
 
-    public void setEventosCollection(Collection<Eventos> eventosCollection) {
-        this.eventosCollection = eventosCollection;
+    public void setAgendaCollection(Collection<Agenda> agendaCollection) {
+        this.agendaCollection = agendaCollection;
     }
 
     @XmlTransient
@@ -380,21 +441,21 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Colectivos> getColectivosCollection() {
-        return colectivosCollection;
-    }
-
-    public void setColectivosCollection(Collection<Colectivos> colectivosCollection) {
-        this.colectivosCollection = colectivosCollection;
-    }
-
-    @XmlTransient
     public Collection<Solicitudes> getSolicitudesCollection() {
         return solicitudesCollection;
     }
 
     public void setSolicitudesCollection(Collection<Solicitudes> solicitudesCollection) {
         this.solicitudesCollection = solicitudesCollection;
+    }
+
+    @XmlTransient
+    public Collection<Colectivos> getColectivosCollection() {
+        return colectivosCollection;
+    }
+
+    public void setColectivosCollection(Collection<Colectivos> colectivosCollection) {
+        this.colectivosCollection = colectivosCollection;
     }
 
     @Override

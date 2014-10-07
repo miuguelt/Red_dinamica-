@@ -248,13 +248,4 @@ public class CiudadController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage("datosFrom", new FacesMessage("Exito", "Departamento " + departamento.toString()));
     }
-
-    public void asignarDepartamento(FacesContext arg0, UIComponent arg1, Object arg2) {
-        try {
-
-            this.departamento = (Departamentos) arg2;
-
-        } catch (Exception e) {
-        }
-    }      
 }

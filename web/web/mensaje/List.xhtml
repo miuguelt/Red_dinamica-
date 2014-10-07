@@ -8,12 +8,12 @@
 
     <h:form id="mensajeListForm">
         <p:dataTable value="#{mensajeController.items}" id="mensajeListDataTable" 
-                     emptyMessage="No hay Conversaciones" 
+                     emptyMessage="No hay Mensajes" 
                      var="item" styleClass="classDataTable"
                      rowKey="#{item.convId}">
 
             <f:facet name="header">
-                <h:outputText value="#{bundle.ListMensajeTitle_msjRemitente}"/>
+                <h:outputText value="Remitente"/>
             </f:facet>
             <p:column width="10%">
                 <p:graphicImage value="/faces/Usuarios/foto/#{item.msjRemitente.usrId}" style="height: 50px;"/>

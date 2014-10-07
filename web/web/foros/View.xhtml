@@ -13,24 +13,27 @@
                 <h1><h:outputText escape="false" value="Seleccionar un foro" rendered="#{!forosController.foroSelected}"/></h1>
                 <h:panelGrid columns="1" rendered="#{forosController.foroSelected}">
                     <h:panelGroup>
-                        <p:graphicImage id="img" value="/faces/Usuarios/foto/#{forosController.foroSelect.foroUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
+                        <p:graphicImage  id="img" value="/faces/Usuarios/foto/#{forosController.foroSelect.foroUsrId.usrId}" style="cursor:pointer; height: 60px;"/>
                         <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
                             <h:outputText value="#{forosController.foroSelect.foroUsrId.usrNombres} " title="#{bundle.ViewForosTitle_foroUsrId}"/>
                             <h:outputText value="#{forosController.foroSelect.foroUsrId.usrApellidos}" title="#{bundle.ViewForosTitle_foroUsrId}"/>
                         </p:overlayPanel>
                     </h:panelGroup>
                     <h:panelGroup>
-                        <h:outputText value="#{forosController.foroSelect.foroFecha}" title="#{bundle.ViewForosTitle_foroFecha}">
-                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                        </h:outputText>
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText value="Creado: " />
+                            <h:outputText value="#{forosController.foroSelect.foroFecha}" title="Fecha">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </h:panelGrid>
                     </h:panelGroup>
                 </h:panelGrid>
                 <p:outputPanel rendered="#{forosController.foroSelected}">
                     <h3>
-                        <h:outputText value="#{bundle.ViewForosLabel_foroDescripcion}"/>
+                        <h:outputText value="Descripcion"/>
                     </h3>
                     <p>
-                        <h:outputText value="#{forosController.foroSelect.foroDescripcion}" title="#{bundle.ViewForosTitle_foroDescripcion}"/>
+                        <h:outputText value="#{forosController.foroSelect.foroDescripcion}" title="Descripcion del Foro"/>
                     </p>
                 </p:outputPanel>
             </p:panel>

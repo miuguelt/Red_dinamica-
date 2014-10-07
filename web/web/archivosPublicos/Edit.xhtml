@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditArchivosPublicosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditArchivosPublicosLabel_archivoId}" for="archivoId" />
+                    <h:inputText id="archivoId" value="#{archivosPublicosController.selected.archivoId}" title="#{bundle.EditArchivosPublicosTitle_archivoId}" required="true" requiredMessage="#{bundle.EditArchivosPublicosRequiredMessage_archivoId}"/>
+                    <h:outputLabel value="#{bundle.EditArchivosPublicosLabel_archivoTitulo}" for="archivoTitulo" />
+                    <h:inputText id="archivoTitulo" value="#{archivosPublicosController.selected.archivoTitulo}" title="#{bundle.EditArchivosPublicosTitle_archivoTitulo}" required="true" requiredMessage="#{bundle.EditArchivosPublicosRequiredMessage_archivoTitulo}"/>
+                    <h:outputLabel value="#{bundle.EditArchivosPublicosLabel_archivoAutor}" for="archivoAutor" />
+                    <h:inputText id="archivoAutor" value="#{archivosPublicosController.selected.archivoAutor}" title="#{bundle.EditArchivosPublicosTitle_archivoAutor}" />
+                    <h:outputLabel value="#{bundle.EditArchivosPublicosLabel_archivoVisitas}" for="archivoVisitas" />
+                    <h:inputText id="archivoVisitas" value="#{archivosPublicosController.selected.archivoVisitas}" title="#{bundle.EditArchivosPublicosTitle_archivoVisitas}" />
+                    <h:outputLabel value="#{bundle.EditArchivosPublicosLabel_usuariosusrid}" for="usuariosusrid" />
+                    <h:selectOneMenu id="usuariosusrid" value="#{archivosPublicosController.selected.usuariosusrid}" title="#{bundle.EditArchivosPublicosTitle_usuariosusrid}" required="true" requiredMessage="#{bundle.EditArchivosPublicosRequiredMessage_usuariosusrid}">
+                        <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{archivosPublicosController.update}" value="#{bundle.EditArchivosPublicosSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditArchivosPublicosViewLink}"/>
+                <br />
+                <h:commandLink action="#{archivosPublicosController.prepareList}" value="#{bundle.EditArchivosPublicosShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditArchivosPublicosIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

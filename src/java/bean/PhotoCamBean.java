@@ -77,8 +77,7 @@ public class PhotoCamBean implements InterfaceBean, Serializable{
         final ServletContext servletContext = (ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
         Usuarios u = UsuariosController.getUsuarioActual();
         String foto = ""+u.getUsrId();
-        
-        String fileFoto = servletContext.getRealPath("") + File.separator + "/Recursos/Imagenes/perfil/" + File.separator + foto;
+        String fileFoto = servletContext.getRealPath("") + File.separator + "/Usuarios/foto/perfil/" + File.separator + foto;
         
         File file = new File(fileFoto);
         return file.exists();

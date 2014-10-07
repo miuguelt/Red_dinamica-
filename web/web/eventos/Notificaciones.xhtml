@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="notificacionesViewForm">
+        <h:panelGrid>
+            <h:outputText value="Usted es administrador" rendered="#{eventosController.admin}"/>
+            <h:outputText value="Su ponencia ha sido aceptada" rendered="true"/>
+            <h:panelGroup>
+                <h:outputText value="Tiene ponencias por evaluar" rendered="true"/>
+                <p:commandButton icon="ui-icon-plus" value="Evaluar Ponencias" 
+                                 oncomplete="PF('evaluarPonentesListDialog').show()"
+                                 actionListener="# {eventosController.prepareEditConferencia}"
+                                 rendered="true"/>
+                <p:commandButton value="Download Guia" ajax="false" 
+                                 actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                    <p:fileDownload value="# {archivosController.download}" />
+                </p:commandButton>
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:outputText value="Ha sido invitado a ser conferencista  " rendered="#{eventosController.conferencista}"/>
+                <p:commandButton icon="ui-icon-plus" value="Subir Conferencia" 
+                                 oncomplete="PF('conferenciaCreateDialog').show()"
+                                 actionListener="#{eventosController.prepareEditConferencia}"
+                                 rendered="#{eventosController.conferencista}"/>
+            </h:panelGroup>
+        </h:panelGrid>
+    </h:form>
+</ui:composition>

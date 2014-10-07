@@ -7,7 +7,7 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.EditVersionTitle}"></h:outputText>
+            <h:outputText value="Title"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
@@ -15,24 +15,24 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditVersionLabel_versionId}" for="versionId" />
-                    <h:inputText id="versionId" value="#{versionController.selected.versionId}" title="#{bundle.EditVersionTitle_versionId}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionId}"/>
-                    <h:outputLabel value="#{bundle.EditVersionLabel_versionFecha}" for="versionFecha" />
-                    <h:inputText id="versionFecha" value="#{versionController.selected.versionFecha}" title="#{bundle.EditVersionTitle_versionFecha}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionFecha}"/>
-                    <h:outputLabel value="#{bundle.EditVersionLabel_versionArchivoId}" for="versionArchivoId" />
-                    <h:selectOneMenu id="versionArchivoId" value="#{versionController.selected.versionArchivoId}" title="#{bundle.EditVersionTitle_versionArchivoId}" required="true" requiredMessage="#{bundle.EditVersionRequiredMessage_versionArchivoId}">
+                    <h:outputLabel value="Label_versionId" for="versionId" />
+                    <h:inputText id="versionId" value="#{versionController.selected.versionId}" title="Title_versionId}" required="true" requiredMessage="RequiredMessage_versionId}"/>
+                    <h:outputLabel value="Label_versionFecha" for="versionFecha" />
+                    <h:inputText id="versionFecha" value="#{versionController.selected.versionFecha}" title="Title_versionFecha}" required="true" requiredMessage="RequiredMessage_versionFecha}"/>
+                    <h:outputLabel value="Label_versionArchivoId" for="versionArchivoId" />
+                    <h:selectOneMenu id="versionArchivoId" value="#{versionController.selected.versionArchivoId}" title="Title_versionArchivoId}" required="true" requiredMessage="RequiredMessage_versionArchivoId}">
                         <f:selectItems value="#{archivosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{versionController.update}" value="#{bundle.EditVersionSaveLink}"/>
+                <h:commandLink action="#{versionController.update}" value="Guardar"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundle.EditVersionViewLink}"/>
+                <h:link outcome="View" value="Ver"/>
                 <br />
-                <h:commandLink action="#{versionController.prepareList}" value="#{bundle.EditVersionShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{versionController.prepareList}" value="Listar" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.EditVersionIndexLink}" />
+                <h:link outcome="/index" value="Inicio" />
             </h:form>
         </ui:define>
     </ui:composition>

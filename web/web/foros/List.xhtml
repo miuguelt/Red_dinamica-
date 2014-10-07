@@ -7,14 +7,14 @@
 
     <ui:composition >
         <h:form id="forosListForm">
-            <h:outputText id="forosListoutput" escape="false" value="#{bundle.ListForosEmpty}" rendered="#{forosController.items.rowCount == 0}"/>
+            <h:outputText id="forosListoutput" escape="false" value="No hay Foros" rendered="#{forosController.items.rowCount == 0}"/>
             <h:panelGroup id="forosListpanelGroup" rendered="#{forosController.items.rowCount > 0}">
                 <p:dataTable id="forosListDataTable" value="#{forosController.items}" 
                              emptyMessage="No hay Foros" var="item" selectionMode="single"  
                              selection="#{forosController.foroSelect}" rowKey="#{item.foroId}" editable="true">
                     <p:ajax event="rowSelect" listener="#{forosController.RowSelect}" 
                             update=":forosTabView:forosViewForm,:forosTabView:comentariosListForm,:forosTabView:comentariosCreateForm"/> 
-                    <p:column filterValue="#{item.foroDescripcion}" filterMatchMode="contains" sortBy="#{item.foroDescripcion}" filterBy="#{item.foroDescripcion}">
+                    <p:column filterValue="#{item.foroTema}" headerText="Tema" filterMatchMode="contains" sortBy="#{item.foroTema}" filterBy="#{item.foroTema}">
                         <h3> #{item.foroTema}</h3>
                         #{item.foroDescripcion}
                     </p:column>                                       

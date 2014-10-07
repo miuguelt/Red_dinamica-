@@ -6,26 +6,31 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:component>    
-        <h:panelGrid columns="3">
-            <h:outputLabel for="cedula" value="Cédula: *" />
-            <h:inputText id="cedula" value="#{usuariosController.cedula}" rendered="true" >
-                <f:validateLength minimum="1" />  
-                <f:validateRequired />  
-                <p:ajax update="msgCedula" event="keyup"/>
-            </h:inputText>
-            <p:message for="cedula" id="msgCedula" display="tooltip" />  
-            <h:outputLabel value="Contraseña: *" for="pass" />
-            <p:password id="pass" value="#{usuariosController.contrasena}"   required="true">
-                <f:validateLength minimum="3" />  
-                <f:validateRequired /> 
-                <p:ajax update="msgPass" event="keyup" />
-            </p:password>
-            <p:message for="pass" id="msgPass" display="tooltip" />  
+    <ui:component>
+        <p:overlayPanel id="perfilOverlay" for=":menuGeneralForm:perfilBoton" hideEffect="fade">
 
-        </h:panelGrid>
-        <p:commandButton value="Ingresar" actionListener="#{usuariosController.logIn()}" styleClass="bt"/>
-        <p:commandButton id="usariosCreateButton" icon="ui-icon-plus"   value="Registrar" actionListener="#{usuariosController.prepareCreate}" oncomplete="PF('usuariosCreateDialog').show()"/>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <h:outputLabel for="cedula" value="Cédula: *" />
+                    <h:inputText id="cedula" value="#{usuariosController.cedula}" rendered="true" >
+                        <f:validateLength minimum="1" />  
+                        <f:validateRequired />  
+                        <p:ajax update="msgCedula" event="keyup"/>
+                    </h:inputText>
+                    <p:message for="cedula" id="msgCedula" display="tooltip" />  
+                    <h:outputLabel value="Contraseña: *" for="pass" />
+                    <p:password id="pass" value="#{usuariosController.contrasena}"   required="true">
+                        <f:validateLength minimum="3" />  
+                        <f:validateRequired /> 
+                        <p:ajax update="msgPass" event="keyup" />
+                    </p:password>
+                    <p:message for="pass" id="msgPass" display="tooltip" />  
+
+                </h:panelGrid>
+                <p:commandButton value="Ingresar" actionListener="#{usuariosController.logIn()}" styleClass="bt"/>
+                <p:commandButton id="usariosCreateButton" icon="ui-icon-plus"   value="Registrar" actionListener="#{usuariosController.prepareCreate}" oncomplete="PF('usuariosCreateDialog').show()"/>
+            </h:form>
+        </p:overlayPanel>
         <ui:include src="/web/usuarios/Create.xhtml"/>
     </ui:component>
 </html>

@@ -15,38 +15,36 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoId}" for="archivoId" />
-                    <h:inputText id="archivoId" value="#{archivosController.selected.archivoId}" title="#{bundle.EditArchivosTitle_archivoId}" required="true" requiredMessage="#{bundle.EditArchivosRequiredMessage_archivoId}"/>
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoTipo}" for="archivoTipo" />
-                    <h:inputText id="archivoTipo" value="#{archivosController.selected.archivoTipo}" title="#{bundle.EditArchivosTitle_archivoTipo}" required="true" requiredMessage="#{bundle.EditArchivosRequiredMessage_archivoTipo}"/>
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoNombre}" for="archivoNombre" />
-                    <h:inputText id="archivoNombre" value="#{archivosController.selected.archivoNombre}" title="#{bundle.EditArchivosTitle_archivoNombre}" required="true" requiredMessage="#{bundle.EditArchivosRequiredMessage_archivoNombre}"/>
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoAutor}" for="archivoAutor" />
-                    <h:inputText id="archivoAutor" value="#{archivosController.selected.archivoAutor}" title="#{bundle.EditArchivosTitle_archivoAutor}" required="true" requiredMessage="#{bundle.EditArchivosRequiredMessage_archivoAutor}"/>
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoTema}" for="archivoTema" />
-                    <h:inputText id="archivoTema" value="#{archivosController.selected.archivoTema}" title="#{bundle.EditArchivosTitle_archivoTema}" />
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoResumen}" for="archivoResumen" />
-                    <h:inputTextarea rows="4" cols="30" id="archivoResumen" value="#{archivosController.selected.archivoResumen}" title="#{bundle.EditArchivosTitle_archivoResumen}" />
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoVisitas}" for="archivoVisitas" />
-                    <h:inputText id="archivoVisitas" value="#{archivosController.selected.archivoVisitas}" title="#{bundle.EditArchivosTitle_archivoVisitas}" />
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoUsrId}" for="archivoUsrId" />
-                    <h:selectOneMenu id="archivoUsrId" value="#{archivosController.selected.archivoUsrId}" title="#{bundle.EditArchivosTitle_archivoUsrId}" required="true" requiredMessage="#{bundle.EditArchivosRequiredMessage_archivoUsrId}">
+                    <h:outputLabel value="Tipo" for="archivoTipo" />
+                    <h:inputText id="archivoTipo" value="#{archivosController.selected.archivoTipo}" title="Tipo" required="true" requiredMessage="Tipo requerido"/>
+                    <h:outputLabel value="Nombre" for="archivoNombre" />
+                    <h:inputText id="archivoNombre" value="#{archivosController.selected.archivoNombre}" title="Nombre" required="true" requiredMessage="Nombre requerido"/>
+                    <h:outputLabel value="Autor" for="archivoAutor" />
+                    <h:inputText id="archivoAutor" value="#{archivosController.selected.archivoAutor}" title="Auto}" required="true" requiredMessage="Autor requerido"/>
+                    <h:outputLabel value="Tema" for="archivoTema" />
+                    <h:inputText id="archivoTema" value="#{archivosController.selected.archivoTema}" title="Tema" />
+                    <h:outputLabel value="Resumen" for="archivoResumen" />
+                    <h:inputTextarea rows="4" cols="30" id="archivoResumen" value="#{archivosController.selected.archivoResumen}" title="Resumen" />
+                    <h:outputLabel value="Visitas" for="archivoVisitas" />
+                    <h:inputText id="archivoVisitas" value="#{archivosController.selected.archivoVisitas}" title="Visitas" />
+                    <h:outputLabel value="UsrId" for="archivoUsrId" />
+                    <h:selectOneMenu id="archivoUsrId" value="#{archivosController.selected.archivoUsrId}" title="UsrId" required="true" requiredMessage="UsrId  requerido">
                         <f:selectItems value="#{usuariosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditArchivosLabel_archivoColectivoId}" for="archivoColectivoId" />
-                    <h:selectOneMenu id="archivoColectivoId" value="#{archivosController.selected.archivoColectivoId}" title="#{bundle.EditArchivosTitle_archivoColectivoId}" >
+                    <h:outputLabel value="ColectivoId" for="archivoColectivoId" />
+                    <h:selectOneMenu id="archivoColectivoId" value="#{archivosController.selected.archivoColectivoId}" title="ColectivoId" >
                         <f:selectItems value="#{colectivosController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
-                <h:commandLink action="#{archivosController.update}" value="#{bundle.EditArchivosSaveLink}"/>
+                <h:commandLink action="#{archivosController.update}" value="Editar"/>
                 <br />
                 <br />
-                <h:link outcome="View" value="#{bundle.EditArchivosViewLink}"/>
+                <h:link outcome="View" value="Ver"/>
                 <br />
-                <h:commandLink action="#{archivosController.prepareList}" value="#{bundle.EditArchivosShowAllLink}" immediate="true"/>
+                <h:commandLink action="#{archivosController.prepareList}" value="Listar" immediate="true"/>
                 <br />
                 <br />
-                <h:link outcome="/index" value="#{bundle.EditArchivosIndexLink}" />
+                <h:link outcome="/index" value="Inicio" />
             </h:form>
         </ui:define>
     </ui:composition>

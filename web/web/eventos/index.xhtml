@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body" class="bodys">        
+
+            <p:layout>
+                <p:layoutUnit position="west" size="25%" header="Panel Personal" collapsible="true" resizable="true" gutter="15">                            
+                    <ui:include src="/web/eventos/Create.xhtml"/>
+                    <ui:include src="/web/eventos/List.xhtml"/>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" style="border: none;" >
+                    <h:panelGrid id="grid" width="100%">
+                        <p:panel header="#{eventosController.eventoSelect.eventoTitulo}" />
+                    </h:panelGrid>
+                    <p:tabView id="eventosTabView" dynamic="true" scrollable="true" styleClass="tabView" activeIndex="0">
+                        <p:tab title="Vista General" closable="true">
+                            <p:panel header="Notificaciones" closable="true" toggleable="true" style="margin-bottom:20px" >
+                                <ui:include src="/web/eventos/Notificaciones.xhtml"/>    
+                                <ui:include src="/web/eventos/SubirConferencias.xhtml"/>
+                                <ui:include src="/web/eventos/ListEvaluarPonentes.xhtml"/>        
+                            </p:panel>
+                            <h:panelGrid columns="4">
+                                <ui:include src="/web/eventos/CreateAsistentes.xhtml"/>
+                                <ui:include src="/web/eventos/CreatePonencias.xhtml"/>
+                            </h:panelGrid>
+                            <p:panel header="Información Generla del Evento" toggleable="true" style="margin-bottom:20px" >
+                                <h:panelGrid columns="8">
+                                    <ui:include src="/web/eventos/ListAgenda.xhtml"/>
+                                    <ui:include src="/web/eventos/ListAsistentes.xhtml"/>
+                                    <ui:include src="/web/eventos/ListPonentes.xhtml"/>        
+                                    <ui:include src="/web/eventos/ListConferencistas.xhtml"/>
+                                </h:panelGrid>
+
+                                <ui:include src="/web/eventos/View.xhtml"/>
+                            </p:panel>
+
+                            <ui:include src="/web/eventos/ListNovedad.xhtml"/>
+                            <ui:include src="/web/eventos/CreateNovedad.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Panel Administrador" closable="true">
+                            <p:accordionPanel id="eventosAccordionPanel" multiple="true" activeIndex="2">
+                                <ui:include src="/web/eventos/Edit.xhtml"/>
+                                <p:tab title="Administrar evento" >
+                                    <p:panel style="margin-bottom:20px">
+                                        <h:panelGrid columns="2">
+                                            <h:panelGrid>
+                                                <ui:include src="/web/eventos/CreateAdministrador.xhtml"/>
+                                                <ui:include src="/web/eventos/ListAdministradores.xhtml"/>
+                                            </h:panelGrid>
+                                            <h:panelGrid>
+                                                <ui:include src="/web/eventos/ListAsignarEvaluador.xhtml"/>
+                                                <ui:include src="/web/usuarios/ListInvitarConferencista.xhtml"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:panel header="Administrar Agenda" style="margin-bottom:20px">
+                                        <h:panelGrid>
+                                            <ui:include src="/web/eventos/CreateAgendaPonentes.xhtml"/>
+                                            <ui:include src="/web/eventos/CreateAgendaConferencias.xhtml"/>
+                                        </h:panelGrid>
+                                        <ui:include src="/web/eventos/CreateAgenda.xhtml"/>
+                                    </p:panel>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:tab>
+                    </p:tabView>
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </ui:define>
+
+    </ui:composition>
+</html>

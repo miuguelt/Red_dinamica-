@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/templates/generalTemplate.xhtml">
+
+        <ui:define name="body" >        
+            <p:tabView id="noticiasTabView" styleClass="tabView">  
+                <p:tab title="Noticias">
+
+                    <ui:include src="/web/noticias/Create.xhtml"/>
+                   <ui:include src="/web/noticias/List.xhtml"/>
+                   <ui:include src="/web/noticias/Edit.xhtml"/>
+                   
+
+                </p:tab>
+            </p:tabView>
+        </ui:define>
+
+    </ui:composition>
+</html>

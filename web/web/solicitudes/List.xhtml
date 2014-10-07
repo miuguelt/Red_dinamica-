@@ -7,25 +7,19 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ListSolicitudesTitle}"></h:outputText>
+            <h:outputText value="Solicitudes"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListSolicitudesEmpty}" rendered="#{solicitudesController.items.rowCount == 0}"/>
+                <h:outputText escape="false" value="No hay comentarios" rendered="#{solicitudesController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{solicitudesController.items.rowCount > 0}">
                     <h:outputText value="#{solicitudesController.pagination.pageFirstItem + 1}..#{solicitudesController.pagination.pageLastItem + 1}/#{solicitudesController.pagination.itemsCount}"/>&nbsp;
                     <h:commandLink action="#{solicitudesController.previous}" value="#{bundle.Previous} #{solicitudesController.pagination.pageSize}" rendered="#{solicitudesController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{solicitudesController.next}" value="#{bundle.Next} #{solicitudesController.pagination.pageSize}" rendered="#{solicitudesController.pagination.hasNextPage}"/>&nbsp;
+                    <h:commandLink action="#{solicitudesController.next}" value="Siguiente #{solicitudesController.pagination.pageSize}" rendered="#{solicitudesController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{solicitudesController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListSolicitudesTitle_solicitudId}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.solicitudId}"/>
-                        </h:column>
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListSolicitudesTitle_solicitudCc}"/>
@@ -56,16 +50,16 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandLink action="#{solicitudesController.prepareView}" value="#{bundle.ListSolicitudesViewLink}"/>
+                            <h:commandLink action="#{solicitudesController.prepareView}" value="Ver"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{solicitudesController.prepareEdit}" value="#{bundle.ListSolicitudesEditLink}"/>
+                            <h:commandLink action="#{solicitudesController.prepareEdit}" value="Editar"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{solicitudesController.destroy}" value="#{bundle.ListSolicitudesDestroyLink}"/>
+                            <h:commandLink action="#{solicitudesController.destroy}" value="Eliminar"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>
                 <br />
-                <h:commandLink action="#{solicitudesController.prepareCreate}" value="#{bundle.ListSolicitudesCreateLink}"/>
+                <h:commandLink action="#{solicitudesController.prepareCreate}" value="Crear"/>
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.ListSolicitudesIndexLink}"/>

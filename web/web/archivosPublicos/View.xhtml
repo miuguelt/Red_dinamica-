@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewArchivosPublicosTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewArchivosPublicosLabel_archivoId}"/>
+                    <h:outputText value="#{archivosPublicosController.selected.archivoId}" title="#{bundle.ViewArchivosPublicosTitle_archivoId}"/>
+                    <h:outputText value="#{bundle.ViewArchivosPublicosLabel_archivoTitulo}"/>
+                    <h:outputText value="#{archivosPublicosController.selected.archivoTitulo}" title="#{bundle.ViewArchivosPublicosTitle_archivoTitulo}"/>
+                    <h:outputText value="#{bundle.ViewArchivosPublicosLabel_archivoAutor}"/>
+                    <h:outputText value="#{archivosPublicosController.selected.archivoAutor}" title="#{bundle.ViewArchivosPublicosTitle_archivoAutor}"/>
+                    <h:outputText value="#{bundle.ViewArchivosPublicosLabel_archivoVisitas}"/>
+                    <h:outputText value="#{archivosPublicosController.selected.archivoVisitas}" title="#{bundle.ViewArchivosPublicosTitle_archivoVisitas}"/>
+                    <h:outputText value="#{bundle.ViewArchivosPublicosLabel_usuariosusrid}"/>
+                    <h:outputText value="#{archivosPublicosController.selected.usuariosusrid}" title="#{bundle.ViewArchivosPublicosTitle_usuariosusrid}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{archivosPublicosController.destroyAndView}" value="#{bundle.ViewArchivosPublicosDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewArchivosPublicosEditLink}"/>
+                <br />
+                <h:commandLink action="#{archivosPublicosController.prepareCreate}" value="#{bundle.ViewArchivosPublicosCreateLink}" />
+                <br />
+                <h:commandLink action="#{archivosPublicosController.prepareList}" value="#{bundle.ViewArchivosPublicosShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewArchivosPublicosIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

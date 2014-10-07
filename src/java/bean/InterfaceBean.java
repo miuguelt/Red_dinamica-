@@ -3,5 +3,5 @@ package bean;
 
 
 public interface InterfaceBean{
-    Session session = new Session();
+    SessionU session = new SessionU();
 }

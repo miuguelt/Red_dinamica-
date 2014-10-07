@@ -9,33 +9,28 @@
         <h:panelGrid styleClass="centerPanel" width="90%">
             <!--Foto-->
             <h:panelGrid columns="2">            
-                <p:graphicImage value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}"
+                <p:graphicImage rendered="#{usuariosController.verFoto}" value="/faces/Usuarios/foto/#{usuariosController.usuarioActualVista.usrId}"
                                 style="height: 120px;"/>
+                  <p:graphicImage rendered="#{!usuariosController.verFoto}" value="/faces/Usuarios/foto/default" style="height: 120px;" />
             </h:panelGrid>
             <!--Datos básicos-->
             <h:panelGrid columns="2" >
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrNombres}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrNombres}" title="#{bundle.ViewUsuariosTitle_usrNombres}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrApellidos}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrApellidos}" title="#{bundle.ViewUsuariosTitle_usrApellidos}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrEmail}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrEmail}" title="#{bundle.ViewUsuariosTitle_usrEmail}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrSexo}"/>
-                <h:outputText value="#{usuariosController.sexoUsuarioVista()}" title="#{bundle.ViewUsuariosTitle_usrSexo}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrDepartamento}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrDepartamento}" title="#{bundle.ViewUsuariosTitle_usrDepartamento}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrCiudad}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrCiudad}" title="#{bundle.ViewUsuariosTitle_usrCiudad}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrUniversidad}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrUniversidad}" title="#{bundle.ViewUsuariosTitle_usrUniversidad}"/>
+                <h:outputText value="Nombres"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrNombres}" title="Nombres"/>
+                <h:outputText value="Apellidos"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrApellidos}" title="Apellidos"/>
+                <h:outputText value="Email"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrEmail}" title="Email"/>
+                <h:outputText value="Sexo"/>
+                <h:outputText value="#{usuariosController.sexoUsuarioActual}" title="Sexo"/>
+                <h:outputText value="Departamento"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrDepartamento}" title="Departamento"/>
+                <h:outputText value="Ciudad"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrCiudad}" title="Ciudad"/>
+                <h:outputText value="Universidad"/>
+                <h:outputText value="#{usuariosController.usuarioActualVista.usrUniversidad}" title="Universidad"/>
             </h:panelGrid>
-            <!--solo el administrador puede ver esta característica-->
-            <h:panelGrid columns="2">
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrTipo}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrTipo}" title="#{bundle.ViewUsuariosTitle_usrTipo}"/>
-                <h:outputText value="#{bundle.ViewUsuariosLabel_usrEstado}"/>
-                <h:outputText value="#{usuariosController.usuarioActualVista.usrEstado}" title="#{bundle.ViewUsuariosTitle_usrEstado}"/>
-            </h:panelGrid>
+            
         </h:panelGrid>
     </h:form>
 </ui:composition>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition>
+        <p:dialog id="archivosPCreateDlg" widgetVar="archivosPCreateDialog" modal="true" closeOnEscape="true" resizable="false" appendTo="@(body)" header="Subir Archivo">
+            <h:form >
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Titulo" for="archivoTitulo" />
+                    <h:inputText id="archivoTitulo" value="#{archivosPublicosController.selected.archivoTitulo}" required="true" requiredMessage="El titulo es requerido"/>
+                    <h:outputLabel value="Autor" for="archivoAutor" />
+                    <h:inputText id="archivoAutor" value="#{archivosPublicosController.selected.archivoAutor}" />
+                </h:panelGrid>
+                <p:fileUpload fileUploadListener="#{eventosController.handleFileUploadPonencia}" mode="advanced" dragDropSupport="false" required="true" 
+                              requiredMessage="Seleccione archivo" label="Subir Archivo" oncomplete="handleSubmit(args,'ponenciaCreateDialog');" 
+                              update="">
+
+                    <h1>Seleccione archivo a subir</h1>
+                </p:fileUpload>
+                <p:commandButton value="Subir" action="#{archivosPublicosController.create}"/>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
