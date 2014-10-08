@@ -220,7 +220,7 @@ public class UsuariosController implements Serializable {
     //CODIGO PERSONAL
     private Usuarios current;
     private Usuarios usuarioSelect;
-    private static Usuarios usuarioActual; //Permita pasar al Usuario a travez de muchos controlers
+    private static Usuarios usuarioActual = new Usuarios(); //Permita pasar al Usuario a travez de muchos controlers
     private Usuarios usuarioActualVista; //Permite mostrar los datos del usuario actual en la vista
     private DataModel itemsUsuarioSelectArchivos = null;
     private boolean skip;

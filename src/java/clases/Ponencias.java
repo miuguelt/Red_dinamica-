@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,7 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ponencias.findAll", query = "SELECT p FROM Ponencias p"),
     @NamedQuery(name = "Ponencias.findByPonenciasPonenteId", query = "SELECT p FROM Ponencias p WHERE p.ponenciasPK.ponenciasPonenteId = :ponenciasPonenteId"),
     @NamedQuery(name = "Ponencias.findByPonenciasEventoId", query = "SELECT p FROM Ponencias p WHERE p.ponenciasPK.ponenciasEventoId = :ponenciasEventoId"),
-    @NamedQuery(name = "Ponencias.findByPonenciaTitulo", query = "SELECT p FROM Ponencias p WHERE p.ponenciaTitulo = :ponenciaTitulo")})
+    @NamedQuery(name = "Ponencias.findByPonenciaTitulo", query = "SELECT p FROM Ponencias p WHERE p.ponenciaTitulo = :ponenciaTitulo"),
+    @NamedQuery(name = "Ponencias.findByPonenciasConcepto", query = "SELECT p FROM Ponencias p WHERE p.ponenciasConcepto = :ponenciasConcepto"),
+    @NamedQuery(name = "Ponencias.findByPonenciasConcepto1", query = "SELECT p FROM Ponencias p WHERE p.ponenciasConcepto1 = :ponenciasConcepto1")})
 public class Ponencias implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -35,15 +38,30 @@ public class Ponencias implements Serializable {
     @Size(max = 200)
     @Column(name = "ponencia_titulo")
     private String ponenciaTitulo;
-    @JoinColumn(name = "ponencias_evaluador_id", referencedColumnName = "usr_id")
-    @ManyToOne
-    private Usuarios ponenciasEvaluadorId;
-    @JoinColumn(name = "ponencias_evento_id", referencedColumnName = "evento_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Eventos eventos;
+    @Column(name = "ponencias_concepto")
+    private Integer ponenciasConcepto;
+    @Column(name = "ponencias_concepto1")
+    private Integer ponenciasConcepto1;
+    @Lob
+    @Size(max = 16777215)
+    @Column(name = "ponencia_correpciones")
+    private String ponenciaCorrepciones;
+    @Lob
+    @Size(max = 16777215)
+    @Column(name = "ponencia_correpciones1")
+    private String ponenciaCorrepciones1;
     @JoinColumn(name = "ponencias_ponente_id", referencedColumnName = "usr_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuarios usuarios;
+    @JoinColumn(name = "ponencias_evento_id", referencedColumnName = "evento_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Eventos eventos;
+    @JoinColumn(name = "ponencias_evaluador_id", referencedColumnName = "usr_id")
+    @ManyToOne
+    private Usuarios ponenciasEvaluadorId;
+    @JoinColumn(name = "ponencias_evaluador1_id", referencedColumnName = "usr_id")
+    @ManyToOne
+    private Usuarios ponenciasEvaluador1Id;
 
     public Ponencias() {
     }
@@ -72,12 +90,44 @@ public class Ponencias implements Serializable {
         this.ponenciaTitulo = ponenciaTitulo;
     }
 
-    public Usuarios getPonenciasEvaluadorId() {
-        return ponenciasEvaluadorId;
+    public Integer getPonenciasConcepto() {
+        return ponenciasConcepto;
     }
 
-    public void setPonenciasEvaluadorId(Usuarios ponenciasEvaluadorId) {
-        this.ponenciasEvaluadorId = ponenciasEvaluadorId;
+    public void setPonenciasConcepto(Integer ponenciasConcepto) {
+        this.ponenciasConcepto = ponenciasConcepto;
+    }
+
+    public Integer getPonenciasConcepto1() {
+        return ponenciasConcepto1;
+    }
+
+    public void setPonenciasConcepto1(Integer ponenciasConcepto1) {
+        this.ponenciasConcepto1 = ponenciasConcepto1;
+    }
+
+    public String getPonenciaCorrepciones() {
+        return ponenciaCorrepciones;
+    }
+
+    public void setPonenciaCorrepciones(String ponenciaCorrepciones) {
+        this.ponenciaCorrepciones = ponenciaCorrepciones;
+    }
+
+    public String getPonenciaCorrepciones1() {
+        return ponenciaCorrepciones1;
+    }
+
+    public void setPonenciaCorrepciones1(String ponenciaCorrepciones1) {
+        this.ponenciaCorrepciones1 = ponenciaCorrepciones1;
+    }
+
+    public Usuarios getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(Usuarios usuarios) {
+        this.usuarios = usuarios;
     }
 
     public Eventos getEventos() {
@@ -88,12 +138,20 @@ public class Ponencias implements Serializable {
         this.eventos = eventos;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Usuarios getPonenciasEvaluadorId() {
+        return ponenciasEvaluadorId;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setPonenciasEvaluadorId(Usuarios ponenciasEvaluadorId) {
+        this.ponenciasEvaluadorId = ponenciasEvaluadorId;
+    }
+
+    public Usuarios getPonenciasEvaluador1Id() {
+        return ponenciasEvaluador1Id;
+    }
+
+    public void setPonenciasEvaluador1Id(Usuarios ponenciasEvaluador1Id) {
+        this.ponenciasEvaluador1Id = ponenciasEvaluador1Id;
     }
 
     @Override

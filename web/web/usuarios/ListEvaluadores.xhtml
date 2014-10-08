@@ -29,8 +29,7 @@
                             update=":eventosTabView:eventosAccordionPanel:evaluadorListForm"/>
 
                     <p:column width="8%">
-                        <p:graphicImage rendered="#{usuariosController.verFoto}" value="/faces/Usuarios/foto/#{item.usrId}" style="height: 60px;"/>
-                        <p:graphicImage rendered="#{!usuariosController.verFoto}" value="/faces/Usuarios/foto/default" style="height: 60px;"/>
+                        <p:graphicImage value="/faces/Usuarios/foto/#{item.usrId}" style="height: 60px;"/>
                     </p:column>
                     
                     <p:column sortBy="#{item.usrNombres}" filterBy="#{item.usrNombres}">

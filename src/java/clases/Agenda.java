@@ -54,12 +54,12 @@ public class Agenda implements Serializable {
     @Size(max = 100)
     @Column(name = "agenda_lugar")
     private String agendaLugar;
-    @JoinColumn(name = "agenda_evento_id", referencedColumnName = "evento_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Eventos eventos;
     @JoinColumn(name = "agenda_usr_id", referencedColumnName = "usr_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuarios usuarios;
+    @JoinColumn(name = "agenda_evento_id", referencedColumnName = "evento_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Eventos eventos;
 
     public Agenda() {
     }
@@ -120,20 +120,20 @@ public class Agenda implements Serializable {
         this.agendaLugar = agendaLugar;
     }
 
-    public Eventos getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(Eventos eventos) {
-        this.eventos = eventos;
-    }
-
     public Usuarios getUsuarios() {
         return usuarios;
     }
 
     public void setUsuarios(Usuarios usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public Eventos getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(Eventos eventos) {
+        this.eventos = eventos;
     }
 
     @Override

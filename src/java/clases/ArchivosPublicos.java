@@ -9,8 +9,11 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -34,12 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ArchivosPublicos.findByArchivoTitulo", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivoTitulo = :archivoTitulo"),
     @NamedQuery(name = "ArchivosPublicos.findByArchivoAutor", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivoAutor = :archivoAutor"),
     @NamedQuery(name = "ArchivosPublicos.findByArchivoVisitas", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivoVisitas = :archivoVisitas"),
-    @NamedQuery(name = "ArchivosPublicos.findByArchivopalabrasClave", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivopalabrasClave = :archivopalabrasClave")})
+    @NamedQuery(name = "ArchivosPublicos.findByArchivopalabrasClave", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivopalabrasClave = :archivopalabrasClave"),
+    @NamedQuery(name = "ArchivosPublicos.findByArchivoTipo", query = "SELECT a FROM ArchivosPublicos a WHERE a.archivoTipo = :archivoTipo")})
 public class ArchivosPublicos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "archivo_id")
     private Integer archivoId;
     @Basic(optional = false)
@@ -55,7 +59,12 @@ public class ArchivosPublicos implements Serializable {
     @Size(max = 200)
     @Column(name = "archivo_palabrasClave")
     private String archivopalabrasClave;
-    @ManyToMany(mappedBy = "archivosPublicosCollection")
+    @Column(name = "archivo_tipo")
+    private Integer archivoTipo;
+    @JoinTable(name = "BibliografiaColectivo", joinColumns = {
+        @JoinColumn(name = "biblio_archivo_id", referencedColumnName = "archivo_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "biblio_colect_id", referencedColumnName = "colect_id")})
+    @ManyToMany
     private Collection<Colectivos> colectivosCollection;
     @JoinColumn(name = "archivo_usr_id", referencedColumnName = "usr_id")
     @ManyToOne(optional = false)
@@ -111,6 +120,14 @@ public class ArchivosPublicos implements Serializable {
 
     public void setArchivopalabrasClave(String archivopalabrasClave) {
         this.archivopalabrasClave = archivopalabrasClave;
+    }
+
+    public Integer getArchivoTipo() {
+        return archivoTipo;
+    }
+
+    public void setArchivoTipo(Integer archivoTipo) {
+        this.archivoTipo = archivoTipo;
     }
 
     @XmlTransient

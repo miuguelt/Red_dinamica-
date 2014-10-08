@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -67,10 +68,18 @@ public class Eventos implements Serializable {
     @Column(name = "evento_fin")
     @Temporal(TemporalType.DATE)
     private Date eventoFin;
-    @ManyToMany(mappedBy = "eventosCollection")
+    @JoinTable(name = "AdministrarEventos", joinColumns = {
+        @JoinColumn(name = "admin_evento_id", referencedColumnName = "evento_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "admin_usr_id", referencedColumnName = "usr_id")})
+    @ManyToMany
     private Collection<Usuarios> usuariosCollection;
-    @ManyToMany(mappedBy = "eventosCollection1")
+    @JoinTable(name = "Asistentes", joinColumns = {
+        @JoinColumn(name = "asistente_evento_id", referencedColumnName = "evento_id")}, inverseJoinColumns = {
+        @JoinColumn(name = "asistente_usr_id", referencedColumnName = "usr_id")})
+    @ManyToMany
     private Collection<Usuarios> usuariosCollection1;
+    @ManyToMany(mappedBy = "eventosCollection2")
+    private Collection<Usuarios> usuariosCollection2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventos")
     private Collection<Conferencias> conferenciasCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "novedadEventoId")
@@ -159,6 +168,15 @@ public class Eventos implements Serializable {
 
     public void setUsuariosCollection1(Collection<Usuarios> usuariosCollection1) {
         this.usuariosCollection1 = usuariosCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Usuarios> getUsuariosCollection2() {
+        return usuariosCollection2;
+    }
+
+    public void setUsuariosCollection2(Collection<Usuarios> usuariosCollection2) {
+        this.usuariosCollection2 = usuariosCollection2;
     }
 
     @XmlTransient

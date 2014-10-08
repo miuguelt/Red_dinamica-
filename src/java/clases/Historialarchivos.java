@@ -42,12 +42,12 @@ public class Historialarchivos implements Serializable {
     @Column(name = "historial_fecha")
     @Temporal(TemporalType.DATE)
     private Date historialFecha;
-    @JoinColumn(name = "historial_archivo_id", referencedColumnName = "archivo_id")
-    @ManyToOne(optional = false)
-    private Archivos historialArchivoId;
     @JoinColumn(name = "historial_usr_id", referencedColumnName = "usr_id")
     @ManyToOne(optional = false)
     private Usuarios historialUsrId;
+    @JoinColumn(name = "historial_archivo_id", referencedColumnName = "archivo_id")
+    @ManyToOne(optional = false)
+    private Archivos historialArchivoId;
 
     public Historialarchivos() {
     }
@@ -72,20 +72,20 @@ public class Historialarchivos implements Serializable {
         this.historialFecha = historialFecha;
     }
 
-    public Archivos getHistorialArchivoId() {
-        return historialArchivoId;
-    }
-
-    public void setHistorialArchivoId(Archivos historialArchivoId) {
-        this.historialArchivoId = historialArchivoId;
-    }
-
     public Usuarios getHistorialUsrId() {
         return historialUsrId;
     }
 
     public void setHistorialUsrId(Usuarios historialUsrId) {
         this.historialUsrId = historialUsrId;
+    }
+
+    public Archivos getHistorialArchivoId() {
+        return historialArchivoId;
+    }
+
+    public void setHistorialArchivoId(Archivos historialArchivoId) {
+        this.historialArchivoId = historialArchivoId;
     }
 
     @Override

@@ -39,12 +39,15 @@ import org.primefaces.model.UploadedFile;
 import controllers.util.JsfUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 import javax.mail.*;
 import javax.faces.context.FacesContext;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.jsp.tagext.TryCatchFinally;
 
 @Named("eventosController")
 @ViewScoped
@@ -258,10 +261,26 @@ public class EventosController implements Serializable {
     private DataModel itemsAgenda = null;
     private DataModel itemsNovedades = null;
     private DataModel itemsEvaluarPonentes = null;
+    private List<Ponencias> soyEvaluador;
+    private List<Ponencias> soyEvaluador1;
+
+    @PostConstruct
+    public void init() {
+        try {
+            soyEvaluador = (List<Ponencias>) getUsuarioActual().getPonenciasCollection2();
+            soyEvaluador1 = (List<Ponencias>) getUsuarioActual().getPonenciasCollection1();
+//            soyEvaluador.addAll(soyEvaluador1);
+        } catch (Exception e) {
+        }
+    }
+
+    public void setSoyEvaluador(List<Ponencias> soyEvaluador) {
+        this.soyEvaluador = soyEvaluador;
+    }
 
     public DataModel getItemsEvaluarPonentes() {
         try {
-            return itemsEvaluarPonentes = new ListDataModel((List) getUsuarioActual().getPonenciasCollection());
+            return itemsEvaluarPonentes = new ListDataModel(soyEvaluador);
         } catch (Exception e) {
             return itemsEvaluarPonentes = null;
         }
@@ -417,6 +436,15 @@ public class EventosController implements Serializable {
         this.eventoSelect = eventoSelect;
     }
 
+    public void prepareListaEvaluar() {
+        try {
+            soyEvaluador.addAll(soyEvaluador1);
+            soyEvaluador1.clear();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("Inicie sesión");
+        }
+    }
+
     public void prepareEditConferencia() {
         conferencia = new Conferencias();
         getConferencia().setUsuarios(getUsuarioActual());
@@ -508,6 +536,15 @@ public class EventosController implements Serializable {
         }
     }
 
+    public void editPonencia() {
+        try {
+            getPonenciaEjbFacade().edit(ponencia);
+            JsfUtil.addSuccessMessage("Ponencia evaluada");
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage("error al calificar");
+        }
+    }
+
     public void createPonencia() {
         try {
             ponencia.setPonenciaTitulo(getTitulo());
@@ -587,10 +624,23 @@ public class EventosController implements Serializable {
                 + " http://localhost:8080/red_dinamica/faces/web/eventos/index.xhtml"); //Mensaje
         mail.sendMail();
     }
+    private int evaluador;
+
+    public void setEvaluador(int evaluador) {
+        this.evaluador = evaluador;
+    }
+
+    public void setEvaluar(Ponencias ponencia, int evaluador) {
+        setEvaluador(evaluador);
+        setPonencia(ponencia);
+    }
 
     public void asignarEvaluador() {
-        enviarCorreoAdministrador();
-        ponencia.setPonenciasEvaluadorId(getUsuarioEvaluador());
+        if (evaluador == 0) {
+            ponencia.setPonenciasEvaluadorId(getUsuarioEvaluador());
+        } else {
+            ponencia.setPonenciasEvaluador1Id(getUsuarioEvaluador());
+        }
         getPonenciaEjbFacade().edit(ponencia);
         JsfUtil.addSuccessMessage("Evaluador Asignado correctamente");
     }

@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -68,10 +67,7 @@ public class Colectivos implements Serializable {
     private Date colectFecha;
     @Column(name = "colect_estado")
     private Boolean colectEstado;
-    @JoinTable(name = "BibliografiaColectivo", joinColumns = {
-        @JoinColumn(name = "biblio_colect_id", referencedColumnName = "colect_id")}, inverseJoinColumns = {
-        @JoinColumn(name = "biblio_archivo_id", referencedColumnName = "archivo_id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "colectivosCollection")
     private Collection<ArchivosPublicos> archivosPublicosCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "colectivos")
     private Collection<Formaparte> formaparteCollection;

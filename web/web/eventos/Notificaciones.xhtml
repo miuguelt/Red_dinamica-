@@ -8,12 +8,24 @@
     <h:form id="notificacionesViewForm">
         <h:panelGrid>
             <h:outputText value="Usted es administrador" rendered="#{eventosController.admin}"/>
-            <h:outputText value="Su ponencia ha sido aceptada" rendered="true"/>
+            <h:panelGroup>
+                <h:outputText value="Su ponencia ha sido aceptada" rendered="true"/>
+                <p:commandButton value="Descargar Guia Ponencias" ajax="false" 
+                                 actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                    <p:fileDownload value="# {archivosController.download}" />
+                </p:commandButton>
+                <p:commandButton icon="ui-icon-plus" value="Subir Ponencia" 
+                                 oncomplete="PF('evaluarPonentesListDialog').show()"
+                                 actionListener="# {eventosController.prepareEditConferencia}"
+                                 rendered="true"/>
+            </h:panelGroup>
+
             <h:panelGroup>
                 <h:outputText value="Tiene ponencias por evaluar" rendered="true"/>
                 <p:commandButton icon="ui-icon-plus" value="Evaluar Ponencias" 
                                  oncomplete="PF('evaluarPonentesListDialog').show()"
-                                 actionListener="# {eventosController.prepareEditConferencia}"
+                                 actionListener="#{eventosController.prepareListaEvaluar()}"
+                                 update=":eventosTabView:evaluarPonentesListDlg"
                                  rendered="true"/>
                 <p:commandButton value="Download Guia" ajax="false" 
                                  actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">

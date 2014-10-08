@@ -6,10 +6,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <h:form id="evaluadorListFormBoton" > 
-        <p:commandButton id="evaluadorListBoton" value="Evaluar Ponencias" type="button" style="width: 100%;"/>
+    <h:form>
+        <p:commandButton value="Asignar evaludar" 
+                         oncomplete="PF('asignarEvaluadorListDialog').show()"/>
     </h:form>
-    <p:overlayPanel id="evaluadorListOverlay" for="evaluadorListFormBoton:evaluadorListBoton" appendToBody="true" hideEffect="fade">
+
+    <p:dialog id="asignarEvaluadorListDlg" widgetVar="asignarEvaluadorListDialog" modal="true" resizable="true" appendTo="@(body)" 
+              header="Ponencias" closeOnEscape="true">
 
         <h:form id="evaluadorListForm">
             <p:dataTable styleClass="classDataTable"
@@ -50,21 +53,21 @@
                 </p:column>
 
                 <p:column headerText="Evaluador uno">
-                    <p:commandButton icon="ui-icon-plus" actionListener="#{eventosController.setPonencia(item)}"  value="Asisgnar Evaluador 1" oncomplete="PF('colectivosCreateDialog').show()"/>
+                    <p:commandButton icon="ui-icon-plus" actionListener="#{eventosController.setEvaluar(item, 0)}"  value="Asisgnar Evaluador 1" oncomplete="PF('colectivosCreateDialog').show()"/>
                     <p:graphicImage id="imgEvaluador1" value="/faces/Usuarios/foto/#{item.ponenciasEvaluadorId.usrId}" style="cursor:pointer; height: 50px;"/>
                     <p:overlayPanel for="imgEvaluador1" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
                         <h:outputText value="#{item.ponenciasEvaluadorId.usrNombres} #{item.ponenciasEvaluadorId.usrApellidos}"/>
                     </p:overlayPanel>
                 </p:column>
                 <p:column headerText="Evaluador Dos">
-                    <p:commandButton icon="ui-icon-plus" actionListener="#{eventosController.setPonencia(item)}"  value="Asisgnar Evaluador 2" oncomplete="PF('colectivosCreateDialog').show()"/>
-                    <p:graphicImage id="imgEvaluador2" value="/faces/Usuarios/foto/#{item.ponenciasEvaluadorId.usrId}" style="cursor:pointer; height: 50px;"/>
+                    <p:commandButton icon="ui-icon-plus" actionListener="#{eventosController.setEvaluar(item, 1)}"  value="Asisgnar Evaluador 2" oncomplete="PF('colectivosCreateDialog').show()"/>
+                    <p:graphicImage id="imgEvaluador2" value="/faces/Usuarios/foto/#{item.ponenciasEvaluador1Id.usrId}" style="cursor:pointer; height: 50px;"/>
                     <p:overlayPanel for="imgEvaluador2" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout">
-                        <h:outputText value="#{item.ponenciasEvaluadorId.usrNombres} #{item.ponenciasEvaluadorId.usrApellidos}"/>
+                        <h:outputText value="#{item.ponenciasEvaluador1Id.usrNombres} #{item.ponenciasEvaluador1Id.usrApellidos}"/>
                     </p:overlayPanel>
                 </p:column>
             </p:dataTable>
         </h:form>
-    </p:overlayPanel>
+    </p:dialog>
     <ui:include src="/web/usuarios/ListEvaluadores.xhtml"/>
 </ui:composition>

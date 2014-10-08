@@ -53,12 +53,12 @@ public class Comentarios implements Serializable {
     @Column(name = "coment_fecha")
     @Temporal(TemporalType.DATE)
     private Date comentFecha;
-    @JoinColumn(name = "coment_foro_id", referencedColumnName = "foro_id")
-    @ManyToOne(optional = false)
-    private Foros comentForoId;
     @JoinColumn(name = "coment_usr_id", referencedColumnName = "usr_id")
     @ManyToOne(optional = false)
     private Usuarios comentUsrId;
+    @JoinColumn(name = "coment_foro_id", referencedColumnName = "foro_id")
+    @ManyToOne(optional = false)
+    private Foros comentForoId;
 
     public Comentarios() {
     }
@@ -97,20 +97,20 @@ public class Comentarios implements Serializable {
         this.comentFecha = comentFecha;
     }
 
-    public Foros getComentForoId() {
-        return comentForoId;
-    }
-
-    public void setComentForoId(Foros comentForoId) {
-        this.comentForoId = comentForoId;
-    }
-
     public Usuarios getComentUsrId() {
         return comentUsrId;
     }
 
     public void setComentUsrId(Usuarios comentUsrId) {
         this.comentUsrId = comentUsrId;
+    }
+
+    public Foros getComentForoId() {
+        return comentForoId;
+    }
+
+    public void setComentForoId(Foros comentForoId) {
+        this.comentForoId = comentForoId;
     }
 
     @Override

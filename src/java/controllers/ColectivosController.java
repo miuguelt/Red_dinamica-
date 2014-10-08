@@ -2,7 +2,6 @@ package controllers;
 
 import clases.Colectivos;
 import clases.Formaparte;
-import clases.Foros;
 import clases.Usuarios;
 import controllers.util.JsfUtil;
 import controllers.util.PaginationHelper;

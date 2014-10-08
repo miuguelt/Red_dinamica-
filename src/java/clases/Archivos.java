@@ -45,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Archivos.findByArchivoVisitas", query = "SELECT a FROM Archivos a WHERE a.archivoVisitas = :archivoVisitas"),
     @NamedQuery(name = "Archivos.findByArchivoDireccion", query = "SELECT a FROM Archivos a WHERE a.archivoDireccion = :archivoDireccion"),
     @NamedQuery(name = "Archivos.findByArchivoExtencion", query = "SELECT a FROM Archivos a WHERE a.archivoExtencion = :archivoExtencion"),
-    @NamedQuery(name = "Archivos.findByArchivoFecha", query = "SELECT a FROM Archivos a WHERE a.archivoFecha = :archivoFecha")})
+    @NamedQuery(name = "Archivos.findByArchivoFecha", query = "SELECT a FROM Archivos a WHERE a.archivoFecha = :archivoFecha"),
+    @NamedQuery(name = "Archivos.findByArchivopalabrasClave", query = "SELECT a FROM Archivos a WHERE a.archivopalabrasClave = :archivopalabrasClave")})
 public class Archivos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,6 +86,9 @@ public class Archivos implements Serializable {
     @Column(name = "archivo_fecha")
     @Temporal(TemporalType.DATE)
     private Date archivoFecha;
+    @Size(max = 200)
+    @Column(name = "archivo_palabrasClave")
+    private String archivopalabrasClave;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "historialArchivoId")
     private Collection<Historialarchivos> historialarchivosCollection;
     @JoinColumn(name = "archivo_usr_id", referencedColumnName = "usr_id")
@@ -188,6 +192,14 @@ public class Archivos implements Serializable {
 
     public void setArchivoFecha(Date archivoFecha) {
         this.archivoFecha = archivoFecha;
+    }
+
+    public String getArchivopalabrasClave() {
+        return archivopalabrasClave;
+    }
+
+    public void setArchivopalabrasClave(String archivopalabrasClave) {
+        this.archivopalabrasClave = archivopalabrasClave;
     }
 
     @XmlTransient

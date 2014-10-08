@@ -17,7 +17,7 @@
                          rows="5"
                          rowsPerPageTemplate="10,15,20" >
 
-                <p:column width="5%" sortBy="#{item.usuarios.usrNombres}" filterBy="#{item.usuarios.usrNombres}" headerText="Ponente">
+                <p:column width="5%" sortBy="#{item.usuarios.usrNombres}" filterBy="#{item.usuarios.usrNombres}" filterMatchMode="contains" headerText="Ponente">
                     <p:graphicImage id="imgEvaluar" value="/faces/Usuarios/foto/#{item.usuarios.usrId}" 
                                     style="cursor:pointer; width: 60px;"/>
                     <p:overlayPanel for="imgEvaluar" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mouseout"
@@ -26,21 +26,21 @@
                     </p:overlayPanel>
                 </p:column>
 
-                <p:column width="15" sortBy="#{item.ponenciaTitulo}" filterBy="#{item.ponenciaTitulo}" headerText="Ponencias">
+                <p:column width="15" sortBy="#{item.ponenciaTitulo}" filterBy="#{item.ponenciaTitulo}" headerText="Ponencias" filterMatchMode="contains">
                     <h:outputText value="#{item.ponenciaTitulo}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}" headerText="Universidad">
+                <p:column sortBy="#{item.usuarios.usrUniversidad}" filterBy="#{item.usuarios.usrUniversidad}" headerText="Universidad" filterMatchMode="contains">
                     <h:outputText value="#{item.usuarios.usrUniversidad}"/>
                 </p:column>
                 <p:column width="15%">
                         <p:commandButton value="Descargar" ajax="false" actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
                             <p:fileDownload value="# {archivosController.download}" />
                         </p:commandButton> <br/>
-                        <p:commandButton icon="ui-icon-plus" value="Evaluar" 
-                                         oncomplete="PF('evaluarPonentesListDialog').show()"
-                                         actionListener="# {eventosController.prepareEditConferencia}"
-                                         rendered="true"/>
+                        <p:commandButton value="Evaluar" oncomplete="PF('evaluarDialog').show()" rendered="#{item.ponenciasEvaluadorId == usuariosController.usuarioActualVista}" 
+                                         actionListener="#{eventosController.setPonencia(item)}" update=":eventosTabView:evaluacionDlg"/>
+                        <p:commandButton value="Evaluar1" oncomplete="PF('evaluar1Dialog').show()" rendered="#{item.ponenciasEvaluador1Id == usuariosController.usuarioActualVista}" 
+                                         actionListener="#{eventosController.setPonencia(item)}" update=":eventosTabView:evaluacion1Dlg"/>
                 </p:column>
             </p:dataTable>
         </h:form>

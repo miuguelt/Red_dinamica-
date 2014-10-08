@@ -16,18 +16,23 @@
     <p:dialog id="ponenciaCreateDlg" widgetVar="ponenciaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Crear Nuevo Colectivo">
 
         <h:form>
-            <h:outputLabel value="Titulo " for="titulo"/>
-            <h:inputText id="titulo" value="#{eventosController.titulo}" title="Titulo de Ponencia">
-                <f:ajax event="blur"/>
-            </h:inputText>
-            <p:fileUpload fileUploadListener="#{eventosController.handleFileUploadPonencia}" mode="advanced" dragDropSupport="false" required="true" 
-                          requiredMessage="Seleccione archivo" label="Subir Archivo" oncomplete="handleSubmit(args,'ponenciaCreateDialog');" 
-                          update=":eventosTabView:ponenciaCreateDlg,
-                          :eventosTabView:ponentesListDlg">
+            <p:commandButton value="Descargar Guia Resumen" ajax="false" 
+                             actionListener="# {archivosController.prepDownload(item)}" icon="ui-icon-arrowthick-1-s">
+                <p:fileDownload value="# {archivosController.download}" />
+            </p:commandButton>
+            <p:panel>
+                <h:outputLabel value="Titulo " for="titulo"/>
+                <h:inputText id="titulo" value="#{eventosController.titulo}" title="Titulo de Ponencia">
+                    <f:ajax event="blur"/>
+                </h:inputText>
+                <p:fileUpload fileUploadListener="#{eventosController.handleFileUploadPonencia}" mode="advanced" dragDropSupport="false" required="true" 
+                              requiredMessage="Seleccione archivo" label="Subir Archivo" oncomplete="handleSubmit(args,'ponenciaCreateDialog');" 
+                              update=":eventosTabView:ponenciaCreateDlg,
+                              :eventosTabView:ponentesListDlg">
 
-                <h1>Seleccione Ponencia</h1>
-            </p:fileUpload>
-
+                    <h1>Suba el resumen de la ponencia</h1>
+                </p:fileUpload>
+            </p:panel>
         </h:form>
     </p:dialog>
 </ui:composition>

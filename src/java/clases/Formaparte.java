@@ -37,12 +37,12 @@ public class Formaparte implements Serializable {
     @NotNull
     @Column(name = "forma_estado")
     private boolean formaEstado;
-    @JoinColumn(name = "forma_colect_id", referencedColumnName = "colect_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Colectivos colectivos;
     @JoinColumn(name = "forma_usr_id", referencedColumnName = "usr_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Usuarios usuarios;
+    @JoinColumn(name = "forma_colect_id", referencedColumnName = "colect_id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Colectivos colectivos;
 
     public Formaparte() {
     }
@@ -76,20 +76,20 @@ public class Formaparte implements Serializable {
         this.formaEstado = formaEstado;
     }
 
-    public Colectivos getColectivos() {
-        return colectivos;
-    }
-
-    public void setColectivos(Colectivos colectivos) {
-        this.colectivos = colectivos;
-    }
-
     public Usuarios getUsuarios() {
         return usuarios;
     }
 
     public void setUsuarios(Usuarios usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public Colectivos getColectivos() {
+        return colectivos;
+    }
+
+    public void setColectivos(Colectivos colectivos) {
+        this.colectivos = colectivos;
     }
 
     @Override
